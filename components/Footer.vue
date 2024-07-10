@@ -1,6 +1,10 @@
+<template>
+</template>
+
 <script setup lang="ts">
 import {version} from '../package.json'
 </script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4KTYN4E5D4"></script>
 <script>
@@ -10,5 +14,3 @@ import {version} from '../package.json'
 
   gtag('config', 'G-4KTYN4E5D4');
 </script>
-<template>
-</template>
