@@ -18,3 +18,4 @@ onMounted(() => {
   gtag('js', new Date());
   gtag('config', 'G-4KTYN4E5D4');
 });
+</script>
