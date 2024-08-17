@@ -69,18 +69,37 @@ export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
   { id: 'gemini-1.5-pro-exp-0801', name: 'Gemini 1.5 Pro Experiment 0801', provider: 'google', type: 'universal' },
-  { id: 'gemini-1.5-flash', name: 'Gemini 1.5 flash', provider: 'google', type: 'universal' },
-  { id: 'gemini-1.5-pro', name: 'Gemini 1.5 PRO', provider: 'google', type: 'universal' }
+  { id: 'gemini-1.5-flash', name: 'Gemini 1.5 flash', provider: 'google', type: 'universal' }
 ];
 
 export const textGenModels: Model[] = [{
     id: '@cf/qwen/qwen1.5-14b-chat-awq',
-    name: 'qwen1.5-14b-chat-awq',
+    name: '通义千问1.5 14b',
     provider: 'workers-ai',
     type: 'chat'
 }, {
-    id: '@cf/google/gemma-7b-it-lora',
-    name: 'gemma-7b-it-lora',
+    id: '@cf/google/gemma-7b-it',
+    name: 'Gemma 7B',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/deepseek-ai/deepseek-math-7b-base',
+    name: 'DeepSeekMath 7b',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/deepseek-ai/deepseek-math-7b-instruct',
+    name: 'DeepSeekMath 7b 极速版',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/meta/llama-3.1-8b-instruct',
+    name: 'Llama 3.1 8b 极速版',
+    provider: 'workers-ai',
+    type: 'chat'
+}, {
+    id: '@cf/mistral/mistral-7b-instruct-v0.2',
+    name: 'Mistral 7B 极速版',
     provider: 'workers-ai',
     type: 'chat'
 }]
@@ -91,8 +110,8 @@ export const imageGenModels: Model[] = [{
     provider: 'workers-ai-image',
     type: 'text-to-image'
 }, {
-    id: '@cf/bytedance/stable-diffusion-xl-lightning',
-    name: 'stable-diffusion-xl-lightning',
+    id: '@cf/lykon/dreamshaper-8-lcm',
+    name: 'dreamshaper-8-lcm',
     provider: 'workers-ai-image',
     type: 'text-to-image'
 }]
