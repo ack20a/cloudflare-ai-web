@@ -62,39 +62,39 @@ export const DB = new Database();
 export const initialSettings = {
     openaiKey: '',
     image_steps: 20,
-    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.',
+    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI.Respond using markdown.',
 }
 
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
-  { id: 'gemini-1.5-pro-exp-0827', name: 'Gemini 1.5 Pro Experiment 0827', provider: 'google', type: 'universal' },
-  { id: 'gemini-1.5-flash-exp-0827', name: 'Gemini 1.5 flash Experiment 0827', provider: 'google', type: 'universal' }
+  { id: 'gemini-1.5-pro-002', name: 'Gemini 1.5 Pro 002', provider: 'google', type: 'universal' },
+  { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
+  { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
+  { id: 'llama3-groq-70b-8192-tool-use-preview', name: 'Llama 3 Groq 70B Tool Use (Preview)', provider: 'openai', type: 'universal' },
+  { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)', provider: 'openai', type: 'universal' },
+  { id: 'command-r-plus-internet', name: 'command-r-plus-internet', provider: 'openai', type: 'universal' },
+  { id: 'gemini-1.5-flash-002', name: 'Gemini 1.5 Flash 002', provider: 'google', type: 'universal' }
 ];
 
 export const textGenModels: Model[] = [{
-    id: '@cf/qwen/qwen1.5-14b-chat-awq',
-    name: '通义千问1.5 14b',
-    provider: 'workers-ai',
+    id: 'gpt-4o-mini',
+    name: 'GPT-4o mini',
+    provider: 'openai',
     type: 'chat'
 }, {
-    id: '@cf/google/gemma-7b-it',
+    id: '@hf/google/gemma-7b-it',
     name: 'Gemma 7B',
-    provider: 'workers-ai',
+    provider: 'openai',
+    type: 'chat'
+}, {
+    id: '@hf/google/gemma-7b-it',
+    name: 'Gemma 7B',
+    provider: 'openai',
     type: 'chat'
 }, {
     id: '@cf/deepseek-ai/deepseek-math-7b-instruct',
     name: 'DeepSeekMath 7b 极速版',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@cf/meta/llama-3.1-8b-instruct',
-    name: 'Llama 3.1 8b 极速版',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@cf/mistral/mistral-7b-instruct-v0.2',
-    name: 'Mistral 7B 极速版',
     provider: 'workers-ai',
     type: 'chat'
 }]
@@ -105,8 +105,8 @@ export const imageGenModels: Model[] = [{
     provider: 'workers-ai-image',
     type: 'text-to-image'
 }, {
-    id: '@cf/lykon/dreamshaper-8-lcm',
-    name: 'dreamshaper-8-lcm',
+    id: '@@cf/black-forest-labs/flux-1-schnell',
+    name: 'flux-1-schnell',
     provider: 'workers-ai-image',
     type: 'text-to-image'
 }]
