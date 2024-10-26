@@ -71,20 +71,13 @@ export const uniModals: Model[] = [
   { id: 'gemini-1.5-pro-002', name: 'Gemini 1.5 Pro 002', provider: 'google', type: 'universal' },
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
-  { id: 'llama3-groq-70b-8192-tool-use-preview', name: 'Llama 3 Groq 70B Tool Use (Preview)', provider: 'openai', type: 'universal' },
   { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)', provider: 'openai', type: 'universal' },
-  { id: 'command-r-plus-internet', name: 'command-r-plus-internet', provider: 'openai', type: 'universal' },
   { id: 'gemini-1.5-flash-002', name: 'Gemini 1.5 Flash 002', provider: 'google', type: 'universal' }
 ];
 
 export const textGenModels: Model[] = [{
     id: 'gpt-4o-mini',
     name: 'GPT-4o mini',
-    provider: 'openai',
-    type: 'chat'
-}, {
-    id: '@hf/google/gemma-7b-it',
-    name: 'Gemma 7B',
     provider: 'openai',
     type: 'chat'
 }, {
