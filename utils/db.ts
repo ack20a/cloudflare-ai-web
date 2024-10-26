@@ -72,7 +72,10 @@ export const uniModals: Model[] = [
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
   { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)', provider: 'openai', type: 'universal' },
-  { id: 'gemini-1.5-flash-002', name: 'Gemini 1.5 Flash 002', provider: 'google', type: 'universal' }
+  { id: 'gemini-1.5-flash-002', name: 'Gemini 1.5 Flash 002', provider: 'google', type: 'universal' },
+  { id: 'ack-4o', name: 'ACK-4o', provider: 'openai', type: 'universal' },
+  { id: 'ack-search', name: 'ACK-Search', provider: 'openai', type: 'universal' },
+  { id: 'ack-3.5-sonnet', name: 'ACK-3.5-Sonnet', provider: 'openai', type: 'universal' }
 ];
 
 export const textGenModels: Model[] = [{
@@ -81,9 +84,14 @@ export const textGenModels: Model[] = [{
     provider: 'openai',
     type: 'chat'
 }, {
+    id: 'claude-3-haiku',
+    name: 'Claude 3 Haiku',
+    provider: 'openai',
+    type: 'chat'
+}, {
     id: '@hf/google/gemma-7b-it',
     name: 'Gemma 7B',
-    provider: 'openai',
+    provider: 'workers-ai',
     type: 'chat'
 }, {
     id: '@cf/deepseek-ai/deepseek-math-7b-instruct',
