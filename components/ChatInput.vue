@@ -41,7 +41,7 @@ function handleInput(e: KeyboardEvent) {
   fileList.value = []
 }
 
-const imageType = ['image/png', 'image/jpeg', 'image/webp', 'image/heic', 'image/heif']
+const imageType = ['image/png', 'image/jpeg', 'image/webp', 'image/heic', 'image/heif', 'image/jpg']
 
 function checkFile(file: File) {
   if (fileList.value.length >= 5) {
