@@ -1,4 +1,10 @@
-import {GoogleGenerativeAI, HarmBlockThreshold, HarmCategory, SafetySetting} from '@google/generative-ai'
+import {
+    GoogleGenerativeAI,
+    HarmBlockThreshold,
+    HarmCategory,
+    SafetySetting,
+    DynamicRetrievalMode
+} from '@google/generative-ai'
 import {headers} from '~/utils/helper';
 import {OpenAIMessage} from "~/utils/types";
 
@@ -10,10 +16,23 @@ export default defineEventHandler(async (event) => {
     const messages: OpenAIMessage[] = JSON.parse(<string>body.get('messages'))
     const files = body.getAll('files') as File[]
 
-    const m = genAI.getGenerativeModel({model, safetySettings})
-    let msg = messages.slice(1)
+    const modelConfig = {
+        model,
+        safetySettings,
+        tools: [{
+            googleSearchRetrieval: {
+                dynamicRetrievalConfig: {
+                    mode: DynamicRetrievalMode.MODE_DYNAMIC,
+                    dynamicThreshold: 0.7,
+                },
+            },
+        }]
+    }
 
+    const m = genAI.getGenerativeModel(modelConfig, { apiVersion: "v1beta" })
+    let msg = messages.slice(1)
     let res
+
     if (files.length) {
         const imageParts = await Promise.all(files.map(fileToGenerativePart))
         const prompt = msg.at(-1)
@@ -36,13 +55,17 @@ export default defineEventHandler(async (event) => {
         async start(controller) {
             for await (const chunk of res.stream) {
                 try {
+                    const groundingMetadata = chunk.candidates?.[0]?.groundingMetadata
+                    if (groundingMetadata) {
+                        // 这里可以处理 groundingMetadata
+                        console.log('Grounding Metadata:', groundingMetadata)
+                    }
                     controller.enqueue(textEncoder.encode(chunk.text()))
                 } catch (e) {
                     console.error(e)
                     controller.enqueue(textEncoder.encode('已触发安全限制，请重新开始对话'))
                 }
             }
-
             controller.close()
         }
     })
