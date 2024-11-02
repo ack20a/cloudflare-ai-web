@@ -48,7 +48,7 @@ export function workersTextParser(chunk: string) {
 export function imageResponse(res: Response) {
     return new Response(res.body, {
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'image/jpg',
         }
     })
 }
