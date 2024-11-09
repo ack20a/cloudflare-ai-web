@@ -3,6 +3,8 @@ import MarkdownIt from "markdown-it"
 import markdownit from "markdown-it"
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark-dimmed.min.css'
+import markdownItKatex from "markdown-it-katex"
+import "katex/dist/katex.min.css"
 
 defineProps<{
   history: HistoryItem[]
@@ -17,7 +19,7 @@ const md: MarkdownIt = markdownit({
     }
     return `<pre class="hljs"><code>${hljs.highlightAuto(code).value}</code></pre>`;
   },
-})
+}).use(markdownItKatex)
 </script>
 
 <template>
