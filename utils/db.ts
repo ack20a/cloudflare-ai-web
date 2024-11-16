@@ -77,28 +77,14 @@ export const uniModals: Model[] = [
   { id: 'claude-3-5-sonnet-20240620', name: 'claude-3-5-sonnet', provider: 'openai', type: 'universal' }
 ];
 
-export const textGenModels: Model[] = [{
-    id: 'gpt-4o-mini',
-    name: 'GPT-4o mini',
-    provider: 'openai',
-    type: 'chat'
-}, {
-    id: 'claude-3-haiku',
-    name: 'Claude 3 Haiku',
-    provider: 'openai',
-    type: 'chat'
-},{
-    id: '@cf/deepseek-ai/deepseek-math-7b-instruct',
-    name: 'DeepSeekMath 7b 极速版',
-    provider: 'workers-ai',
-    type: 'chat'
-}]
+export const textGenModels: Model[] = [
+  {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'chat'},
+  {id: 'claude-3-haiku', name: 'Claude 3 Haiku', provider: 'openai', type: 'chat'},
+  {id: '@cf/deepseek-ai/deepseek-math-7b-instruct', name: 'DeepSeekMath 7b 极速版', provider: 'workers-ai', type: 'chat'}
+]
 
-export const imageGenModels: Model[] = [{
-    id: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-    name: 'stable-diffusion-xl-base-1.0',
-    provider: 'workers-ai-image',
-    type: 'text-to-image'
-}]
+export const imageGenModels: Model[] = [
+  { id: '@cf/stabilityai/stable-diffusion-xl-base-1.0', name: 'stable-diffusion-xl-base-1.0', provider: 'workers-ai-image', type: 'text-to-image' }
+]
 
 export const models: Model[] = [...uniModals, ...textGenModels, ...imageGenModels]
