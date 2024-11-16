@@ -75,6 +75,7 @@ export const uniModals: Model[] = [
   { id: 'gemini-1.5-pro-002', name: 'Gemini 1.5 Pro 002', provider: 'google', type: 'universal' },
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
   { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)', provider: 'openai', type: 'universal' },
+  { id: 'command-r', name: 'command-r', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
