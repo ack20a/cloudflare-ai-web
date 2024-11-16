@@ -71,7 +71,7 @@ export const uniModals: Model[] = [
   { id: 'gemini-exp-1114', name: 'Gemini Experimental 1114', provider: 'google', type: 'universal' },
   { id: 'llama-3.1-sonar-large-128k-online', name: 'Search', provider: 'openai', type: 'universal' },
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
-  { id: 'claude-3-5-sonnet-20241022', name: 'Claude-3-5-sonnet', provider: 'openai', type: 'universal' }
+  { id: 'claude-3-5-sonnet-20241022', name: 'Claude-3-5-sonnet', provider: 'openai', type: 'universal' },
   { id: 'gemini-1.5-pro-002', name: 'Gemini 1.5 Pro 002', provider: 'google', type: 'universal' },
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
   { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)', provider: 'openai', type: 'universal' },
