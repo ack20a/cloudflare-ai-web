@@ -74,6 +74,8 @@ export const uniModals: Model[] = [
 
 export const textGenModels: Model[] = [
   {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'chat'},
+  {id: 'gpt-4o-mini-search', name: 'GPT-4o mini Google Search', provider: 'openai', type: 'chat'},
+  {id: 'gpt-4o-mini-search', name: 'GPT-4o mini Image', provider: 'openai', type: 'chat'},
   {id: 'claude-3-5-haiku', name: 'Claude 3 Haiku', provider: 'openai', type: 'chat'},
   {id: '@cf/deepseek-ai/deepseek-math-7b-instruct', name: 'DeepSeekMath 7b 极速版', provider: 'workers-ai', type: 'chat'},
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
@@ -85,7 +87,6 @@ export const textGenModels: Model[] = [
 
 export const imageGenModels: Model[] = [
   { id: '@cf/stabilityai/stable-diffusion-xl-base-1.0', name: 'stable-diffusion-xl-base-1.0', provider: 'workers-ai-image', type: 'text-to-image' },
-  { id: '@cf/black-forest-labs/flux-1-schnell', name: 'FLUX.1 [schnell]', provider: 'workers-ai-image', type: 'text-to-image' }
 ]
 
 export const models: Model[] = [...uniModals, ...textGenModels, ...imageGenModels]
