@@ -74,7 +74,6 @@ export const uniModals: Model[] = [
 
 export const textGenModels: Model[] = [
   {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'chat'},
-  {id: 'gpt-4o-mini-search', name: 'GPT-4o mini Google Search', provider: 'openai', type: 'chat'},
   {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'chat'},
   {id: 'claude-3-5-haiku', name: 'Claude 3 Haiku', provider: 'openai', type: 'chat'},
   {id: '@cf/deepseek-ai/deepseek-math-7b-instruct', name: 'DeepSeekMath 7b 极速版', provider: 'workers-ai', type: 'chat'},
