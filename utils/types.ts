@@ -25,20 +25,13 @@ export interface TabItem {
 
 export interface OpenAIMessage {
     role: 'system' | 'user' | 'assistant'
-    content: string | {
-        type: 'text' | 'image_url'
-        text?: string
-        image_url?: {
-            url: string
-        }
-    }[]
+    content: string
 }
 
 export interface OpenAIBody {
     model: string
     stream: boolean
     messages: OpenAIMessage[]
-    max_tokens?: number
 }
 
 export interface OpenAIReq {
