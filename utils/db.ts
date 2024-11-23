@@ -70,6 +70,7 @@ export type Settings = typeof initialSettings
 export const uniModals: Model[] = [
   { id: 'gemini-exp-1114', name: 'Gemini Experimental 1114', provider: 'google', type: 'universal' },
   { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro 002', provider: 'google', type: 'universal' },
+  { id: 'gemini-exp-1121', name: 'Gemini Experimental 1121', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
