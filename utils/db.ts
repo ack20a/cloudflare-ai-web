@@ -75,6 +75,7 @@ export const uniModals: Model[] = [
 export const textGenModels: Model[] = [
   {id: 'nyk', name: '牛永康(一般)', provider: 'openai', type: 'chat'},
   {id: 'flux', name: 'GPT-4o mini Image(一般)', provider: 'openai', type: 'chat'},
+  { id: 'glm', name: '智谱清言(1s-1min)', provider: 'openai', type: 'universal' },
   { id: 'qwen', name: '通义千问实验版(1s-1min)', provider: 'openai', type: 'universal' },
   {id: 'gpt-4o-mini', name: 'GPT-4o mini(一般)', provider: 'openai', type: 'chat'},
   {id: 'claude-3-haiku', name: 'Claude 3 Haiku(一般)', provider: 'openai', type: 'chat'},
