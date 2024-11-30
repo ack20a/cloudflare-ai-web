@@ -76,13 +76,10 @@ export const textGenModels: Model[] = [
   {id: 'nyk', name: '牛永康', provider: 'openai', type: 'chat'},
   {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'chat'},
   {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'chat'},
-  {id: 'claude-3-5-haiku', name: 'Claude 3 Haiku', provider: 'openai', type: 'chat'},
-  {id: '@cf/deepseek-ai/deepseek-math-7b-instruct', name: 'DeepSeekMath 7b 极速版', provider: 'workers-ai', type: 'chat'},
+  {id: 'claude-3-haiku', name: 'Claude 3 Haiku', provider: 'openai', type: 'chat'},
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
   { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)', provider: 'openai', type: 'universal' },
-  { id: 'llama-3.1-sonar-large-128k-online', name: 'Search', provider: 'openai', type: 'universal' },
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
-  { id: 'claude-3-5-sonnet-20241022', name: 'Claude-3-5-sonnet', provider: 'openai', type: 'universal' },
 ]
 
 export const imageGenModels: Model[] = [
