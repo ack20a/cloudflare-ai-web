@@ -39,6 +39,11 @@ export default defineNuxtConfig({
         defaultLocale: 'zh',
     },
     nitro: {
+        prerender: {
+            crawlLinks: true,
+            routes: ['/'],
+            ignore: ['/manifest.json']
+        },
         vercel: {
             regions: ["sin1", "syd1", "sfo1", "iad1", "pdx1", "cle1"]
         }
