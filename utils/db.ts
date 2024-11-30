@@ -74,13 +74,14 @@ export const uniModals: Model[] = [
 
 export const textGenModels: Model[] = [
   {id: 'nyk', name: '牛永康(一般)', provider: 'openai', type: 'chat'},
-  {id: 'gpt-4o-mini', name: 'GPT-4o mini(一般)', provider: 'openai', type: 'chat'},
   {id: 'flux', name: 'GPT-4o mini Image(一般)', provider: 'openai', type: 'chat'},
+  { id: 'qwen', name: '通义千问实验版(1s-1min)', provider: 'openai', type: 'universal' },
+  { id: 'metaso', name: '秘塔AI搜索', provider: 'openai', type: 'universal' },
+  {id: 'gpt-4o-mini', name: 'GPT-4o mini(一般)', provider: 'openai', type: 'chat'},
   {id: 'claude-3-haiku', name: 'Claude 3 Haiku(一般)', provider: 'openai', type: 'chat'},
   { id: 'mistral-large-latest', name: 'Mistral Large(一般)', provider: 'openai', type: 'universal' },
   { id: 'llama-3.2-90b-vision-preview', name: 'Llama 3.2 90B (Preview)(非常快)', provider: 'openai', type: 'universal' },
   { id: 'gpt-4o', name: 'GPT-4o(一般)', provider: 'openai', type: 'universal' },
-  { id: 'qwen', name: '通义千问实验版(1s-1min)', provider: 'openai', type: 'universal' },
 ]
 
 export const imageGenModels: Model[] = [
