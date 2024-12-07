@@ -68,7 +68,7 @@ export const initialSettings = {
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
-  { id: 'gemini-exp-1121', name: 'Gemini Experimental 1121', provider: 'google', type: 'universal' },
+  { id: 'gemini-exp-1206', name: 'Gemini Experimental 1206', provider: 'google', type: 'universal' },
   { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro 002', provider: 'google', type: 'universal' },
 ];
 
@@ -77,7 +77,6 @@ export const textGenModels: Model[] = [
   {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'chat'},
   { id: 'glm-image', name: 'AI生图-智谱清言', provider: 'openai', type: 'universal' },
   { id: 'glm', name: '智谱清言(慢)', provider: 'openai', type: 'universal' },
-  { id: 'qwen', name: '通义千问实验版(慢)', provider: 'openai', type: 'universal' },
   {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'chat'},
   {id: 'claude-3-haiku', name: 'Claude 3 Haiku', provider: 'openai', type: 'chat'},
   { id: 'mistral-large-latest', name: 'Mistral Large', provider: 'openai', type: 'universal' },
