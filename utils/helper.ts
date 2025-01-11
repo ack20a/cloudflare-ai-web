@@ -36,8 +36,16 @@ export function streamResponse(res: Response, parser: (chunk: string) => string)
 }
 
 export function openaiParser(chunk: string) {
-    const data: OpenAIRes = JSON.parse(chunk)
-    return data.choices[0].delta.content ?? ''
+    try {
+        const data: OpenAIRes = JSON.parse(chunk)
+        if (!data.choices?.[0]?.delta) {
+            return ''
+        }
+        return data.choices[0].delta.content ?? ''
+    } catch (e) {
+        console.error('Failed to parse OpenAI response:', e)
+        return ''
+    }
 }
 
 export function workersTextParser(chunk: string) {
