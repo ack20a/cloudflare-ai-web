@@ -73,12 +73,12 @@ export const uniModals: Model[] = [
 ];
 
 export const textGenModels: Model[] = [
-  {id: 'nyk', name: '牛永康', provider: 'openai', type: 'chat'},
+  {id: 'nyk', name: '牛永康', provider: 'openai', type: 'universal'},
   {id: 'gemini-1.5-flash-online', name: 'Gemini-1.5-Flash-Search', provider: 'openai', type: 'chat'},
-  {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'chat'},
+  {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'universal'},
   { id: 'glm-image', name: 'AI生图-智谱清言', provider: 'openai', type: 'universal' },
   { id: 'glm', name: '智谱清言(慢)', provider: 'openai', type: 'universal' },
-  {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'chat'},
+  {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'universal'},
   { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
 ]
 
