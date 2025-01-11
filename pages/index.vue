@@ -172,8 +172,7 @@ async function handleSend(input: string, addHistory: boolean, files: {
       openAIReq({
         ...req,
         endpoint: selectedModel.value.endpoint!,
-        key: settings.value.openaiKey === '' ? undefined : settings.value.openaiKey,
-        files: files.map(f => f.file)
+        key: settings.value.openaiKey || undefined
       }, text => {
         history.value[history.value.length - 1].content += text
         scrollStream(chatList)

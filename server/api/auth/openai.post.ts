@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
     const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-            Authorization: key === undefined ? `Bearer ${process.env.OPENAI_API_KEY}` : `Bearer ${key}`,
+            Authorization: key ? `Bearer ${key}` : `Bearer ${process.env.OPENAI_API_KEY}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(openAIBody),
