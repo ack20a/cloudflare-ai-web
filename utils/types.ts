@@ -25,7 +25,13 @@ export interface TabItem {
 
 export interface OpenAIMessage {
     role: 'system' | 'user' | 'assistant'
-    content: string
+    content: string | Array<{
+        type: 'text' | 'image_url'
+        text?: string
+        image_url?: {
+            url: string
+        }
+    }>
 }
 
 export interface OpenAIBody {
@@ -39,6 +45,7 @@ export interface OpenAIReq {
     endpoint: string
     messages: OpenAIMessage[]
     key?: string
+    files?: File[]
 }
 
 export interface OpenAIRes {
