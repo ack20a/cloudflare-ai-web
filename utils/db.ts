@@ -68,7 +68,7 @@ export const initialSettings = {
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
-  { id: 'gemini-exp-1206', name: 'Gemini Experimental 1206', provider: 'openai', type: 'universal' },
+  { id: 'gemini-2.0-flash-thinking-exp', name: 'Gemini-2.0-Flash-Thinking', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
 ];
 
