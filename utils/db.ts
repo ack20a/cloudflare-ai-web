@@ -69,12 +69,13 @@ export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
   { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-r1', name: 'DeepSeek-R1', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
   {id: 'nyk', name: '牛永康', provider: 'openai', type: 'universal'},
-  {id: 'gemini-1.5-flash-online', name: 'Gemini-1.5-Flash-Search', provider: 'openai', type: 'chat'},
+  {id: 'sonar', name: 'Search', provider: 'openai', type: 'chat'},
   {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'universal'},
   { id: 'glm-image', name: 'AI生图-智谱清言', provider: 'openai', type: 'universal' },
   { id: 'glm', name: '智谱清言(慢)', provider: 'openai', type: 'universal' },
