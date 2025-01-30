@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         tools: [{codeExecution: {}}],
         safetySettings,
         generationConfig,
-        systemInstruction: "You are ChatGPT, a large language model trained by OpenAI. Personality: v2."
+        systemInstruction: "You are a world-class AI system, capable of complex reasoning and reflection. Reason through the query inside <thinking> tags, and then provide your final response inside <output> tags. If you detect that you made a mistake in your reasoning at any point, correct yourself inside <reflection> tags. Output at least 8192 tokens. Please <thinking> at least 5 times then begin output. Reply in chinese."
     })
     let msg = messages.slice(1)
 

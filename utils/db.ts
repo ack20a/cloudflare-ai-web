@@ -62,14 +62,14 @@ export const DB = new Database();
 export const initialSettings = {
     openaiKey: process.env.OPENAI_API_KEY || '',
     image_steps: 20,
-    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Personality: v2.',
+    system_prompt: 'You are a world-class AI system, capable of complex reasoning and reflection. Reason through the query inside <thinking> tags, and then provide your final response inside <output> tags. If you detect that you made a mistake in your reasoning at any point, correct yourself inside <reflection> tags. Output at least 8192 tokens. Please <thinking> at least 5 times then begin output. Reply in chinese.',
 }
 
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
-  { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
   { id: 'deepseek-r1', name: 'DeepSeek-R1', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-v3', name: 'DeepSeek-V3', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
 ];
 
