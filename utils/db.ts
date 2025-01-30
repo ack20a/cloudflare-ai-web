@@ -62,7 +62,7 @@ export const DB = new Database();
 export const initialSettings = {
     openaiKey: process.env.OPENAI_API_KEY || '',
     image_steps: 20,
-    system_prompt: 'You are a world-class AI system, capable of complex reasoning and reflection. Reason through the query inside <thinking> tags, and then provide your final response inside <output> tags. If you detect that you made a mistake in your reasoning at any point, correct yourself inside <reflection> tags. Output at least 8192 tokens. Please <thinking> at least 5 times then begin output. Reply in chinese.',
+    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Personality: v2.',
 }
 
 export type Settings = typeof initialSettings
