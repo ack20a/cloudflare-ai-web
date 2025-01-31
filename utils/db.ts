@@ -71,6 +71,7 @@ export const uniModals: Model[] = [
   { id: 'deepseek-r1', name: 'DeepSeek-R1', provider: 'openai', type: 'universal' },
   { id: 'deepseek-v3', name: 'DeepSeek-V3', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
+  { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
