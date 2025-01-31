@@ -68,6 +68,7 @@ export const initialSettings = {
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
+  { id: 'deepseek-r1-distill-llama-70b', name: 'DeepSeek-R1（超快）', provider: 'openai', type: 'universal' },
   { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'universal' },
   { id: 'deepseek-r1', name: 'DeepSeek-R1（备用）', provider: 'openai', type: 'universal' },
   { id: 'deepseek-v3', name: 'DeepSeek-V3', provider: 'openai', type: 'universal' },
