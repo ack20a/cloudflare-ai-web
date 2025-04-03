@@ -68,23 +68,17 @@ export const initialSettings = {
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
-  { id: 'o3-mini', name: 'o3-mini', provider: 'openai', type: 'universal' },
-  { id: 'deepseek-r1-distill-llama-70b', name: 'DeepSeek-R1（超快）', provider: 'openai', type: 'universal' },
-  { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'universal' },
-  { id: 'deepseek-r1', name: 'DeepSeek-R1（备用）', provider: 'openai', type: 'universal' },
-  { id: 'deepseek-v3', name: 'DeepSeek-V3', provider: 'openai', type: 'universal' },
+  { id: 'unsloth/gemma-3-27b-it', name: 'Gemma 3 27b It', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'chat' },
   { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
-  {id: 'nyk', name: '牛永康', provider: 'openai', type: 'universal'},
+  {id: 'nyk-dsr1', name: '牛永康（DeepSeek-R1）', provider: 'openai', type: 'chat'},
+  {id: 'flux', name: 'DeepSeek-R1 Image', provider: 'openai', type: 'universal'},
   {id: 'sonar', name: 'Search', provider: 'openai', type: 'chat'},
-  {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'universal'},
-  { id: 'glm-image', name: 'AI生图-智谱清言', provider: 'openai', type: 'universal' },
-  { id: 'glm', name: '智谱清言(慢)', provider: 'openai', type: 'universal' },
-  {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'universal'},
-  { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
+  { id: 'openai-large', name: 'GPT-4o', provider: 'openai', type: 'universal' },
 ]
 
 export const imageGenModels: Model[] = []
