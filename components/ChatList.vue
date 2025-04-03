@@ -3,6 +3,8 @@ import MarkdownIt from "markdown-it"
 import markdownit from "markdown-it"
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark-dimmed.min.css'
+import markdownItKatex from "markdown-it-katex"
+import "katex/dist/katex.min.css"
 
 defineProps<{
   history: HistoryItem[]
@@ -17,7 +19,7 @@ const md: MarkdownIt = markdownit({
     }
     return `<pre class="hljs"><code>${hljs.highlightAuto(code).value}</code></pre>`;
   },
-})
+}).use(markdownItKatex)
 </script>
 
 <template>
@@ -39,7 +41,8 @@ const md: MarkdownIt = markdownit({
           </li>
         </template>
         <template v-else>
-          <li v-if="i.type === 'text'" v-html="md.render(i.content)" class="assistant chat-item assistant-text prose"
+          <li v-if="i.type === 'text'" v-html="md.render(i.content)"
+              class="assistant chat-item assistant-text prose prose-pre:break-words prose-pre:whitespace-pre-wrap"
               :class="index+1===history.length && loading ?  'loading':''"/>
           <li v-else-if="i.type === 'image'" class="assistant image-item">
             <template v-for="img_url in i.src_url" :key="img_url">

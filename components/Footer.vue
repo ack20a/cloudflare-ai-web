@@ -1,13 +1,21 @@
-<script setup lang="ts">
-import {version} from '../package.json'
-</script>
-
 <template>
-  <footer class="shrink-0 h-6">
-    <div class="text-center text-xs font-light">
-      {{ version }} | Star on
-      <a href="https://github.com/Jazee6/cloudflare-ai-web" target="_blank"
-         class="text-neutral-500 hover:text-neutral-900 underline dark:text-neutral-400 dark:hover:text-neutral-300">GitHub</a>
-    </div>
-  </footer>
 </template>
+
+<script setup lang="ts">
+import { version } from '../package.json'
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  // Load Google tag (gtag.js) asynchronously
+  const script = document.createElement('script');
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4KTYN4E5D4';
+  script.async = true;
+  document.head.appendChild(script);
+
+  // Initialize gtag
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4KTYN4E5D4');
+});
+</script>

@@ -14,15 +14,15 @@ export default defineNuxtConfig({
     },
     app: {
         head: {
-            title: 'CF AI Web',
+            title: '永康 AI Web',
             meta: [
                 {
                     name: 'keywords',
-                    content: 'CF AI Web, AI, Cloudflare Workers, ChatGPT, GeminiPro, Google Generative AI'
+                    content: '永康 AI Web, AI, Cloudflare Workers, ChatGPT, GeminiPro, Google Generative AI'
                 },
                 {
                     name: 'description',
-                    content: 'Integrated web platform supporting GeminiPro/Cloudflare Workers AI/ChatGPT by Jazee6'
+                    content: 'Integrated web platform supporting GeminiPro/Cloudflare Workers AI/ChatGPT'
                 }
             ],
             link: [
@@ -33,27 +33,14 @@ export default defineNuxtConfig({
             ]
         }
     },
-    vite: {
-        build: {
-            rollupOptions: {
-                output: {
-                    manualChunks: (id) => {
-                        if (id.includes('node_modules')) {
-                            return 'vendor'
-                        }
-                    }
-                }
-            }
-        }
-    },
     i18n: {
         vueI18n: './i18n.config.ts',
         strategy: 'no_prefix',
         defaultLocale: 'zh',
+    },
+    nitro: {
+        vercel: {
+            regions: ["sin1", "syd1", "sfo1", "iad1", "pdx1", "cle1"]
+        }
     }
-    // nitro: {
-    //     vercel: {
-    //         regions: ["sin1", "syd1", "sfo1", "iad1", "pdx1", "cle1"]
-    //     }
-    // }
 })

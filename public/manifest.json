@@ -1,10 +1,10 @@
 {
-  "name": "Cloudflare AI Web",
-  "short_name": "Cloudflare AI Web",
+  "name": "永康 AI Web",
+  "short_name": "永康 AI Web",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#fff",
-  "description": "Cloudflare AI Web App",
+  "description": "永康 AI Web App",
   "icons": [
     {
       "src": "/pwa.webp",
@@ -15,7 +15,7 @@
   "related_applications": [
     {
       "platform": "web",
-      "url": "https://jaze.top"
+      "url": "https://ai.ack20.eu.org"
     }
   ]
 }

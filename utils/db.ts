@@ -60,80 +60,33 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const initialSettings = {
-    openaiKey: '',
+    openaiKey: process.env.OPENAI_API_KEY || '',
     image_steps: 20,
-    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.',
+    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Personality: v2.',
 }
 
 export type Settings = typeof initialSettings
 
 export const uniModals: Model[] = [
-    {
-        id: 'gemini-1.5-flash',
-        name: 'Gemini 1.5 flash',
-        provider: 'google',
-        type: 'universal'
-    }
+  { id: 'o3-mini', name: 'o3-mini', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-r1-distill-llama-70b', name: 'DeepSeek-R1（超快）', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-r1', name: 'DeepSeek-R1（备用）', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-v3', name: 'DeepSeek-V3', provider: 'openai', type: 'universal' },
+  { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
+  { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
+];
+
+export const textGenModels: Model[] = [
+  {id: 'nyk', name: '牛永康', provider: 'openai', type: 'universal'},
+  {id: 'sonar', name: 'Search', provider: 'openai', type: 'chat'},
+  {id: 'flux', name: 'GPT-4o mini Image', provider: 'openai', type: 'universal'},
+  { id: 'glm-image', name: 'AI生图-智谱清言', provider: 'openai', type: 'universal' },
+  { id: 'glm', name: '智谱清言(慢)', provider: 'openai', type: 'universal' },
+  {id: 'gpt-4o-mini', name: 'GPT-4o mini', provider: 'openai', type: 'universal'},
+  { id: 'gpt-4o', name: 'GPT-4o', provider: 'openai', type: 'universal' },
 ]
 
-export const textGenModels: Model[] = [{
-    id: 'gpt-3.5-turbo',
-    name: 'ChatGPT-3.5-turbo',
-    provider: 'openai',
-    endpoint: 'chat/completions',
-    type: 'chat'
-}, {
-    id: '@cf/qwen/qwen1.5-14b-chat-awq',
-    name: 'qwen1.5-14b-chat-awq',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@cf/openchat/openchat-3.5-0106',
-    name: 'openchat-3.5-0106',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@cf/google/gemma-7b-it-lora',
-    name: 'gemma-7b-it-lora',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@hf/thebloke/openhermes-2.5-mistral-7b-awq',
-    name: 'openhermes-2.5-mistral-7b-awq',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@hf/thebloke/neural-chat-7b-v3-1-awq',
-    name: 'neural-chat-7b-v3-1-awq',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@hf/nexusflow/starling-lm-7b-beta',
-    name: 'starling-lm-7b-beta',
-    provider: 'workers-ai',
-    type: 'chat'
-}, {
-    id: '@cf/meta/llama-3-8b-instruct',
-    name: 'llama-3-8b-instruct',
-    provider: 'workers-ai',
-    type: 'chat'
-}]
-
-export const imageGenModels: Model[] = [{
-    id: '@cf/lykon/dreamshaper-8-lcm',
-    name: 'dreamshaper-8-lcm',
-    provider: 'workers-ai-image',
-    type: 'text-to-image'
-}, {
-    id: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-    name: 'stable-diffusion-xl-base-1.0',
-    provider: 'workers-ai-image',
-    type: 'text-to-image'
-}, {
-    id: '@cf/bytedance/stable-diffusion-xl-lightning',
-    name: 'stable-diffusion-xl-lightning',
-    provider: 'workers-ai-image',
-    type: 'text-to-image'
-}]
+export const imageGenModels: Model[] = []
 
 export const models: Model[] = [...uniModals, ...textGenModels, ...imageGenModels]
