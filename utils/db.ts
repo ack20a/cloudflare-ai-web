@@ -59,15 +59,6 @@ export class Database extends Dexie {
 
 export const DB = new Database();
 
-export const initialSettings = {
-    openaiKey: process.env.OPENAI_API_KEY || '',
-    image_steps: 20,
-    system_prompt: 'You are ChatGPT, a large language model trained by OpenAI. Personality: v2.',
-}
-
-export type Settings = typeof initialSettings
-
-// 所有模型都已设置为OpenAI提供商
 export const uniModals: Model[] = [
   { id: 'unsloth/gemma-3-27b-it', name: 'Gemma 3 27b It', provider: 'openai', type: 'universal' },
   { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'chat' },

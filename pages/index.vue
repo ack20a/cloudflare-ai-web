@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useLocalStorage} from "@vueuse/core";
+import {openAIReq} from "~/utils/api";
 
 const route = useRoute()
 const router = useRouter()
@@ -11,7 +11,6 @@ const selectedTab = ref(0)
 const {selectedModel} = useGlobalState()
 const initializing = ref(true)
 const loading = ref(false)
-let settings: Ref<Settings>
 let session: number = 0
 
 async function initDB() {
@@ -50,8 +49,6 @@ onMounted(async () => {
       await loadData()
     } else await getLatestData()
   }
-
-  settings = useLocalStorage('settings', initialSettings)
 
   initializing.value = false
 })
@@ -172,7 +169,7 @@ async function handleSend(input: string, addHistory: boolean, files: {
       openAIReq({
         ...req,
         endpoint: selectedModel.value.endpoint!,
-        key: settings.value.openaiKey === '' ? undefined : settings.value.openaiKey,
+        key: process.env.OPENAI_API_KEY || '',
         files: files.map(f => f.file)
       }, text => {
         history.value[history.value.length - 1].content += text
@@ -206,7 +203,6 @@ async function addFiles(files: {
 <template>
   <UContainer class="flex h-full w-full overflow-y-auto">
     <ModelSelect/>
-    <Setting/>
     <Pass/>
 
     <Sidebar :tabs="tabs" :selected="selectedTab" :handle-delete="handleDelete" :handle-new-chat="handleNewChat"

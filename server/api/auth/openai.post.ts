@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
     const body = await readFormData(event);
     const model = body.get('model') as string;
     const messages = JSON.parse(body.get('messages') as string);
-    const key = body.get('key') as string;
     const endpoint = body.get('endpoint') as string;
     const files = body.getAll('files') as File[];
 
@@ -48,7 +47,7 @@ export default defineEventHandler(async (event) => {
     const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-            Authorization: key ? `Bearer ${key}` : `Bearer ${process.env.OPENAI_API_KEY}`,
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(openAIBody),

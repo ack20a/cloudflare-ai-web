@@ -44,7 +44,6 @@ export interface OpenAIReq {
     model: string
     endpoint: string
     messages: OpenAIMessage[]
-    key?: string
     files?: File[]
 }
 
