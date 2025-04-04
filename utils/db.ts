@@ -60,8 +60,9 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
-  { id: 'unsloth/gemma-3-27b-it', name: 'Gemma 3 27b It', provider: 'openai', type: 'universal' },
+  { id: 'deepseek-ai/DeepSeek-R1-Zero', name: 'DeepSeek-R1-Zero', provider: 'openai', type: 'chat' },
   { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'chat' },
+  { id: 'unsloth/gemma-3-27b-it', name: 'Gemma 3 27b It', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
   { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
 ];
