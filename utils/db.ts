@@ -67,6 +67,7 @@ export const initialSettings = {
 
 export type Settings = typeof initialSettings
 
+// 所有模型都已设置为OpenAI提供商
 export const uniModals: Model[] = [
   { id: 'unsloth/gemma-3-27b-it', name: 'Gemma 3 27b It', provider: 'openai', type: 'universal' },
   { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'chat' },

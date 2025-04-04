@@ -18,11 +18,11 @@ export default defineNuxtConfig({
             meta: [
                 {
                     name: 'keywords',
-                    content: '永康 AI Web, AI, Cloudflare Workers, ChatGPT, GeminiPro, Google Generative AI'
+                    content: '永康 AI Web, AI, OpenAI, ChatGPT'
                 },
                 {
                     name: 'description',
-                    content: 'Integrated web platform supporting GeminiPro/Cloudflare Workers AI/ChatGPT'
+                    content: 'Integrated web platform supporting OpenAI/ChatGPT'
                 }
             ],
             link: [

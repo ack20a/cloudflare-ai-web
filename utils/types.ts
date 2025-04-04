@@ -1,7 +1,7 @@
 export interface Model {
     id: string
     name: string
-    provider: 'openai' | 'workers-ai' | 'google' | 'workers-ai-image'
+    provider: 'openai'
     type: 'chat' | 'text-to-image' | 'universal'
     endpoint?: string
 }
@@ -57,33 +57,3 @@ export interface OpenAIRes {
         finish_reason: 'stop' | null
     }[]
 }
-
-export interface WorkersBody {
-    stream: boolean
-    messages: OpenAIMessage[]
-}
-
-export interface WorkersBodyImage {
-    prompt: string
-    num_steps?: number
-}
-
-export interface WorkersReq {
-    model: string
-    messages: OpenAIMessage[]
-}
-
-export interface WorkersReqImage {
-    model: string
-    messages: OpenAIMessage[]
-    num_steps?: number
-}
-
-export interface WorkersRes {
-    response: string
-}
-
-// export interface GeminiReq {
-//     model: string
-//     messages: OpenAIMessage[]
-// }

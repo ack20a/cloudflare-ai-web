@@ -179,44 +179,6 @@ async function handleSend(input: string, addHistory: boolean, files: {
         scrollStream(chatList)
       }).then(basicDone).catch(basicCatch).finally(basicFin)
       break
-    case "workers-ai":
-      workersReq(req, res => {
-        history.value[history.value.length - 1].content += res
-        scrollStream(chatList)
-      }).then(basicDone).catch(basicCatch).finally(basicFin)
-      break
-    case "workers-ai-image":
-      workersImageReq({
-        ...req,
-        num_steps: settings.value.image_steps,
-      }).then(res => {
-        const blob = res as Blob
-        Object.assign(history.value[history.value.length - 1], {
-          content: input,
-          src: [blob],
-          src_url: [URL.createObjectURL(blob)]
-        })
-
-        setTimeout(() => {
-          scrollToTop(chatList)
-          basicFin()
-        }, 100)
-      }).then(() => {
-        const store = {...toRaw(history.value[history.value.length - 1])}
-        delete store.src_url
-        DB.history.add(store)
-      }).catch(basicCatch)
-      break
-    case "google":
-      const form = new FormData()
-      form.append('model', req.model)
-      form.append('messages', JSON.stringify(req.messages))
-      files.forEach(i => form.append('files', i.file))
-      geminiReq(form, text => {
-        history.value[history.value.length - 1].content += text
-        scrollStream(chatList, 512)
-      }).then(basicDone).catch(basicCatch).finally(basicFin)
-      break
   }
 }
 

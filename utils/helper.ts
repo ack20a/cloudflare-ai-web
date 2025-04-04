@@ -48,11 +48,6 @@ export function openaiParser(chunk: string) {
     }
 }
 
-export function workersTextParser(chunk: string) {
-    const data: WorkersRes = JSON.parse(chunk)
-    return data.response
-}
-
 export function imageResponse(res: Response) {
     return new Response(res.body, {
         headers: {
