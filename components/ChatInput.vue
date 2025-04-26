@@ -97,7 +97,7 @@ const handlePaste = (e: ClipboardEvent) => {
   <div class="relative">
     <div class="absolute bottom-10 w-full flex flex-col">
       <UButton class="self-center drop-shadow-xl blur-global mb-1" color="white"
-               @click="$globalState.openModelSelect=!$globalState.openModelSelect">
+               @click="openModelSelect = !openModelSelect">
         {{ selectedModel.name }}
         <template #trailing>
           <UIcon name="i-heroicons-chevron-down-solid"/>
