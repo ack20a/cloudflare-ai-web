@@ -60,17 +60,15 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
-  { id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1（稳定）', provider: 'openai', type: 'chat' },
-  { id: 'chutesai/Llama-4-Maverick-17B-128E-Instruct-FP8', name: 'Llama-4-Maverick-17B', provider: 'openai', type: 'universal' },
-  { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash Experimental', provider: 'openai', type: 'universal' },
-  { id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini 2.0 Flash Thinking Experimental 01-21', provider: 'openai', type: 'universal' },
+  {id: 'o3-mini', name: 'o3-mini', provider: 'openai', type: 'chat' },
+  {id: 'microsoft/MAI-DS-R1-FP8', name: 'DeepSeek-R1(微软版)', provider: 'openai', type: 'chat' },
+  {id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'openai', type: 'universal' },
+  {id: 'gemini-2.5-flash-preview-04-17', name: 'Gemini 2.5 Flash Preview 04-17', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
-  {id: 'nyk-dsr1', name: '牛永康（DeepSeek-R1）', provider: 'openai', type: 'chat'},
-  {id: 'flux', name: 'DeepSeek-R1 Image', provider: 'openai', type: 'universal'},
-  {id: 'sonar', name: 'Search', provider: 'openai', type: 'chat'},
-  { id: 'openai-large', name: 'GPT-4o', provider: 'openai', type: 'universal' },
+  {id: 'nyk-dsr1', name: '牛永康(DeepSeek-R1)', provider: 'openai', type: 'chat'},
+  {id: 'flux', name: '生图(DeepSeek-R1)', provider: 'openai', type: 'chat'},
 ]
 
 export const imageGenModels: Model[] = []

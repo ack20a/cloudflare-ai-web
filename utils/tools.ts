@@ -35,7 +35,13 @@ export function scrollToTop(el: HTMLElement | null) {
 }
 
 export function getSystemPrompt() {
-    const content = JSON.parse(localStorage.getItem('settings') || '{}').system_prompt || 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.'
+    const enabled = localStorage.getItem('systemPromptEnabled') !== 'false'
+    if (!enabled) {
+        return null
+    }
+    
+    const content = localStorage.getItem('systemPrompt') || 'You are ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture. Personality: v2. Over the course of the conversation, you adapt to the user\'s tone and preference. Try to match the user\'s vibe, tone, and generally how they are speaking. You want the conversation to feel natural. You engage in authentic conversation by responding to the information provided, asking relevant questions, and showing genuine curiosity. If natural, continue the conversation with casual conversation. Respond in Chinese.'
+    
     const p: OpenAIMessage = {
         role: 'system',
         content
@@ -53,22 +59,21 @@ export function getMessages(history: HistoryItem[], options?: {
             content: history[history.length - 2].content
         }]
     }
-    if (options?.addHistory)
-        return [
-            getSystemPrompt()
-        ].concat(history.slice(0, -1).filter(i => i.type === 'text').map((item) => {
+    
+    // 不再从客户端添加系统提示词，将由服务器端处理
+    if (options?.addHistory) {
+        return history.slice(0, -1).filter(i => i.type === 'text').map((item) => {
             return {
                 role: item.role,
                 content: item.content
             }
-        }))
-    else
-        return [
-            getSystemPrompt()
-        ].concat({
+        })
+    } else {
+        return [{
             role: history[history.length - 2].role,
             content: history[history.length - 2].content
-        })
+        }]
+    }
 }
 
 export function handleImgZoom(img: HTMLImageElement) {

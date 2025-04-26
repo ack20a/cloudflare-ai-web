@@ -16,8 +16,9 @@ export default defineI18nConfig(() => ({
             img_gen_steps: '图片生成步数',
             text_generation: '文本生成',
             image_generation: '图像生成',
-            system_prompt: '系统提示',
+            system_prompt: '系统提示词',
             universal: '多模',
+            enter_system_prompt: '请输入系统提示词',
         },
         en: {
             setting: 'Setting',
@@ -36,6 +37,7 @@ export default defineI18nConfig(() => ({
             image_generation: 'Image generation',
             system_prompt: 'System prompt',
             universal: 'Universal',
+            enter_system_prompt: 'Enter system prompt',
         }
     }
 }))
