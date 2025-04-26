@@ -60,6 +60,7 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
+  {id: 'gpt-41', name: 'GPT‑4.1', provider: 'openai', type: 'chat' },
   {id: 'o3-mini', name: 'o3-mini', provider: 'openai', type: 'chat' },
   {id: 'microsoft/MAI-DS-R1-FP8', name: 'DeepSeek-R1(微软版)', provider: 'openai', type: 'chat' },
   {id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', provider: 'openai', type: 'universal' },
