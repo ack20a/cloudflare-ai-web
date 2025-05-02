@@ -61,10 +61,7 @@ export const DB = new Database();
 
 export const uniModals: Model[] = [
 {id: 'deepseek-ai/DeepSeek-R1', name: 'DeepSeek R1|128K', provider: 'openai', type: 'chat' },
-{id: 'deepseek-ai/DeepSeek-Prover-V2-671B', name: 'DeepSeek Prover V2 671B', provider: 'openai', type: 'chat' },
 {id: 'deepseek-ai/DeepSeek-V3-0324', name: 'DeepSeek V3 0324|128K', provider: 'openai', type: 'chat' },
-{id: 'unsloth/gemma-3-27b-it', name: 'Gemma 3 27B|👁️|128K', provider: 'openai', type: 'universal' },
-{id: 'chutesai/Llama-4-Scout-17B-16E-Instruct', name: 'Llama 4 Scout 17B|👁️|10M', provider: 'openai', type: 'universal' },
 {id: 'Qwen/QwQ-32B', name: 'QwQ 32B|128K', provider: 'openai', type: 'chat' },
 {id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash|👁️|1M', provider: 'openai', type: 'universal' },
 {id: 'gemini-2.5-flash-preview-04-17', name: 'Gemini 2.5 Flash Preview 0417|👁️|1M', provider: 'openai', type: 'universal' },
