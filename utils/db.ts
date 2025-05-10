@@ -61,10 +61,11 @@ export const DB = new Database();
 
 export const uniModals: Model[] = [
 {id: 'deepseek-ai/DeepSeek-R1', name: 'DeepSeek R1|128K', provider: 'openai', type: 'chat' },
-{id: 'deepseek-ai/DeepSeek-V3-0324', name: 'DeepSeek V3 0324|128K', provider: 'openai', type: 'chat' },
-{id: 'Qwen/QwQ-32B', name: 'QwQ 32B|128K', provider: 'openai', type: 'chat' },
-{id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash|👁️|1M', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.5-flash-preview-04-17', name: 'Gemini 2.5 Flash Preview 0417|👁️|1M', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.5-flash-preview-04-17', name: 'Gemini 2.5 Flash Preview 04-17|👁️|1M', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.5-pro-exp-03-25', name: 'Gemini 2.5 Pro Preview 03-25|👁️|1M', provider: 'openai', type: 'universal' },
+{id: 'nvidia/Llama-3_1-Nemotron-Ultra-253B-v1', name: 'Llama 3.1 Nemotron Ultra 253B V1|👁️|128k', provider: 'openai', type: 'universal' },
+{id: 'Qwen/Qwen3-235B-A22B', name: '|👁️|1M', provider: 'openai', type: 'universal' },
+{id: 'deepseek-ai/DeepSeek-Prover-V2-671B', name: '|👁️|1M', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
