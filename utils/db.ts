@@ -64,8 +64,8 @@ export const uniModals: Model[] = [
 {id: 'gemini-2.5-flash-preview-04-17', name: 'Gemini 2.5 Flash Preview 04-17|👁️|1M', provider: 'openai', type: 'universal' },
 {id: 'gemini-2.5-pro-exp-03-25', name: 'Gemini 2.5 Pro Preview 03-25|👁️|1M', provider: 'openai', type: 'universal' },
 {id: 'nvidia/Llama-3_1-Nemotron-Ultra-253B-v1', name: 'Llama 3.1 Nemotron Ultra 253B V1|👁️|128k', provider: 'openai', type: 'universal' },
-{id: 'Qwen/Qwen3-235B-A22B', name: '|👁️|1M', provider: 'openai', type: 'universal' },
-{id: 'deepseek-ai/DeepSeek-Prover-V2-671B', name: '|👁️|1M', provider: 'openai', type: 'universal' },
+{id: 'Qwen/Qwen3-235B-A22B', name: 'Qwen3-235B-A22B|128K', provider: 'openai', type: 'chat' },
+{id: 'deepseek-ai/DeepSeek-Prover-V2-671B', name: 'DeepSeek-Prover-V2-671B|128K', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
