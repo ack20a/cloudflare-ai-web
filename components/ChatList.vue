@@ -23,7 +23,7 @@ const md: MarkdownIt = markdownit({
 </script>
 
 <template>
-  <ul class="overflow-y-auto overflow-x-hidden scrollbar-hide pt-24 pb-16 pl-1 flex flex-col space-y-1">
+  <ul class="overflow-y-auto overflow-x-hidden scrollbar-hide pt-6 pb-6 px-4 flex flex-col space-y-4">
     <template v-for="(i,index) in history" :key="i.id">
       <template v-if="!i.content">
         <USkeleton class="loading-item"/>
@@ -33,7 +33,7 @@ const md: MarkdownIt = markdownit({
           <li v-if="i.type === 'text' || i.type === 'image-prompt'" class="user chat-item user-text">
             {{ i.content }}
           </li>
-          <li v-else-if="i.type === 'image'" class="user image-item">
+          <li v-else-if="i.type === 'image'" class="user image-item p-2">
             <template v-for="img_url in i.src_url" :key="img_url">
               <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url" class="image"
                    :class="i.src_url?.length === 1 ? 'max-h-64' : (i.src_url?.length === 2 ? 'max-h-32': 'max-h-16')"/>
@@ -44,7 +44,7 @@ const md: MarkdownIt = markdownit({
           <li v-if="i.type === 'text'" v-html="md.render(i.content)"
               class="assistant chat-item assistant-text prose prose-pre:break-words prose-pre:whitespace-pre-wrap"
               :class="index+1===history.length && loading ?  'loading':''"/>
-          <li v-else-if="i.type === 'image'" class="assistant image-item">
+          <li v-else-if="i.type === 'image'" class="assistant image-item p-2">
             <template v-for="img_url in i.src_url" :key="img_url">
               <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url"
                    class="image"/>
@@ -61,43 +61,85 @@ const md: MarkdownIt = markdownit({
 
 <style scoped lang="postcss">
 .loading-item {
-  @apply rounded-xl px-2 py-1.5 h-10 shrink-0 w-1/3 animate-pulse
+  /* USkeleton has this class, so we style it here. Tailwind classes from @apply were removed. */
+  border-radius: 0.75rem; /* rounded-xl */
+  height: 2.5rem; /* h-10 */
+  width: 33.333333%; /* w-1/3 */
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* animate-pulse */
+  background-color: var(--card-hover-background-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .loading-item {
+    background-color: var(--card-hover-background-dark);
+  }
 }
 
 .user {
-  @apply self-end slide-top
+  /* self-end removed to align left */
+  @apply slide-top;
 }
 
 .assistant {
-  @apply slide-top
+  @apply slide-top;
 }
 
 .chat-item {
-  @apply break-words rounded-xl px-2 py-1.5 max-w-[95%] md:max-w-[80%]
+  @apply break-words rounded-xl max-w-[95%] md:max-w-[80%];
+  padding: 0.5rem 0.75rem; /* Equivalent to py-2 px-3 */
 }
 
 .image-item {
-  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%]
+  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%];
+  /* p-2 was added in template */
 }
 
 .image {
-  @apply cursor-pointer hover:brightness-75 transition-all rounded-md
+  @apply cursor-pointer hover:brightness-75 transition-all rounded-md;
 }
 
 .user-text {
-  @apply bg-green-500 text-white dark:bg-green-700 dark:text-gray-300
+  /* Removed background and text colors that made it look like a bubble */
+  background-color: transparent;
+  color: var(--text-color-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .user-text {
+    color: var(--text-color-dark);
+  }
 }
 
 .assistant-text {
-  @apply self-start bg-gray-200 text-black dark:bg-gray-400
+  align-self: flex-start;
+  background-color: var(--card-background-light);
+  color: var(--text-color-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .assistant-text {
+    background-color: var(--card-background-dark);
+    color: var(--text-color-dark);
+  }
 }
 
 .assistant-error {
-  @apply self-start bg-red-200 dark:bg-red-400 dark:text-black
+  align-self: flex-start;
+  /* Using more specific shades for errors */
+  background-color: #FFEBEE; /* Approx red-100 */
+  color: #D32F2F;       /* Approx red-700 */
+}
+
+@media (prefers-color-scheme: dark) {
+  .assistant-error {
+    background-color: #2C1A1D; /* Approx dark red-900 */
+    color: #EF9A9A;        /* Approx light red-200 */
+  }
 }
 
 .user-text::selection {
-  @apply text-neutral-900 bg-gray-300
+  /* Kept existing selection style, can be themed later if needed */
+  @apply text-neutral-900 bg-gray-300;
 }
 
 .slide-top {
