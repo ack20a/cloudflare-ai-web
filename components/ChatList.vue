@@ -23,7 +23,7 @@ const md: MarkdownIt = markdownit({
 </script>
 
 <template>
-  <ul class="overflow-y-auto overflow-x-hidden scrollbar-hide pt-6 pb-6 px-4 flex flex-col space-y-4">
+  <ul class="overflow-y-auto overflow-x-hidden scrollbar-hide pt-20 pb-6 px-4 flex flex-col space-y-4">
     <template v-for="(i,index) in history" :key="i.id">
       <template v-if="!i.content">
         <USkeleton class="loading-item"/>
@@ -78,6 +78,7 @@ const md: MarkdownIt = markdownit({
 .user {
   /* self-end removed to align left */
   @apply slide-top;
+  transform: translateZ(0);
 }
 
 .assistant {
