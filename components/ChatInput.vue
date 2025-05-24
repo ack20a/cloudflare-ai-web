@@ -94,8 +94,8 @@ const handlePaste = (e: ClipboardEvent) => {
 </script>
 
 <template>
-  <div class="relative">
-    <div class="absolute bottom-10 w-full flex flex-col">
+  <div class="relative pb-16">
+    <div class="absolute bottom-10 w-full flex flex-col z-10">
       <!-- Model Selector Button -->
       <UButton class="self-center mb-1 px-2 py-1 rounded-md
                       bg-transparent text-[var(--text-color-light)] hover:bg-[var(--card-hover-background-light)]

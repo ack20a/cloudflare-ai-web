@@ -15,7 +15,7 @@ defineProps<{
 
 <template>
   <div :class="{mask:openAside}" @click="openAside=!openAside"></div>
-  <aside class="w-48 flex flex-col transition-all mobile-bar" :class="{hide:!openAside}">
+  <aside class="w-48 flex flex-col transition-all mobile-bar mt-14" :class="{hide:!openAside}">
     <div class="m-2">
       <UButton icon="i-heroicons-plus-solid"
                class="w-full py-2 px-3 rounded-md border-transparent 
