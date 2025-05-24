@@ -19,11 +19,11 @@ function handleReload() {
 </script>
 
 <template>
-  <header class="blur-global shadow h-14 fixed w-full z-30 rounded-b-lg">
+  <header class="blur-global dark:bg-neutral-800 shadow h-16 fixed w-full z-30 rounded-b-lg">
     <UContainer class="h-full flex items-center">
-      <IButton name="i-heroicons-bars-3-20-solid" @click="openAside = !openAside" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10"/>
-      <h1 class="text-base font-normal ml-2">永康 AI Web</h1>
-      <IButton class="ml-auto p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10" :name="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
+      <IButton name="i-heroicons-bars-3-20-solid" @click="openAside = !openAside"/>
+      <h1 @click="handleReload" class="text-lg font-bold ml-2 hover:cursor-pointer">永康 AI Web</h1>
+      <IButton class="ml-auto" :name="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
                @click="toggleDark()"/>
     </UContainer>
   </header>

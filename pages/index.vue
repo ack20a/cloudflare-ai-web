@@ -201,23 +201,19 @@ async function addFiles(files: {
 </script>
 
 <template>
-  <UContainer class="flex h-full w-full overflow-y-auto p-2 md:p-4">
+  <UContainer class="flex h-full w-full overflow-y-auto">
     <ModelSelect/>
     <Pass/>
 
-    <!-- Sidebar is expected to have its own width (w-48 from its component) and internal styling -->
     <Sidebar :tabs="tabs" :selected="selectedTab" :handle-delete="handleDelete" :handle-new-chat="handleNewChat"
              :handle-switch-chat="handleSwitchChat"/>
-    <!-- Main content area, add left margin for separation from Sidebar -->
-    <main class="w-full flex flex-col ml-4 md:ml-6">
-      <USkeleton v-if="initializing" class="h-24 w-4/5 md:w-3/5 self-center rounded-xl mt-10 md:mt-20"/>
-      <USkeleton v-if="initializing" class="h-32 w-4/5 md:w-3/5 self-center rounded-xl mt-2"/>
+    <main class="w-full flex flex-col">
+      <USkeleton v-if="initializing" class="h-24 w-3/5 self-end rounded-xl mt-20"/>
+      <USkeleton v-if="initializing" class="h-24 w-3/5 rounded-xl mt-2"/>
 
       <template v-else>
-        <!-- ChatList should be the primary scrollable area if messages exceed viewport -->
-        <ChatList id="chatList" :history="history" :loading="loading" class="flex-grow overflow-y-auto"/>
-        <!-- ChatInput sticks to the bottom -->
-        <ChatInput class="mt-auto shrink-0" :session="session" :loading="loading" :selected-model="selectedModel"
+        <ChatList id="chatList" :history="history" :loading="loading"/>
+        <ChatInput class="mt-auto" :session="session" :loading="loading" :selected-model="selectedModel"
                    :handle-send="handleSend"/>
       </template>
     </main>

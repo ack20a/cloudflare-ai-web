@@ -1,85 +1,10 @@
 html, body, #__nuxt {
-    @apply h-full;
-}
-
-:root {
-    /* ChatGPT-Inspired Palette */
-
-    /* Light Mode */
-    --primary-color-light: #1AA37F; /* Accent Green */
-    --secondary-color-light: #6B6C6F; /* Neutral Gray for secondary text/elements */
-    --neutral-color-light: #555555;   /* Darker Gray for less prominent text/icons */
-    --background-color-light: #FFFFFF; /* Main Background */
-    --text-color-light: #202123;       /* Main Text (Dark Gray/Black) */
-    --blur-background-light: rgba(255, 255, 255, 0.75); /* Blur for main background */
-    --card-background-light: #F7F7F8;    /* AI Message / Prominent Card Background */
-    --card-hover-background-light: #E9E9EA; /* Slightly darker than card */
-    --neutral-background-light: #F7F7F8; /* Sidebar/general page distinction, same as card */
-    --primary-button-text-color: #FFFFFF; /* Text on primary buttons */
-    
-    /* Input Fields - Light Mode */
-    --input-background-light: #FFFFFF; /* Inputs on white background */
-    --input-border-color-light: #D0D0D2; /* Subtle border for inputs */
-    --input-focus-border-color-light: var(--primary-color-light); /* Accent on focus */
-    
-    /* Secondary/Icon Buttons - Light Mode */
-    --secondary-button-background-light: #F0F0F0; /* Off-white, distinct from main card */
-    --secondary-button-text-light: var(--text-color-light); /* Main text color */
-    --secondary-button-hover-background-light: #E5E5E5; /* Slightly darker hover */
-    --icon-button-color-light: var(--neutral-color-light); /* Neutral gray for icons */
-    --icon-button-hover-background-light: rgba(0, 0, 0, 0.05); /* Subtle blackish hover */
-
-    /* Dark Mode */
-    --primary-color-dark: #1AA37F;  /* Accent Green */
-    --secondary-color-dark: #7E8088; /* Lighter Neutral Gray for secondary text/elements */
-    --neutral-color-dark: #B0B0B3;   /* Lighter Gray for less prominent text/icons */
-    --background-color-dark: #202123; /* Main Background (Dark Gray) */
-    --text-color-dark: #ECECF1;       /* Main Text (Light Gray/White) */
-    --blur-background-dark: rgba(32, 33, 35, 0.75); /* Blur for main background */
-    --card-background-dark: #343541;    /* AI Message / Prominent Card Background */
-    --card-hover-background-dark: #3F404A; /* Slightly lighter than card */
-    --neutral-background-dark: #202123; /* Sidebar/general page, same as main */
-    /* --primary-button-text-color is shared with light mode */
-
-    /* Input Fields - Dark Mode */
-    --input-background-dark: #2A2B2E; /* Slightly lighter than main for inputs */
-    --input-border-color-dark: #4A4B4F; /* Subtle border for inputs */
-    --input-focus-border-color-dark: var(--primary-color-dark); /* Accent on focus */
-
-    /* Secondary/Icon Buttons - Dark Mode */
-    --secondary-button-background-dark: #2A2B2E; /* Same as input background */
-    --secondary-button-text-dark: var(--text-color-dark); /* Main text color */
-    --secondary-button-hover-background-dark: #343541; /* Slightly lighter, matches card bg */
-    --icon-button-color-dark: var(--neutral-color-dark); /* Neutral gray for icons */
-    --icon-button-hover-background-dark: rgba(236, 236, 241, 0.08); /* Subtle whitish hover */
-}
-
-html {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--background-color-light);
-    color: var(--text-color-light);
-}
-
-@media (prefers-color-scheme: dark) {
-    html {
-        background-color: var(--background-color-dark);
-        color: var(--text-color-dark);
-    }
-}
-
-body {
-    /* Inherit font, background, and color from html */
+    @apply h-full
 }
 
 .blur-global {
-    background: var(--blur-background-light);
+    background: rgba(245, 245, 247, 0.72);
     backdrop-filter: saturate(180%) blur(20px);
-}
-
-@media (prefers-color-scheme: dark) {
-    .blur-global {
-        background: var(--blur-background-dark);
-    }
 }
 
 .loading > dd:last-child::after,
