@@ -38,20 +38,20 @@ defineProps<{
 
 <style scoped lang="postcss">
 .hide {
-  @apply -translate-x-full opacity-0 w-0 m-0 invisible transition-all
+  @apply -translate-x-full opacity-0 w-0 m-0 invisible transition-all;
 }
 
 .card-focus {
-  @apply ring-2 ring-primary-500 dark:ring-primary-400
+  @apply ring-2 ring-primary-500 dark:ring-primary-400;
 }
 
 @media not all and (min-width: 768px) {
   .mobile-bar {
-    @apply fixed left-0 z-20 h-full bg-white shadow-xl pb-6 px-2 dark:bg-neutral-900 rounded-r
+    @apply fixed left-0 z-20 h-full bg-white shadow-xl pb-6 px-2 dark:bg-neutral-900 rounded-r;
   }
 
   .mask {
-    @apply fixed inset-0 z-10 bg-black opacity-25
+    @apply fixed inset-0 z-10 bg-black opacity-25;
   }
 }
 </style>

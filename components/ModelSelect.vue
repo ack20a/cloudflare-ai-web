@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {uniModals} from "~/utils/db";
+import {uniModals, models} from "~/utils/db";
 
 const {t} = useI18n()
 const {selectedModel, openModelSelect} = useGlobalState()

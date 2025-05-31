@@ -145,47 +145,47 @@ onMounted(() => {
 
 <style scoped lang="postcss">
 .loading-item {
-  @apply rounded-xl px-2 py-1.5 h-10 shrink-0 w-1/3 animate-pulse
+  @apply rounded-xl px-2 py-1.5 h-10 shrink-0 w-1/3 animate-pulse;
 }
 
 .user {
-  @apply self-end slide-top
+  @apply self-end slide-top;
 }
 
 .assistant {
-  @apply slide-top
+  @apply slide-top;
 }
 
 .chat-item {
-  @apply break-words rounded-xl px-2 py-1.5 max-w-[95%] md:max-w-[80%]
+  @apply break-words rounded-xl px-2 py-1.5 max-w-[95%] md:max-w-[80%];
 }
 
 .image-item {
-  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%]
+  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%];
 }
 
 .image {
-  @apply cursor-pointer hover:brightness-75 transition-all rounded-md
+  @apply cursor-pointer hover:brightness-75 transition-all rounded-md;
 }
 
 .user-text {
-  @apply bg-green-500 text-white dark:bg-green-700 dark:text-gray-300
+  @apply bg-green-500 text-white dark:bg-green-700 dark:text-gray-300;
 }
 
 .assistant-text {
-  @apply self-start bg-gray-200 text-black dark:bg-gray-400
+  @apply self-start bg-gray-200 text-black dark:bg-gray-400;
 }
 
 .assistant-error {
-  @apply self-start bg-red-200 dark:bg-red-400 dark:text-black
+  @apply self-start bg-red-200 dark:bg-red-400 dark:text-black;
 }
 
 .user-text::selection {
-  @apply text-neutral-900 bg-gray-300
+  @apply text-neutral-900 bg-gray-300;
 }
 
 .slide-top {
-  animation: slide-top .25s cubic-bezier(.25, .46, .45, .94) both
+  animation: slide-top .25s cubic-bezier(.25, .46, .45, .94) both;
 }
 
 @keyframes slide-top {
