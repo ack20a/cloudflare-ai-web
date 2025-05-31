@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {uniModals, models} from "~/utils/db";
+import {imageGenModels, textGenModels, uniModals} from "~/utils/db";
 
 const {t} = useI18n()
 const {selectedModel, openModelSelect} = useGlobalState()
@@ -13,16 +13,30 @@ watch(selectedModel, v => {
 
 const groups = computed(() => [
   {
-    key: 'models',
-    label: t('available_models'),
-    commands: models.map(i => ({
+    key: 'universal',
+    label: t('universal'),
+    commands: uniModals.map(i => ({
+      id: i.id,
+      label: i.name
+    }))
+  }, {
+    key: 'text generation',
+    label: t('text_generation'),
+    commands: textGenModels.map(i => ({
+      id: i.id,
+      label: i.name
+    }))
+  }, {
+    key: 'image generation',
+    label: t('image_generation'),
+    commands: imageGenModels.map(i => ({
       id: i.id,
       label: i.name
     }))
   }])
 
 function onSelect(option: { id: string }) {
-  selectedModel.value = models.find(i => i.id === option.id) || uniModals[0]
+  selectedModel.value = models.find(i => i.id === option.id) || textGenModels[0]
 }
 </script>
 

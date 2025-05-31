@@ -8,6 +8,8 @@ RUN npm i -g pnpm
 
 ADD package.json pnpm-lock.yaml ./
 
+ADD patches ./patches
+
 RUN pnpm install
 
 COPY . .

@@ -11,94 +11,15 @@ defineProps<{
   loading: boolean
 }>()
 
-// 复制功能
-const {t} = useI18n()
-const toast = useToast()
-
-// 为代码块生成带复制按钮的HTML
-function generateCodeBlock(code: string, language?: string): string {
-  const highlightedCode = language && hljs.getLanguage(language) 
-    ? hljs.highlight(code, {language}).value 
-    : hljs.highlightAuto(code).value
-  
-  return `<pre class="hljs relative group"><code>${highlightedCode}</code><button class="copy-code-btn opacity-0 group-hover:opacity-100 absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs transition-all z-10" onclick="copyCode(this)">${t('copy_code')}</button></pre>`
-}
-
 const md: MarkdownIt = markdownit({
   linkify: true,
   highlight: (code, language) => {
-    return generateCodeBlock(code, language)
+    if (language && hljs.getLanguage(language)) {
+      return `<pre class="hljs"><code>${hljs.highlight(code, {language}).value}</code></pre>`;
+    }
+    return `<pre class="hljs"><code>${hljs.highlightAuto(code).value}</code></pre>`;
   },
 }).use(markdownItKatex)
-
-function copyToClipboard(text: string) {
-  navigator.clipboard.writeText(text).then(() => {
-    toast.add({
-      title: t('copied'),
-      icon: 'i-heroicons-check-circle',
-      timeout: 2000
-    })
-  }).catch(err => {
-    console.error('复制失败:', err)
-    toast.add({
-      title: '复制失败',
-      color: 'red',
-      icon: 'i-heroicons-x-circle',
-      timeout: 2000
-    })
-  })
-}
-
-function copyMessage(content: string) {
-  // 移除HTML标签，只复制纯文本
-  const tempDiv = document.createElement('div')
-  tempDiv.innerHTML = content
-  const plainText = tempDiv.textContent || tempDiv.innerText || ''
-  copyToClipboard(plainText)
-}
-
-// 全局复制代码块函数
-onMounted(() => {
-  (window as any).copyCode = function(button: HTMLButtonElement) {
-    const pre = button.closest('pre')
-    const code = pre?.querySelector('code')
-    if (code) {
-      const text = code.textContent || ''
-      navigator.clipboard.writeText(text).then(() => {
-        const originalText = button.textContent
-        button.textContent = t('copied')
-        setTimeout(() => {
-          button.textContent = t('copy_code')
-        }, 2000)
-        
-        // 全局toast提示
-        if ((window as any).showCopyToast) {
-          (window as any).showCopyToast()
-        }
-      }).catch(err => {
-        console.error('复制失败:', err)
-      })
-    }
-  }
-  
-  // 设置全局toast函数
-  (window as any).showCopyToast = () => {
-    toast.add({
-      title: t('copied'),
-      icon: 'i-heroicons-check-circle',
-      timeout: 2000
-    })
-  }
-  
-  // 更新所有已存在的代码块复制按钮文本
-  nextTick(() => {
-    document.querySelectorAll('.copy-code-btn').forEach(btn => {
-      if (btn.textContent !== t('copied')) {
-        btn.textContent = t('copy_code')
-      }
-    })
-  })
-})
 </script>
 
 <template>
@@ -120,14 +41,9 @@ onMounted(() => {
           </li>
         </template>
         <template v-else>
-          <li v-if="i.type === 'text'" class="assistant chat-item assistant-text prose prose-pre:break-words prose-pre:whitespace-pre-wrap relative group"
-              :class="index+1===history.length && loading ?  'loading':''">
-            <div v-html="md.render(i.content)"></div>
-            <button @click="copyMessage(i.content)" 
-                    class="copy-message-btn opacity-0 group-hover:opacity-100 absolute top-2 right-2 bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded text-xs transition-all z-10">
-              {{ t('copy_message') }}
-            </button>
-          </li>
+          <li v-if="i.type === 'text'" v-html="md.render(i.content)"
+              class="assistant chat-item assistant-text prose prose-pre:break-words prose-pre:whitespace-pre-wrap"
+              :class="index+1===history.length && loading ?  'loading':''"/>
           <li v-else-if="i.type === 'image'" class="assistant image-item">
             <template v-for="img_url in i.src_url" :key="img_url">
               <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url"
@@ -145,47 +61,47 @@ onMounted(() => {
 
 <style scoped lang="postcss">
 .loading-item {
-  @apply rounded-xl px-2 py-1.5 h-10 shrink-0 w-1/3 animate-pulse;
+  @apply rounded-xl px-2 py-1.5 h-10 shrink-0 w-1/3 animate-pulse
 }
 
 .user {
-  @apply self-end slide-top;
+  @apply self-end slide-top
 }
 
 .assistant {
-  @apply slide-top;
+  @apply slide-top
 }
 
 .chat-item {
-  @apply break-words rounded-xl px-2 py-1.5 max-w-[95%] md:max-w-[80%];
+  @apply break-words rounded-xl px-2 py-1.5 max-w-[95%] md:max-w-[80%]
 }
 
 .image-item {
-  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%];
+  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%]
 }
 
 .image {
-  @apply cursor-pointer hover:brightness-75 transition-all rounded-md;
+  @apply cursor-pointer hover:brightness-75 transition-all rounded-md
 }
 
 .user-text {
-  @apply bg-green-500 text-white dark:bg-green-700 dark:text-gray-300;
+  @apply bg-green-500 text-white dark:bg-green-700 dark:text-gray-300
 }
 
 .assistant-text {
-  @apply self-start bg-gray-200 text-black dark:bg-gray-400;
+  @apply self-start bg-gray-200 text-black dark:bg-gray-400
 }
 
 .assistant-error {
-  @apply self-start bg-red-200 dark:bg-red-400 dark:text-black;
+  @apply self-start bg-red-200 dark:bg-red-400 dark:text-black
 }
 
 .user-text::selection {
-  @apply text-neutral-900 bg-gray-300;
+  @apply text-neutral-900 bg-gray-300
 }
 
 .slide-top {
-  animation: slide-top .25s cubic-bezier(.25, .46, .45, .94) both;
+  animation: slide-top .25s cubic-bezier(.25, .46, .45, .94) both
 }
 
 @keyframes slide-top {

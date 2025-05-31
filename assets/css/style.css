@@ -1,5 +1,5 @@
 html, body, #__nuxt {
-    @apply h-full;
+    @apply h-full
 }
 
 .blur-global {
@@ -26,5 +26,5 @@ html, body, #__nuxt {
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-    @apply hidden;
+    @apply hidden
 }

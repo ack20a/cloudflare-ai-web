@@ -67,8 +67,12 @@ export const uniModals: Model[] = [
 {id: 'gemini-2.0-flash-exp-image', name: '🎨大画家', provider: 'openai', type: 'universal' },
 {id: 'deepseek-ai/DeepSeek-R1-0528', name: 'DeepSeek R1 0528|128K', provider: 'openai', type: 'chat' },
 {id: 'Qwen/Qwen3-235B-A22B', name: 'Qwen3-235B-A22B|128K', provider: 'openai', type: 'chat' },
-{id: 'nyk-dsr1', name: '牛永康(DeepSeek-R1)', provider: 'openai', type: 'chat'},
 ];
 
-// 导出所有模型
-export const models: Model[] = uniModals
+export const textGenModels: Model[] = [
+{id: 'nyk-dsr1', name: '牛永康(DeepSeek-R1)', provider: 'openai', type: 'chat'},
+]
+
+export const imageGenModels: Model[] = []
+
+export const models: Model[] = [...uniModals, ...textGenModels, ...imageGenModels]
