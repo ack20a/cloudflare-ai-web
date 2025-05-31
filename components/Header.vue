@@ -21,10 +21,12 @@ function handleReload() {
 <template>
   <header class="blur-global dark:bg-neutral-800 shadow h-16 fixed w-full z-30 rounded-b-lg">
     <UContainer class="h-full flex items-center">
-      <IButton name="i-heroicons-bars-3-20-solid" @click="openAside = !openAside"/>
+      <UButton variant="ghost" size="sm" @click="openAside = !openAside" 
+               icon="i-heroicons-bars-3-20-solid" square />
       <h1 @click="handleReload" class="text-lg font-bold ml-2 hover:cursor-pointer">永康 AI Web</h1>
-      <IButton class="ml-auto" :name="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
-               @click="toggleDark()"/>
+      <UButton variant="ghost" size="sm" 
+               :icon="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
+               @click="toggleDark()" square class="ml-auto" />
     </UContainer>
   </header>
 </template>
