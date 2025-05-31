@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import {openAIReq} from "~/utils/api";
+import { KeyboardShortcuts } from "~/utils/chatEnhancements"
+import { ConfigManager } from "~/utils/config"
 
 const route = useRoute()
 const router = useRouter()
@@ -198,6 +200,55 @@ async function addFiles(files: {
     ...historyItem
   })
 }
+
+const searchQuery = ref('')
+const filteredHistory = computed(() => {
+  if (!searchQuery.value) return history.value
+  return history.value.filter(item =>
+    item.content.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+// 初始化配置和快捷键
+onMounted(async () => {
+  // 初始化配置
+  ConfigManager.init()
+  
+  // 注册快捷键
+  KeyboardShortcuts.register('ctrl+n', handleNewChat)
+  KeyboardShortcuts.register('ctrl+b', () => {
+    const { openAside } = useGlobalState()
+    openAside.value = !openAside.value
+  })
+  KeyboardShortcuts.register('ctrl+/', () => {
+    const inputEl = document.querySelector('textarea')
+    inputEl?.focus()
+  })
+  KeyboardShortcuts.init()
+
+  let s = parseInt(route.query.session as string)
+  if (Number.isNaN(s)) {
+    await getLatestData()
+  } else {
+    const tab = await DB.tab.get(s)
+    if (tab) {
+      session = tab.id!
+      await loadData()
+    } else await getLatestData()
+  }
+
+  initializing.value = false
+})
+
+// 语音输入处理
+function handleSpeechInput(transcript: string) {
+  // 这里可以将语音转换的文本传递给输入框
+  const inputEl = document.querySelector('textarea')
+  if (inputEl) {
+    inputEl.value = transcript
+    inputEl.dispatchEvent(new Event('input', { bubbles: true }))
+  }
+}
 </script>
 
 <template>
@@ -212,7 +263,17 @@ async function addFiles(files: {
       <USkeleton v-if="initializing" class="h-24 w-3/5 rounded-xl mt-2"/>
 
       <template v-else>
-        <ChatList id="chatList" :history="history" :loading="loading"/>
+        <!-- 聊天增强控制栏 -->
+        <ChatControls 
+          :messages="history" 
+          @search="searchQuery = $event"
+          @speech-input="handleSpeechInput"
+        />
+        
+        <!-- 聊天列表 -->
+        <ChatList id="chatList" :history="filteredHistory" :loading="loading"/>
+        
+        <!-- 输入框 -->
         <ChatInput class="mt-auto" :session="session" :loading="loading" :selected-model="selectedModel"
                    :handle-send="handleSend"/>
       </template>
