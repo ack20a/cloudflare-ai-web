@@ -65,13 +65,12 @@ export const uniModals: Model[] = [
 {id: 'gemini-2.0-flash-thinking-exp-01-21', name: '💬直接回答', provider: 'openai', type: 'universal' },
 {id: 'gemini-2.5-flash-preview-05-20', name: '💡深度思考', provider: 'openai', type: 'universal' },
 {id: 'gemini-2.0-flash-exp-image', name: '🎨大画家', provider: 'openai', type: 'universal' },
-{id: 'deepseek-ai/DeepSeek-R1', name: 'DeepSeek R1|128K', provider: 'openai', type: 'chat' },
+{id: 'deepseek-ai/DeepSeek-R1-0528', name: 'DeepSeek R1 0528|128K', provider: 'openai', type: 'chat' },
 {id: 'Qwen/Qwen3-235B-A22B', name: 'Qwen3-235B-A22B|128K', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
 {id: 'nyk-dsr1', name: '牛永康(DeepSeek-R1)', provider: 'openai', type: 'chat'},
-{id: 'flux', name: '生图(DeepSeek-R1)', provider: 'openai', type: 'chat'},
 ]
 
 export const imageGenModels: Model[] = []
