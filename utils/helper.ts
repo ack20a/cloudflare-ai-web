@@ -1,10 +1,6 @@
 import {createParser} from "eventsource-parser";
 import {getToken, isLogin} from "~/utils/tools";
 import {useGlobalState} from "~/utils/store";
-import { ErrorHandler, withRetry } from "~/utils/errorHandler"
-import { PerformanceMonitor } from "~/utils/performance"
-import { ErrorHandler, withRetry } from "~/utils/errorHandler"
-import { PerformanceMonitor } from "~/utils/performance"
 
 export const headers = {
     'Content-Type': 'text/event-stream',
@@ -89,51 +85,37 @@ export async function basicFetch(
     options: RequestInit = {},
     onStream?: (data: string) => void,
 ) {
-    const endTimer = PerformanceMonitor.startTimer('basicFetch')
-    
-    try {
-        const headers = new Headers(options.headers || {})
-        if (isLogin()) {
-            headers.set('Authorization', getToken()!)
+    const headers = new Headers(options.headers || {})
+    if (isLogin()) {
+        headers.set('Authorization', getToken()!)
+    }
+    const response = await fetch('/api/auth' + path, {
+        ...options,
+        headers,
+    })
+
+    if (!response.ok) {
+        const text = await response.text()
+        if (response.status === 401 && text === 'Password Incorrect') {
+            passModal.value = true
         }
-        
-        const response = await withRetry(async () => {
-            return fetch('/api/auth' + path, {
-                ...options,
-                headers,
+        throw new Error(response.status + ' ' + response.statusText + ' ' + text)
+    }
+
+    if (response.headers.get('Content-Type')?.includes('text/event-stream')) {
+        const body = response.body
+        if (body === null) {
+            throw new Error('Response body is null')
+        }
+        if (onStream) {
+            return new Promise(resolve => {
+                handleStream(body, onStream, resolve)
             })
-        })
-
-        if (!response.ok) {
-            const text = await response.text()
-            if (response.status === 401 && text === 'Password Incorrect') {
-                passModal.value = true
-            }
-            
-            const error = ErrorHandler.handle({
-                message: `${response.status} ${response.statusText} ${text}`,
-                status: response.status
-            })
-            throw new Error(error.message)
         }
+    }
 
-        if (response.headers.get('Content-Type')?.includes('text/event-stream')) {
-            const body = response.body
-            if (body === null) {
-                throw new Error('Response body is null')
-            }
-            if (onStream) {
-                return new Promise(resolve => {
-                    handleStream(body, onStream, resolve)
-                })
-            }
-        }
-
-        if (response.headers.get('Content-Type')?.includes('image')) {
-            return await response.blob()
-        }
-    } finally {
-        endTimer()
+    if (response.headers.get('Content-Type')?.includes('image')) {
+        return await response.blob()
     }
 }
 

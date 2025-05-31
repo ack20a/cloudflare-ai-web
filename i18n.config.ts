@@ -22,35 +22,6 @@ export default defineI18nConfig(() => ({
             copied: '已复制',
             available_models: '可用模型',
             close: '关闭',
-            // 新增的聊天增强功能文本
-            speech_recognition: '语音识别',
-            speech_recognition_start: '开始语音识别',
-            speech_recognition_stop: '停止语音识别',
-            speech_not_supported: '浏览器不支持语音识别',
-            export_chat: '导出聊天记录',
-            export_as_txt: '导出为TXT',
-            export_as_md: '导出为Markdown',
-            export_as_json: '导出为JSON',
-            search_messages: '搜索消息',
-            message_stats: '消息统计',
-            total_messages: '总消息数',
-            user_messages: '用户消息',
-            ai_messages: 'AI消息',
-            total_characters: '总字符数',
-            average_length: '平均长度',
-            
-            // 错误提示增强
-            network_error: '网络连接失败，请检查网络连接',
-            auth_error: '认证失败，请检查API密钥',
-            rate_limit_error: 'API调用频率过高，请稍后重试',
-            server_error: '服务器内部错误，请稍后重试',
-            retry_in: '{{seconds}}秒后重试',
-            
-            // 键盘快捷键
-            shortcuts: '快捷键',
-            new_chat_shortcut: '新建对话 (Ctrl+N)',
-            focus_input: '聚焦输入框 (Ctrl+/)',
-            toggle_sidebar: '切换侧边栏 (Ctrl+B)',
         },
         en: {
             setting: 'Setting',
@@ -73,35 +44,6 @@ export default defineI18nConfig(() => ({
             copied: 'Copied',
             available_models: 'Available models',
             close: 'Close',
-            // 新增的聊天增强功能文本
-            speech_recognition: 'Speech recognition',
-            speech_recognition_start: 'Start speech recognition',
-            speech_recognition_stop: 'Stop speech recognition',
-            speech_not_supported: 'Browser does not support speech recognition',
-            export_chat: 'Export chat history',
-            export_as_txt: 'Export as TXT',
-            export_as_md: 'Export as Markdown',
-            export_as_json: 'Export as JSON',
-            search_messages: 'Search messages',
-            message_stats: 'Message statistics',
-            total_messages: 'Total messages',
-            user_messages: 'User messages',
-            ai_messages: 'AI messages',
-            total_characters: 'Total characters',
-            average_length: 'Average length',
-            
-            // 错误提示增强
-            network_error: 'Network connection failed, please check your network connection',
-            auth_error: 'Authentication failed, please check your API key',
-            rate_limit_error: 'API call frequency is too high, please try again later',
-            server_error: 'Internal server error, please try again later',
-            retry_in: 'Retry in {{seconds}} seconds',
-            
-            // 键盘快捷键
-            shortcuts: 'Shortcuts',
-            new_chat_shortcut: 'New chat (Ctrl+N)',
-            focus_input: 'Focus input box (Ctrl+/)',
-            toggle_sidebar: 'Toggle sidebar (Ctrl+B)',
         }
     }
 }))
