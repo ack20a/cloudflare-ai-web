@@ -60,13 +60,14 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
-{id: 'gemini-2.0-flash-thinking-exp-01-21-search', name: '🔍永康搜索', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.5-flash-preview-05-20-search', name: '🔭深度研究', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-thinking-exp-01-21', name: '💬直接回答', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.5-flash-preview-05-20', name: '💡深度思考', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-exp-image', name: '🎨大画家', provider: 'openai', type: 'universal' },
-{id: 'deepseek-ai/DeepSeek-R1-0528', name: 'DeepSeek R1 0528|128K', provider: 'openai', type: 'chat' },
-{id: 'Qwen/Qwen3-235B-A22B', name: 'Qwen3-235B-A22B|128K', provider: 'openai', type: 'chat' },
+{id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'openai', type: 'universal' },
+{id: 'o3', name: 'o3', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.0-flash-thinking-exp-01-21-search', name: '🔍搜索', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.0-flash-thinking-exp-01-21', name: '💬直答', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.0-flash-exp-image', name: '🎨画画', provider: 'openai', type: 'universal' },
+{id: 'moonshotai/kimi-k2-instruct', name: 'Kimi K2', provider: 'openai', type: 'chat' },
+{id: 'deepseek-ai/deepseek-r1-0528', name: 'DeepSeek R1 0528', provider: 'openai', type: 'chat' },
+{id: 'qwen/qwen3-235b-a22b', name: 'Qwen3 235B A22B', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
