@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import MarkdownIt from "markdown-it"
-import markdownit from "markdown-it"
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark-dimmed.min.css'
 import markdownItKatex from "markdown-it-katex"
@@ -11,8 +10,10 @@ defineProps<{
   loading: boolean
 }>()
 
-const md: MarkdownIt = markdownit({
+const md = new MarkdownIt({
+  html: true,
   linkify: true,
+  breaks: true,
   highlight: (code, language) => {
     if (language && hljs.getLanguage(language)) {
       return `<pre class="hljs"><code>${hljs.highlight(code, {language}).value}</code></pre>`;
