@@ -60,14 +60,16 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
-{id: 'openai/gpt-oss-120b', name: 'GPT-oss', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-thinking-exp-01-21-search', name: '🔍Gemini Thinking 0121', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-thinking-exp-01-21', name: '💬Gemini Thinking 0121', provider: 'openai', type: 'universal' },
+{id: 'gpt-oss-120b', name: 'GPT OSS Ultra', provider: 'openai', type: 'chat' },
+{id: 'openai/gpt-oss-120b', name: 'GPT OSS', provider: 'openai', type: 'chat' },
+{id: 'gemini-2.5-pro', name: '🖼️Gemini 2.5 Pro', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.5-pro-search', name: '🖼️2.5 Pro Search', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.0-flash-thinking-exp-01-21', name: '🖼️Gemini Thinking 0121', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.0-flash-thinking-exp-01-21-search', name: '🖼️0121 Search', provider: 'openai', type: 'universal' },
 {id: 'gemini-2.0-flash-exp-image', name: '🎨Gemini Image', provider: 'openai', type: 'universal' },
-{id: 'moonshotai/kimi-k2-instruct', name: 'Kimi K2', provider: 'openai', type: 'universal' },
-{id: 'deepseek-ai/deepseek-r1-0528', name: 'DeepSeek R1 0528', provider: 'openai', type: 'chat' },
-{id: 'qwen/qwen3-235b-a22b', name: 'Qwen3 235B A22B', provider: 'openai', type: 'chat' },
+{id: 'moonshotai/kimi-k2-instruct', name: 'Kimi K2', provider: 'openai', type: 'chat' },
+{id: 'qwen-3-235b-a22b-thinking-2507', name: 'Qwen 32a Thinking 2507', provider: 'openai', type: 'chat' },
+{id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek R1', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
