@@ -60,6 +60,7 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
+{id: 'GPT-5', name: 'GPT-5', provider: 'openai', type: 'universal' },
 {id: 'gpt-oss-120b', name: 'GPT OSS Ultra', provider: 'openai', type: 'chat' },
 {id: 'openai/gpt-oss-120b', name: 'GPT OSS', provider: 'openai', type: 'chat' },
 {id: 'gemini-2.5-pro', name: '🖼️Gemini 2.5 Pro', provider: 'openai', type: 'universal' },
