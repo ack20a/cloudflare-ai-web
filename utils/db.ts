@@ -63,8 +63,8 @@ export const uniModals: Model[] = [
 {id: 'openai/gpt-oss-120b', name: 'GPT OSS 120B', provider: 'openai', type: 'chat' },
 {id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro 满血版', provider: 'openai', type: 'universal' },
 {id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini Thinking 0121', provider: 'openai', type: 'universal' },
-{id: 'bytedance/seed-oss-36b-instruct', name: '豆包 36B', provider: 'openai', type: 'universal' },
-{id: 'qwen/qwen3-next-80b-a3b-thinking', name: 'Qwen 3 Next 80B', provider: 'openai', type: 'universal' },
+{id: 'bytedance/seed-oss-36b-instruct', name: '豆包 36B', provider: 'openai', type: 'chat' },
+{id: 'qwen/qwen3-next-80b-a3b-thinking', name: 'Qwen 3 Next 80B', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
