@@ -60,21 +60,14 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
-{id: 'GPT-5', name: 'GPT-5', provider: 'openai', type: 'universal' },
-{id: 'gpt-oss-120b', name: 'GPT OSS Ultra', provider: 'openai', type: 'chat' },
-{id: 'openai/gpt-oss-120b', name: 'GPT OSS', provider: 'openai', type: 'chat' },
-{id: 'gemini-2.5-pro', name: '🖼️Gemini 2.5 Pro', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.5-pro-search', name: '🖼️2.5 Pro Search', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-thinking-exp-01-21', name: '🖼️Gemini Thinking 0121', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-thinking-exp-01-21-search', name: '🖼️0121 Search', provider: 'openai', type: 'universal' },
-{id: 'gemini-2.0-flash-exp-image', name: '🎨Gemini Image', provider: 'openai', type: 'universal' },
-{id: 'moonshotai/kimi-k2-instruct', name: 'Kimi K2', provider: 'openai', type: 'chat' },
-{id: 'qwen-3-235b-a22b-thinking-2507', name: 'Qwen 32a Thinking 2507', provider: 'openai', type: 'chat' },
-{id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek R1', provider: 'openai', type: 'chat' },
+{id: 'openai/gpt-oss-120b', name: 'GPT OSS 120B', provider: 'openai', type: 'chat' },
+{id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro 满血版', provider: 'openai', type: 'universal' },
+{id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini Thinking 0121', provider: 'openai', type: 'universal' },
+{id: 'bytedance/seed-oss-36b-instruct', name: '豆包 36B', provider: 'openai', type: 'universal' },
+{id: 'qwen/qwen3-next-80b-a3b-thinking', name: 'Qwen 3 Next 80B', provider: 'openai', type: 'universal' },
 ];
 
 export const textGenModels: Model[] = [
-{id: 'nyk-dsr1', name: '牛永康(DeepSeek-R1)', provider: 'openai', type: 'chat'},
 ]
 
 export const imageGenModels: Model[] = []
