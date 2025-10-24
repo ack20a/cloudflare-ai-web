@@ -214,21 +214,18 @@ function handlePromptSelect(prompt: string) {
 </script>
 
 <template>
-  <div class="relative flex-1 overflow-hidden">
-    <div class="absolute inset-0 -z-20 bg-gradient-to-br from-emerald-600/30 via-slate-900 to-slate-950"/>
-    <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.25),_transparent_55%)] dark:bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.15),_transparent_55%)]"/>
-
-    <UContainer class="relative flex h-full w-full flex-col overflow-hidden py-6">
+  <div class="page">
+    <UContainer class="flex h-full w-full flex-col overflow-hidden py-6">
       <ModelSelect/>
       <Pass/>
 
-      <div class="flex h-full w-full flex-1 gap-6 overflow-hidden">
+      <div class="workspace">
         <Sidebar :tabs="tabs" :selected="selectedTab" :handle-delete="handleDelete" :handle-new-chat="handleNewChat"
                  :handle-switch-chat="handleSwitchChat"/>
 
-        <main class="flex h-full w-full flex-1 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/70 p-6 shadow-xl backdrop-blur-xl dark:border-white/5 dark:bg-black/40">
-          <USkeleton v-if="initializing" class="h-24 w-3/5 self-end rounded-3xl"/>
-          <USkeleton v-if="initializing" class="h-24 w-3/5 rounded-3xl mt-4"/>
+        <main class="chat-surface">
+          <USkeleton v-if="initializing" class="h-24 w-3/5 self-end rounded-xl"/>
+          <USkeleton v-if="initializing" class="mt-4 h-24 w-3/5 rounded-xl"/>
 
           <template v-else>
             <ChatList id="chatList" :history="history" :loading="loading" @select-prompt="handlePromptSelect"/>
@@ -241,3 +238,17 @@ function handlePromptSelect(prompt: string) {
     </UContainer>
   </div>
 </template>
+
+<style scoped lang="postcss">
+.page {
+  @apply relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-950;
+}
+
+.workspace {
+  @apply flex h-full w-full flex-1 gap-6 overflow-hidden pt-4;
+}
+
+.chat-surface {
+  @apply flex h-full w-full flex-1 flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900;
+}
+</style>

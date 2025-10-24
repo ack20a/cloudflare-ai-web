@@ -51,13 +51,13 @@ function handlePrompt(prompt: string) {
 <template>
   <div class="relative flex-1 overflow-hidden">
     <TransitionGroup name="fade-up" tag="ul"
-                     class="flex flex-1 flex-col space-y-4 overflow-y-auto overflow-x-hidden px-1 pb-28 pt-6 scrollbar-hide">
+                     class="flex flex-1 flex-col space-y-4 overflow-y-auto overflow-x-hidden px-2 pb-28 pt-4 scrollbar-hide">
       <template v-for="(i,index) in history" :key="i.id">
         <li v-if="!i.content" class="flex justify-start">
           <USkeleton class="loading-item"/>
         </li>
         <li v-else class="flex w-full gap-3" :class="{'flex-row-reverse text-right': i.role==='user'}">
-          <div class="mt-1 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/50 text-lg text-emerald-600 shadow-inner dark:border-white/10 dark:bg-emerald-500/10 dark:text-emerald-300">
+          <div class="mt-1 flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-lg text-emerald-500 shadow-sm dark:border-neutral-700 dark:bg-neutral-900 dark:text-emerald-300">
             <UIcon :name="i.role==='user' ? 'i-heroicons-user-circle' : 'i-heroicons-sparkles-solid'" class="h-5 w-5"/>
           </div>
           <div class="flex max-w-[85%] flex-col gap-2">
@@ -90,23 +90,17 @@ function handlePrompt(prompt: string) {
     </TransitionGroup>
 
     <div v-if="!history.length"
-         class="pointer-events-auto absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 text-center">
-      <div class="space-y-3">
-        <span class="rounded-full border border-emerald-500/50 bg-emerald-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
-          Modern LLM Workspace
-        </span>
-        <h2 class="text-3xl font-semibold text-white drop-shadow-lg">
-          准备好探索更聪明、更具表现力的对话体验了吗？
-        </h2>
-        <p class="text-sm text-neutral-200/80">
-          选择一个提示快速开启对话，或直接输入你的想法。
+         class="pointer-events-auto absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center text-neutral-600 dark:text-neutral-300">
+      <UIcon name="i-heroicons-chat-bubble-left-right" class="h-12 w-12 text-emerald-400"/>
+      <div>
+        <h2 class="text-xl font-semibold">{{ $t('new_chat') }}</h2>
+        <p class="mt-2 text-sm">
+          选择一个提示快速开始，或在下方输入你的问题。
         </p>
       </div>
-      <div class="flex flex-wrap justify-center gap-3">
-        <UButton v-for="prompt in quickPrompts" :key="prompt" variant="ghost"
-                 class="group rounded-2xl border border-white/10 bg-white/10 text-white backdrop-blur transition hover:border-emerald-400/60 hover:bg-emerald-500/20"
-                 size="lg" @click="handlePrompt(prompt)">
-          <UIcon name="i-heroicons-sparkles-solid" class="mr-2 h-5 w-5 opacity-70 group-hover:opacity-100"/>
+      <div class="flex flex-wrap justify-center gap-2">
+        <UButton v-for="prompt in quickPrompts" :key="prompt" variant="soft" class="rounded-lg border border-neutral-200 text-sm font-medium text-neutral-700 hover:border-emerald-300 hover:text-emerald-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
+                 size="sm" @click="handlePrompt(prompt)">
           {{ prompt }}
         </UButton>
       </div>
@@ -116,35 +110,35 @@ function handlePrompt(prompt: string) {
 
 <style scoped lang="postcss">
 .loading-item {
-  @apply h-20 w-3/4 rounded-3xl bg-white/20 backdrop-blur animate-pulse dark:bg-white/10
+  @apply h-20 w-3/4 rounded-2xl bg-neutral-200/60 animate-pulse dark:bg-neutral-800/60;
 }
 
 .message-bubble {
-  @apply rounded-3xl px-4 py-3 text-left shadow-lg ring-1 ring-black/5 transition-all duration-300 backdrop-blur
+  @apply rounded-xl px-4 py-3 text-left shadow-sm ring-1 ring-neutral-200 transition-all duration-200 dark:ring-neutral-800;
 }
 
 .message-bubble-user {
-  @apply bg-emerald-500 text-white ring-emerald-400/40 dark:bg-emerald-500 dark:text-white
+  @apply bg-emerald-500 text-white ring-emerald-400/50 dark:bg-emerald-500;
 }
 
 .message-bubble-assistant {
-  @apply bg-white/80 text-neutral-900 ring-white/60 dark:bg-neutral-900/80 dark:text-neutral-100 dark:ring-white/10
+  @apply bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100;
 }
 
 .message-bubble-error {
-  @apply bg-red-100/90 text-red-800 ring-red-300/60 dark:bg-red-500/20 dark:text-red-200 dark:ring-red-400/40 rounded-2xl px-4 py-3
+  @apply rounded-xl bg-red-50 text-red-700 ring-red-200 dark:bg-red-500/20 dark:text-red-100;
 }
 
 .message-image-grid {
-  @apply flex flex-wrap gap-2 rounded-3xl bg-white/10 p-2 backdrop-blur dark:bg-neutral-800/40
+  @apply flex flex-wrap gap-2 rounded-xl bg-neutral-100 p-2 dark:bg-neutral-800;
 }
 
 .image {
-  @apply cursor-pointer rounded-2xl object-cover transition duration-300 hover:scale-[1.02] hover:brightness-95
+  @apply cursor-pointer rounded-lg object-cover transition duration-200 hover:scale-[1.02] hover:brightness-95;
 }
 
 .timestamp {
-  @apply text-xs font-light text-neutral-400 dark:text-neutral-500
+  @apply text-xs font-light text-neutral-400 dark:text-neutral-500;
 }
 
 .fade-up-enter-active,

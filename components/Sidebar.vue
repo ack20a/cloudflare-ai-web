@@ -18,14 +18,14 @@ defineProps<{
   <aside class="sidebar" :class="{hide:!openAside}">
     <div class="sidebar-header">
       <div>
-        <h2 class="text-base font-semibold text-white">
+        <h2 class="text-base font-semibold text-neutral-800 dark:text-neutral-100">
           {{ $t('history') }}
         </h2>
-        <p class="text-xs text-white/70">
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
           管理你的所有灵感对话
         </p>
       </div>
-      <UButton variant="ghost" size="xs" class="rounded-full border border-white/20 bg-white/10 text-white hover:bg-emerald-500/20"
+      <UButton variant="ghost" size="xs" class="rounded-md border border-neutral-200 bg-white text-neutral-700 hover:border-emerald-300 hover:text-emerald-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
                @click="handleNewChat">
         <UIcon name="i-heroicons-plus" class="mr-1 h-3.5 w-3.5"/>
         {{ $t('new_chat') }}
@@ -33,11 +33,11 @@ defineProps<{
     </div>
     <ol id="tabEl" class="sidebar-list scrollbar-hide" @click="handleSwitchChat">
       <li v-for="i in tabs" :key="i.id" class="sidebar-item" :class="{'card-focus':i.id === selected }" :data-id="i.id">
-        <div class="line-clamp-2 text-sm font-medium text-white/90" :data-id="i.id">
+        <div class="line-clamp-2 text-sm font-medium text-neutral-700 dark:text-neutral-200" :data-id="i.id">
           {{ i.label }}
         </div>
         <UButton v-if="i.id === selected" color="white" variant="ghost" size="xs"
-                 class="rounded-full border border-white/10 bg-white/10 text-white hover:bg-red-500/50"
+                 class="rounded-md border border-neutral-200 bg-white text-neutral-600 hover:border-red-300 hover:text-red-500 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
                  @click.stop="handleDelete(i.id)">
           <UIcon name="i-heroicons-trash" class="h-3.5 w-3.5"/>
         </UButton>
@@ -48,11 +48,11 @@ defineProps<{
 
 <style scoped lang="postcss">
 .sidebar {
-  @apply mr-2 flex w-56 flex-col rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur-xl transition-all dark:border-white/5 dark:bg-black/30;
+  @apply mr-4 flex w-56 flex-col rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition-all dark:border-neutral-800 dark:bg-neutral-950;
 }
 
 .sidebar-header {
-  @apply mb-4 flex items-start justify-between gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur dark:border-white/10 dark:bg-white/5;
+  @apply mb-4 flex items-start justify-between gap-2 rounded-lg border border-neutral-200 bg-neutral-50 p-3 dark:border-neutral-800 dark:bg-neutral-900;
 }
 
 .sidebar-list {
@@ -60,11 +60,11 @@ defineProps<{
 }
 
 .sidebar-item {
-  @apply flex cursor-pointer items-center justify-between gap-2 rounded-2xl border border-transparent bg-white/10 p-3 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-500/20 hover:text-white dark:bg-white/5;
+  @apply flex cursor-pointer items-center justify-between gap-2 rounded-lg border border-transparent bg-white p-3 transition duration-200 hover:border-emerald-300 hover:bg-emerald-50 dark:bg-neutral-900;
 }
 
 .card-focus {
-  @apply border-emerald-400/60 bg-emerald-500/30 shadow-lg dark:bg-emerald-500/20;
+  @apply border-emerald-300 bg-emerald-50 shadow-sm dark:border-emerald-500/60 dark:bg-emerald-500/10;
 }
 
 .hide {
@@ -73,11 +73,11 @@ defineProps<{
 
 @media not all and (min-width: 768px) {
   .sidebar {
-    @apply fixed left-0 z-20 h-full w-72 rounded-r-3xl border border-white/10 bg-white/20 pb-6 pl-4 pr-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/40;
+    @apply fixed left-0 z-20 h-full w-72 rounded-r-xl border border-neutral-200 bg-white pb-6 pl-4 pr-3 shadow-lg dark:border-neutral-800 dark:bg-neutral-950;
   }
 
   .mask {
-    @apply fixed inset-0 z-10 bg-black opacity-30 backdrop-blur-sm;
+    @apply fixed inset-0 z-10 bg-black opacity-40 backdrop-blur-sm;
   }
 }
 </style>

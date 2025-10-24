@@ -122,19 +122,19 @@ defineExpose({
 </script>
 
 <template>
-  <div class="composer-card">
+  <div class="composer">
     <div class="composer-toolbar">
       <div class="flex flex-wrap items-center gap-2">
         <UTooltip :text="addHistory?$t('with_history'):$t('without_history')">
-          <UButton class="rounded-full" @click="addHistory = !addHistory" size="sm"
+          <UButton class="rounded-md" @click="addHistory = !addHistory" size="sm"
                    :color="addHistory?'primary':'gray'" icon="i-heroicons-clock-solid" variant="soft"/>
         </UTooltip>
         <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image') + '(' + $t('support_paste') + ')'">
-          <UButton @click="handleAddFiles" color="white" variant="soft" class="rounded-full" size="sm"
+          <UButton @click="handleAddFiles" color="white" variant="ghost" class="rounded-md" size="sm"
                    icon="i-heroicons-paper-clip-16-solid"/>
         </UTooltip>
       </div>
-      <UButton class="rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-50 hover:bg-emerald-500/40"
+      <UButton class="rounded-md border border-emerald-200 bg-white text-emerald-600 hover:bg-emerald-50 dark:border-emerald-500/40 dark:bg-neutral-900 dark:text-emerald-300"
                size="sm" @click="openModelSelect = !openModelSelect">
         <UIcon name="i-heroicons-command-line" class="mr-1 h-4 w-4"/>
         {{ selectedModel.name }}
@@ -147,10 +147,10 @@ defineExpose({
     <ul v-if="selectedModel.type === 'universal' && fileList.length" class="composer-attachments">
       <li v-for="file in fileList" :key="file.url" class="attachment group">
         <button @click="fileList.splice(fileList.indexOf(file), 1)"
-                class="attachment-remove hidden group-hover:flex">
+                class="attachment-remove">
           <UIcon name="i-heroicons-x-mark" class="h-4 w-4"/>
         </button>
-        <img :src="file.url" class="attachment-preview group-hover:brightness-95 group-hover:scale-105" alt="selected image"
+        <img :src="file.url" class="attachment-preview" alt="selected image"
              @click="handleImgZoom($event.target as HTMLImageElement)"/>
       </li>
     </ul>
@@ -168,36 +168,36 @@ defineExpose({
         class="composer-textarea"
       />
       <UButton @click="handleInput($event)" :disabled="loading"
-               class="send-button" size="lg">
-        <UIcon name="i-heroicons-paper-airplane-solid" class="h-5 w-5"/>
+               class="send-button" size="md" icon="i-heroicons-paper-airplane-solid">
+        <span class="sr-only">{{ $t('send') }}</span>
       </UButton>
     </div>
   </div>
 </template>
 
 <style scoped lang="postcss">
-.composer-card {
-  @apply rounded-3xl border border-white/10 bg-white/80 p-4 shadow-xl backdrop-blur-xl transition-colors dark:border-white/5 dark:bg-neutral-900/70;
+.composer {
+  @apply rounded-xl border border-neutral-200 bg-white p-4 shadow-sm transition dark:border-neutral-800 dark:bg-neutral-900;
 }
 
 .composer-toolbar {
-  @apply flex flex-wrap items-center justify-between gap-3 border-b border-white/20 pb-3 dark:border-white/10;
+  @apply flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 pb-3 dark:border-neutral-800;
 }
 
 .composer-attachments {
-  @apply mt-4 flex flex-wrap gap-3;
+  @apply mt-4 flex flex-wrap gap-2;
 }
 
 .attachment {
-  @apply relative overflow-hidden rounded-2xl border border-white/30 bg-white/40 backdrop-blur dark:border-white/10 dark:bg-neutral-800/70;
+  @apply relative overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 transition hover:border-emerald-200 dark:border-neutral-700 dark:bg-neutral-800;
 }
 
 .attachment-preview {
-  @apply h-20 w-20 object-cover transition duration-300;
+  @apply h-16 w-16 object-cover transition duration-200 hover:scale-105;
 }
 
 .attachment-remove {
-  @apply absolute right-2 top-2 rounded-full bg-black/60 p-1 text-white transition;
+  @apply absolute right-1 top-1 hidden rounded-full bg-black/70 p-1 text-white transition group-hover:flex;
 }
 
 .composer-input {
@@ -205,10 +205,10 @@ defineExpose({
 }
 
 .composer-textarea {
-  @apply flex-1 max-h-48 overflow-y-auto rounded-2xl border border-transparent bg-white/90 px-4 py-3 text-base text-neutral-800 shadow-inner focus:border-emerald-400 focus:ring-emerald-400/60 dark:bg-neutral-800/70 dark:text-neutral-100;
+  @apply flex-1 max-h-48 overflow-y-auto rounded-lg border border-neutral-200 bg-white px-3 py-2 text-base text-neutral-800 shadow-inner focus:border-emerald-400 focus:ring-emerald-400/40 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100;
 }
 
 .send-button {
-  @apply h-12 w-12 rounded-full bg-emerald-500 text-white shadow-lg transition duration-300 hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50;
+  @apply h-11 w-11 rounded-lg bg-emerald-500 text-white transition hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-60;
 }
 </style>

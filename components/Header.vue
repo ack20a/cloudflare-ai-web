@@ -19,29 +19,29 @@ function handleReload() {
 </script>
 
 <template>
-  <header class="fixed inset-x-0 top-0 z-30 border-b border-white/10 bg-white/30 backdrop-blur-xl dark:border-white/5 dark:bg-black/30">
-    <UContainer class="flex h-20 items-center gap-6">
+  <header class="fixed inset-x-0 top-0 z-30 border-b border-neutral-200 bg-white/80 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/80">
+    <UContainer class="flex h-16 items-center gap-6">
       <div class="flex items-center gap-2">
         <IButton name="i-heroicons-bars-3-20-solid" @click="openAside = !openAside"
-                 class="rounded-full border border-white/30 bg-white/40 text-emerald-600 hover:bg-emerald-500/30 dark:border-white/10 dark:bg-neutral-900/60 dark:text-emerald-300"/>
+                 class="rounded-md border border-neutral-200 bg-white text-emerald-500 hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-emerald-300"/>
         <div @click="handleReload" class="group flex cursor-pointer flex-col">
           <div class="flex items-center gap-2">
-            <span class="text-xl font-semibold tracking-wide text-white drop-shadow group-hover:text-emerald-200">永康 AI Web</span>
-            <span class="rounded-full border border-emerald-400/40 bg-emerald-500/20 px-2 py-0.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">
+            <span class="text-lg font-semibold tracking-wide text-neutral-900 group-hover:text-emerald-600 dark:text-neutral-100 dark:group-hover:text-emerald-300">永康 AI Web</span>
+            <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200">
               Beta
             </span>
           </div>
-          <p class="text-xs text-white/70">
-            现代化大模型对话工作台
+          <p class="text-xs text-neutral-500 dark:text-neutral-400">
+            轻量、专注的智能对话体验
           </p>
         </div>
       </div>
       <div class="ml-auto flex items-center gap-2">
-        <UIcon name="i-heroicons-sparkles-solid" class="hidden h-5 w-5 text-emerald-300 sm:block"/>
-        <span class="hidden text-sm text-white/80 sm:block">
-          快速切换模型、整理灵感、驱动你的创意流程
+        <UIcon name="i-heroicons-sparkles-solid" class="hidden h-5 w-5 text-emerald-400 sm:block"/>
+        <span class="hidden text-sm text-neutral-600 sm:block dark:text-neutral-300">
+          快速切换模型，高效完成每一次对话
         </span>
-        <IButton class="rounded-full border border-white/30 bg-white/30 text-emerald-600 hover:bg-emerald-500/30 dark:border-white/10 dark:bg-neutral-900/60 dark:text-emerald-200"
+        <IButton class="rounded-md border border-neutral-200 bg-white text-emerald-500 hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:text-emerald-200"
                  :name="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
                  @click="toggleDark()"/>
       </div>
