@@ -65,6 +65,7 @@ export const uniModals: Model[] = [
 {id: 'gemini-2.0-flash-thinking-exp-01-21', name: 'Gemini Thinking 0121', provider: 'openai', type: 'universal' },
 {id: 'bytedance/seed-oss-36b-instruct', name: '豆包 36B', provider: 'openai', type: 'chat' },
 {id: 'qwen/qwen3-next-80b-a3b-thinking', name: 'Qwen 3 Next 80B', provider: 'openai', type: 'chat' },
+{id: 'minimaxai/minimax-m2', name: 'MiniMax M2', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
