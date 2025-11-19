@@ -11,7 +11,18 @@ defineProps<{
   loading: boolean
 }>()
 
+const emit = defineEmits(['retry'])
+
 const { copy, copied } = useClipboard()
+const copiedId = ref<number | null>(null)
+
+function copyContent(text: string, id: number) {
+  copy(text)
+  copiedId.value = id
+  setTimeout(() => {
+    copiedId.value = null
+  }, 2000)
+}
 
 const md = new MarkdownIt({
   html: true,
@@ -66,7 +77,7 @@ function handleContentClick(e: MouseEvent) {
       </template>
       <template v-else>
         <!-- User Message -->
-        <div v-if="i.role==='user'" class="max-w-3xl mx-auto w-full px-4 flex justify-end">
+        <div v-if="i.role==='user'" class="max-w-3xl mx-auto w-full px-4 flex flex-col items-end group">
            <div class="bg-[#f4f4f4] dark:bg-[#2f2f2f] rounded-3xl px-5 py-3.5 max-w-[85%]">
               <div v-if="i.type === 'text' || i.type === 'image-prompt'" class="whitespace-pre-wrap text-gray-800 dark:text-gray-100 leading-relaxed">
                 {{ i.content }}
@@ -78,10 +89,15 @@ function handleContentClick(e: MouseEvent) {
                 </template>
               </div>
            </div>
+           <div class="flex gap-2 mt-1 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" :class="{'opacity-100': copiedId === index}">
+              <button @click.stop="copyContent(i.content, index)" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors" :title="copiedId === index ? 'Copied!' : 'Copy'">
+                 <UIcon :name="copiedId === index ? 'i-heroicons-check' : 'i-heroicons-clipboard'" class="w-4 h-4" />
+              </button>
+           </div>
         </div>
 
         <!-- Assistant Message -->
-        <div v-else class="max-w-3xl mx-auto w-full px-4 flex gap-4">
+        <div v-else class="max-w-3xl mx-auto w-full px-4 flex gap-4 group">
            <div class="w-8 h-8 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center shrink-0 mt-1 bg-white dark:bg-transparent">
               <UIcon name="i-heroicons-sparkles" class="text-gray-600 dark:text-gray-300 w-5 h-5" />
            </div>
@@ -99,6 +115,17 @@ function handleContentClick(e: MouseEvent) {
               
               <div v-else-if="i.type==='error'" class="text-red-500 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
                 {{ i.content }}
+              </div>
+
+              <div class="flex gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity" :class="{'opacity-100': copiedId === index}" v-if="!loading || index !== history.length - 1">
+                  <button @click.stop="copyContent(i.content, index)" class="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                     <UIcon :name="copiedId === index ? 'i-heroicons-check' : 'i-heroicons-clipboard'" class="w-4 h-4" />
+                     <span>{{ copiedId === index ? 'Copied' : 'Copy' }}</span>
+                  </button>
+                  <button v-if="index === history.length - 1" @click.stop="$emit('retry')" class="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                     <UIcon name="i-heroicons-arrow-path" class="w-4 h-4" />
+                     <span>Retry</span>
+                  </button>
               </div>
            </div>
         </div>

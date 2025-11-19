@@ -198,6 +198,54 @@ async function addFiles(files: {
     ...historyItem
   })
 }
+
+async function handleRetry() {
+  if (loading.value) return
+  
+  const lastItem = history.value[history.value.length - 1]
+  if (lastItem.role === 'assistant' || lastItem.type === 'error') {
+     if (lastItem.id) {
+         await DB.history.delete(lastItem.id)
+     }
+     history.value.pop()
+  }
+  
+  loading.value = true
+  const type = selectedModel.value.type
+  
+  history.value.push({
+    id: (history.value[history.value.length-1]?.id || 0) + 1,
+    session,
+    role: 'assistant',
+    content: '',
+    type: (type === 'chat' || type === 'universal') ? 'text' : 'image',
+    created_at: Date.now()
+  })
+  
+  const chatList = document.getElementById('chatList') as HTMLElement
+  nextTick(() => {
+    scrollToTop(chatList)
+  }).then(r => r)
+
+  const req = {
+    model: selectedModel.value.id,
+    messages: getMessages(toRaw(history.value), {addHistory: true, type})
+  }
+  
+  switch (selectedModel.value.provider) {
+    case 'openai':
+      openAIReq({
+        ...req,
+        endpoint: selectedModel.value.endpoint!,
+        key: process.env.OPENAI_API_KEY || '',
+        files: [] 
+      }, text => {
+        history.value[history.value.length - 1].content += text
+        scrollStream(chatList)
+      }).then(basicDone).catch(basicCatch).finally(basicFin)
+      break
+  }
+}
 </script>
 
 <template>
@@ -256,7 +304,7 @@ async function addFiles(files: {
 
         <!-- Chat Area -->
         <div v-else class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
-          <ChatList :history="history" :loading="loading"/>
+          <ChatList :history="history" :loading="loading" @retry="handleRetry"/>
         </div>
 
         <!-- Input Area -->
