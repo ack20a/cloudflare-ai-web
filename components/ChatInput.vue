@@ -26,19 +26,20 @@ const p = defineProps<{
   }[]) => void
 }>()
 
-function handleInput(e: KeyboardEvent) {
-  if (e.shiftKey) {
-    input.value += '\n'
-  }
-  if (e.isComposing || e.shiftKey) {
-    return
-  }
-
-  if (input.value.trim() === '') return
+function sendMessage() {
+  if (input.value.trim() === '' && fileList.value.length === 0) return
   if (p.loading) return
   p.handleSend(input.value, addHistory.value, toRaw(fileList.value))
   input.value = ''
   fileList.value = []
+}
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.isComposing || e.shiftKey) {
+    return
+  }
+  e.preventDefault()
+  sendMessage()
 }
 
 const imageType = ['image/png', 'image/jpeg', 'image/webp', 'image/heic', 'image/heif', 'image/jpg']
@@ -107,11 +108,11 @@ const handlePaste = (e: ClipboardEvent) => {
     </div>
 
     <!-- Input Container -->
-    <div class="relative flex items-end gap-2 p-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm focus-within:ring-2 focus-within:ring-primary-500/20 focus-within:border-primary-500 transition-all">
+    <div class="relative flex items-end gap-2 p-2 bg-[#f4f4f4] dark:bg-[#2f2f2f] rounded-[26px] transition-all focus-within:ring-1 focus-within:ring-black/5 dark:focus-within:ring-white/5 focus-within:bg-white dark:focus-within:bg-[#2f2f2f] focus-within:shadow-lg">
       
       <!-- Attachment Button -->
       <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image')">
-        <button @click="handleAddFiles" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+        <button @click="handleAddFiles" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10">
           <UIcon name="i-heroicons-paper-clip" class="w-5 h-5" />
         </button>
       </UTooltip>
@@ -119,8 +120,8 @@ const handlePaste = (e: ClipboardEvent) => {
       <!-- History Toggle -->
       <UTooltip :text="addHistory ? $t('with_history') : $t('without_history')">
         <button @click="addHistory = !addHistory" 
-                class="p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                :class="addHistory ? 'text-green-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'">
+                class="p-2 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+                :class="addHistory ? 'text-green-600 dark:text-green-500' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'">
           <UIcon name="i-heroicons-clock" class="w-5 h-5" />
         </button>
       </UTooltip>
@@ -129,11 +130,11 @@ const handlePaste = (e: ClipboardEvent) => {
       <textarea 
         v-model="input"
         rows="1"
-        class="flex-1 max-h-48 py-2.5 bg-transparent border-none focus:ring-0 resize-none text-gray-900 dark:text-gray-100 placeholder-gray-400 scrollbar-hide text-base"
+        class="flex-1 max-h-48 py-3 bg-transparent border-none focus:ring-0 resize-none text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 scrollbar-hide text-base leading-relaxed"
         :placeholder="$t('please_input_text')"
-        @keydown.enter.prevent="handleInput($event)"
+        @keydown.enter="handleKeydown($event)"
         @paste="handlePaste"
-        style="min-height: 44px;"
+        style="min-height: 48px;"
         @input="(e) => {
           const target = e.target as HTMLTextAreaElement;
           target.style.height = 'auto';
@@ -143,12 +144,12 @@ const handlePaste = (e: ClipboardEvent) => {
 
       <!-- Send Button -->
       <button 
-        @click="handleInput($event as any)" 
+        @click="sendMessage" 
         :disabled="loading || (!input.trim() && fileList.length === 0)"
-        class="p-2 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-0.5"
-        :class="input.trim() || fileList.length > 0 ? 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80' : 'bg-gray-100 dark:bg-gray-700 text-gray-400'"
+        class="p-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-1"
+        :class="input.trim() || fileList.length > 0 ? 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80' : 'bg-transparent text-gray-400 dark:text-gray-500'"
       >
-        <UIcon name="i-heroicons-arrow-up" class="w-5 h-5" />
+        <UIcon name="i-heroicons-arrow-up" class="w-6 h-6" />
       </button>
     </div>
   </div>

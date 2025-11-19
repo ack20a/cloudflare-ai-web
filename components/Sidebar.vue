@@ -18,40 +18,47 @@ defineProps<{
 
 <template>
   <div :class="{mask:openAside}" @click="openAside=!openAside" class="md:hidden"></div>
-  <aside class="flex flex-col transition-all duration-300 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 h-full"
-         :class="[openAside ? 'w-64 translate-x-0' : 'w-0 -translate-x-full opacity-0 overflow-hidden', 'fixed md:relative z-20']">
+  <aside class="flex flex-col transition-all duration-300 bg-gray-50 dark:bg-[#171717] border-r border-gray-200 dark:border-white/10 h-full"
+         :class="[openAside ? 'w-[260px] translate-x-0' : 'w-0 -translate-x-full opacity-0 overflow-hidden', 'fixed md:relative z-20']">
     
     <!-- New Chat Button -->
-    <div class="p-3">
+    <div class="p-3 mb-2">
       <button @click="handleNewChat" 
-              class="w-full flex items-center gap-3 px-3 py-3 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm text-gray-700 dark:text-gray-200 text-left">
-        <UIcon name="i-heroicons-plus" class="w-4 h-4" />
-        <span>{{ $t('new_chat') }}</span>
+              class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-gray-200 dark:border-white/20 hover:bg-gray-200 dark:hover:bg-white/10 transition-all text-sm text-gray-700 dark:text-white text-left group">
+        <div class="flex items-center gap-3">
+          <div class="p-1 bg-white dark:bg-white/10 rounded-full shadow-sm group-hover:scale-110 transition-transform">
+             <UIcon name="i-heroicons-plus" class="w-3.5 h-3.5" />
+          </div>
+          <span class="font-medium">{{ $t('new_chat') }}</span>
+        </div>
+        <UIcon name="i-heroicons-pencil-square" class="w-4 h-4 opacity-0 group-hover:opacity-50 transition-opacity" />
       </button>
     </div>
 
     <!-- Chat List -->
-    <div class="flex-1 overflow-y-auto px-3 pb-2 space-y-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
+    <div class="flex-1 overflow-y-auto px-2 pb-2 space-y-1 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
       <div v-for="i in tabs" :key="i.id" 
-           class="group relative flex items-center gap-3 px-3 py-3 rounded-md cursor-pointer text-sm transition-colors"
-           :class="[i.id === selected ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800']"
+           class="group relative flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer text-sm transition-all"
+           :class="[i.id === selected ? 'bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/5']"
            @click="handleSwitchChat" :data-id="i.id">
-        <UIcon name="i-heroicons-chat-bubble-left" class="w-4 h-4 shrink-0" />
-        <div class="flex-1 truncate" :data-id="i.id">{{ i.label }}</div>
+        <div class="truncate flex-1" :data-id="i.id">{{ i.label }}</div>
         
         <!-- Delete Button (visible on hover or selected) -->
         <button v-if="i.id === selected" 
                 @click.stop="handleDelete(i.id)"
-                class="absolute right-2 p-1 text-gray-400 hover:text-red-500 opacity-100 transition-opacity">
+                class="absolute right-2 p-1.5 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity rounded-md hover:bg-gray-300 dark:hover:bg-white/10">
           <UIcon name="i-heroicons-trash" class="w-4 h-4" />
         </button>
+        
+        <!-- Fade effect for long text -->
+        <div v-if="i.id !== selected" class="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-50 dark:from-[#171717] to-transparent pointer-events-none group-hover:from-gray-200 dark:group-hover:from-[#212121]"></div>
       </div>
     </div>
 
     <!-- Bottom Section (User/Settings) -->
-    <div class="p-3 border-t border-gray-200 dark:border-gray-800">
+    <div class="p-3 border-t border-gray-200 dark:border-white/10">
       <button @click="toggleDark()" 
-              class="w-full flex items-center gap-3 px-3 py-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm text-gray-700 dark:text-gray-200">
+              class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-200">
         <UIcon :name="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'" class="w-4 h-4" />
         <span>{{ isDark ? 'Dark mode' : 'Light mode' }}</span>
       </button>

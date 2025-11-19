@@ -4,27 +4,57 @@ import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark-dimmed.min.css'
 import markdownItKatex from "markdown-it-katex"
 import "katex/dist/katex.min.css"
+import { useClipboard } from '@vueuse/core'
 
 defineProps<{
   history: HistoryItem[]
   loading: boolean
 }>()
 
+const { copy, copied } = useClipboard()
+
 const md = new MarkdownIt({
   html: true,
   linkify: true,
   breaks: true,
   highlight: (code, language) => {
-    if (language && hljs.getLanguage(language)) {
-      return `<pre class="hljs"><code>${hljs.highlight(code, {language}).value}</code></pre>`;
-    }
-    return `<pre class="hljs"><code>${hljs.highlightAuto(code).value}</code></pre>`;
+    const validLang = !!(language && hljs.getLanguage(language));
+    const highlighted = validLang
+      ? hljs.highlight(code, { language }).value
+      : hljs.highlightAuto(code).value;
+    
+    return `<div class="code-block-wrapper my-4 rounded-lg overflow-hidden bg-[#0d1117] border border-gray-700/50">
+              <div class="flex items-center justify-between px-4 py-1.5 bg-[#161b22] text-gray-400 text-xs border-b border-gray-700/50">
+                <span class="font-mono">${language || 'code'}</span>
+                <button class="copy-btn flex items-center gap-1 hover:text-white transition-colors py-1" data-code="${encodeURIComponent(code)}">
+                  <span class="i-heroicons-clipboard w-3.5 h-3.5"></span>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre class="hljs !bg-transparent !p-4 !m-0 overflow-x-auto text-sm leading-relaxed"><code class="${language}">${highlighted}</code></pre>
+            </div>`;
   },
 }).use(markdownItKatex)
+
+function handleContentClick(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  const btn = target.closest('.copy-btn') as HTMLElement
+  if (btn && btn.dataset.code) {
+    const code = decodeURIComponent(btn.dataset.code)
+    copy(code)
+    
+    // Visual feedback
+    const originalText = btn.innerHTML
+    btn.innerHTML = `<span class="i-heroicons-check w-3.5 h-3.5 text-green-500"></span><span class="text-green-500">Copied!</span>`
+    setTimeout(() => {
+      btn.innerHTML = originalText
+    }, 2000)
+  }
+}
 </script>
 
 <template>
-  <div class="flex flex-col space-y-6 pb-32 pt-4">
+  <div class="flex flex-col space-y-6 pb-32 pt-4" @click="handleContentClick">
     <template v-for="(i,index) in history" :key="i.id">
       <template v-if="!i.content">
         <div class="max-w-3xl mx-auto w-full px-4 flex gap-4">
@@ -37,8 +67,8 @@ const md = new MarkdownIt({
       <template v-else>
         <!-- User Message -->
         <div v-if="i.role==='user'" class="max-w-3xl mx-auto w-full px-4 flex justify-end">
-           <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl px-5 py-3 max-w-[85%]">
-              <div v-if="i.type === 'text' || i.type === 'image-prompt'" class="whitespace-pre-wrap text-gray-800 dark:text-gray-100">
+           <div class="bg-[#f4f4f4] dark:bg-[#2f2f2f] rounded-3xl px-5 py-3.5 max-w-[85%]">
+              <div v-if="i.type === 'text' || i.type === 'image-prompt'" class="whitespace-pre-wrap text-gray-800 dark:text-gray-100 leading-relaxed">
                 {{ i.content }}
               </div>
               <div v-else-if="i.type === 'image'" class="flex flex-wrap gap-2">
@@ -52,12 +82,12 @@ const md = new MarkdownIt({
 
         <!-- Assistant Message -->
         <div v-else class="max-w-3xl mx-auto w-full px-4 flex gap-4">
-           <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-1">
-              <UIcon name="i-heroicons-sparkles" class="text-white w-5 h-5" />
+           <div class="w-8 h-8 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center shrink-0 mt-1 bg-white dark:bg-transparent">
+              <UIcon name="i-heroicons-sparkles" class="text-gray-600 dark:text-gray-300 w-5 h-5" />
            </div>
            <div class="flex-1 min-w-0 overflow-hidden">
               <div v-if="i.type === 'text'" v-html="md.render(i.content)"
-                  class="prose dark:prose-invert max-w-none prose-pre:bg-gray-800 prose-pre:text-gray-100"
+                  class="prose dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-gray-800 prose-pre:text-gray-100 prose-li:marker:text-gray-400"
                   :class="index+1===history.length && loading ? 'animate-pulse':''"/>
               
               <div v-else-if="i.type === 'image'" class="flex flex-wrap gap-2">

@@ -223,8 +223,39 @@ async function addFiles(files: {
       <USkeleton v-if="initializing" class="h-24 w-3/5 self-center rounded-xl mt-20"/>
 
       <template v-else>
+        <!-- Welcome Screen -->
+        <div v-if="history.length === 0" class="flex-1 flex flex-col items-center justify-center p-4 text-center">
+           <div class="w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-sm flex items-center justify-center mb-6">
+              <UIcon name="i-heroicons-sparkles" class="w-8 h-8 text-gray-900 dark:text-white" />
+           </div>
+           <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">How can I help you today?</h2>
+           
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 max-w-2xl w-full">
+              <button @click="handleSend('Explain quantum computing in simple terms', true, [])" 
+                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1">Explain quantum computing</div>
+                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">in simple terms</div>
+              </button>
+              <button @click="handleSend('Write a python script to scrape a website', true, [])"
+                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1">Write a python script</div>
+                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to scrape a website</div>
+              </button>
+              <button @click="handleSend('How do I make a HTTP request in Javascript?', true, [])"
+                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1">HTTP request in JS</div>
+                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">using fetch or axios</div>
+              </button>
+              <button @click="handleSend('Help me plan a trip to Japan', true, [])"
+                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1">Plan a trip</div>
+                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to Japan for 2 weeks</div>
+              </button>
+           </div>
+        </div>
+
         <!-- Chat Area -->
-        <div class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
+        <div v-else class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
           <ChatList :history="history" :loading="loading"/>
         </div>
 
