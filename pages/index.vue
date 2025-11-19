@@ -286,47 +286,49 @@ function handleQuote(text: string) {
       <template v-else>
         <!-- Welcome Screen -->
         <div v-if="history.length === 0" class="flex-1 flex flex-col items-center justify-center p-4 text-center">
-           <div class="w-12 h-12 bg-white dark:bg-white/10 rounded-full shadow-sm flex items-center justify-center mb-6">
-              <UIcon name="i-heroicons-sparkles" class="w-6 h-6 text-gray-900 dark:text-white" />
+           <div class="mb-8">
+              <div class="w-12 h-12 bg-white dark:bg-white/10 rounded-full shadow-sm flex items-center justify-center mx-auto mb-4">
+                 <UIcon name="i-heroicons-sparkles" class="w-6 h-6 text-gray-900 dark:text-white" />
+              </div>
+              <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">我们先从哪里开始呢？</h2>
            </div>
            
-           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 max-w-2xl w-full">
-              <button @click="handleSend('Explain quantum computing in simple terms', true, [])" 
-                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">Explain quantum computing</div>
-                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">in simple terms</div>
+           <div class="w-full max-w-3xl px-4">
+              <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
+                        :handle-send="handleSend"/>
+           </div>
+           
+           <div class="mt-8 flex flex-wrap justify-center gap-2">
+              <button @click="handleSend('生成一张赛博朋克风格的图片', true, [])" 
+                      class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm text-gray-600 dark:text-gray-300 transition-colors">
+                 🎨 生成图片
               </button>
-              <button @click="handleSend('Write a python script to scrape a website', true, [])"
-                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">Write a python script</div>
-                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to scrape a website</div>
+              <button @click="handleSend('写一段 Python 代码', true, [])" 
+                      class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm text-gray-600 dark:text-gray-300 transition-colors">
+                 💻 写代码
               </button>
-              <button @click="handleSend('How do I make a HTTP request in Javascript?', true, [])"
-                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">HTTP request in JS</div>
-                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">using fetch or axios</div>
-              </button>
-              <button @click="handleSend('Help me plan a trip to Japan', true, [])"
-                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">Plan a trip</div>
-                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to Japan for 2 weeks</div>
+              <button @click="handleSend('解释一下量子纠缠', true, [])" 
+                      class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm text-gray-600 dark:text-gray-300 transition-colors">
+                 🤔 解释概念
               </button>
            </div>
         </div>
 
         <!-- Chat Area -->
-        <div v-else class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
-          <ChatList :history="history" :loading="loading" @retry="handleRetry" @quote="handleQuote"/>
-        </div>
+        <div v-else class="flex-1 flex flex-col h-full overflow-hidden">
+          <div class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
+            <ChatList :history="history" :loading="loading" @retry="handleRetry" @quote="handleQuote"/>
+          </div>
 
-        <!-- Input Area -->
-        <div class="p-4 bg-white dark:bg-[#212121]">
-          <div class="max-w-3xl mx-auto">
-             <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
-                        :handle-send="handleSend"/>
-             <div class="text-xs text-center text-gray-400 mt-2">
-                AI can make mistakes. Consider checking important information.
-             </div>
+          <!-- Input Area -->
+          <div class="p-4 bg-white dark:bg-[#212121]">
+            <div class="max-w-3xl mx-auto">
+               <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
+                          :handle-send="handleSend"/>
+               <div class="text-xs text-center text-gray-400 mt-2">
+                  AI can make mistakes. Consider checking important information.
+               </div>
+            </div>
           </div>
         </div>
       </template>

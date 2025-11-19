@@ -125,7 +125,7 @@ const handlePaste = (e: ClipboardEvent) => {
     </div>
 
     <!-- Input Container -->
-    <div class="relative flex items-end gap-2 p-2 bg-[#f4f4f4] dark:bg-[#2f2f2f] rounded-[26px] transition-all focus-within:ring-1 focus-within:ring-black/5 dark:focus-within:ring-white/5 focus-within:bg-white dark:focus-within:bg-[#2f2f2f] focus-within:shadow-lg">
+    <div class="relative flex items-end gap-2 p-2 bg-[#f4f4f4] dark:bg-[#2f2f2f] rounded-3xl transition-all focus-within:ring-1 focus-within:ring-black/5 dark:focus-within:ring-white/5 focus-within:bg-white dark:focus-within:bg-[#2f2f2f] focus-within:shadow-lg">
       
       <!-- Attachment Button -->
       <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image')">
@@ -150,11 +150,16 @@ const handlePaste = (e: ClipboardEvent) => {
         }"
       ></textarea>
 
+      <!-- Voice Button (Visual Only) -->
+      <button v-if="!input.trim()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10 mb-0.5">
+         <UIcon name="i-heroicons-microphone" class="w-5 h-5" />
+      </button>
+
       <!-- Send Button -->
       <button 
         @click="sendMessage" 
         :disabled="loading || (!input.trim() && fileList.length === 0)"
-        class="p-1.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-1.5"
+        class="p-1.5 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-1.5"
         :class="input.trim() || fileList.length > 0 ? 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80' : 'bg-transparent text-gray-400 dark:text-gray-500'"
       >
         <UIcon name="i-heroicons-arrow-up" class="w-5 h-5" />
