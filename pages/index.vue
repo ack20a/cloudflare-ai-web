@@ -264,9 +264,9 @@ function handleQuote(text: string) {
     
     <main class="flex-1 flex flex-col h-full relative min-w-0">
       <!-- Top Bar -->
-      <div class="h-14 flex items-center justify-between px-4 bg-white dark:bg-[#212121] z-10">
+      <div class="h-14 flex items-center justify-between px-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] bg-white dark:bg-[#212121] z-10">
          <div class="flex items-center gap-2">
-           <button @click="openAside = !openAside" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
+           <button @click="openAside = !openAside" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
               <UIcon name="i-heroicons-bars-3" class="w-5 h-5" />
            </button>
            <button @click="openModelSelect = true" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2f2f2f] transition-colors font-medium text-gray-700 dark:text-gray-200 text-lg">
@@ -321,7 +321,7 @@ function handleQuote(text: string) {
           </div>
 
           <!-- Input Area -->
-          <div class="p-4 bg-white dark:bg-[#212121]">
+          <div class="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white dark:bg-[#212121]">
             <div class="max-w-3xl mx-auto">
                <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
                           :handle-send="handleSend"/>

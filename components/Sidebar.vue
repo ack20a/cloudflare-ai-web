@@ -17,9 +17,9 @@ defineProps<{
 </script>
 
 <template>
-  <div :class="{mask:openAside}" @click="openAside=!openAside" class="md:hidden"></div>
+  <div :class="{mask:openAside}" @click="openAside=!openAside" class="md:hidden z-40"></div>
   <aside class="flex flex-col transition-all duration-300 bg-[#f9f9f9] dark:bg-[#171717] h-full"
-         :class="[openAside ? 'w-[260px] translate-x-0' : 'w-0 -translate-x-full opacity-0 overflow-hidden', 'fixed md:relative z-20']">
+         :class="[openAside ? 'w-[260px] translate-x-0' : 'w-0 -translate-x-full opacity-0 overflow-hidden', 'fixed md:relative z-50 md:z-0']">
     
     <!-- Header / New Chat -->
     <div class="p-3 pb-0">
@@ -57,7 +57,7 @@ defineProps<{
     </div>
 
     <!-- User Profile -->
-    <div class="p-3 border-t border-gray-200 dark:border-white/5">
+    <div class="p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] border-t border-gray-200 dark:border-white/5">
       <button class="w-full flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-[#212121] transition-colors text-sm text-gray-700 dark:text-gray-200">
          <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-medium text-xs">
             AC
