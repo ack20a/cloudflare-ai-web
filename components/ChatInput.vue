@@ -94,47 +94,62 @@ const handlePaste = (e: ClipboardEvent) => {
 </script>
 
 <template>
-  <div class="relative">
-    <div class="absolute bottom-10 w-full flex flex-col">
-      <UButton class="self-center drop-shadow-xl blur-global mb-1" color="white"
-               @click="openModelSelect = !openModelSelect">
-        {{ selectedModel.name }}
-        <template #trailing>
-          <UIcon name="i-heroicons-chevron-down-solid"/>
-        </template>
-      </UButton>
-      <ul v-if="selectedModel.type === 'universal'" style="margin: 0"
-          class="flex flex-wrap bg-white dark:bg-[#121212] rounded-t-md">
-        <li v-for="file in fileList" :key="file.url" class="relative group/img">
-          <button @click="fileList.splice(fileList.indexOf(file), 1)"
-                  class="absolute z-10 hidden group-hover/img:block rounded-full bg-neutral-100 right-0 hover:brightness-75 transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 16 16">
-              <path fill="currentColor"
-                    d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94z"/>
-            </svg>
+  <div class="relative w-full">
+    <!-- Image Preview List -->
+    <div v-if="fileList.length > 0" class="flex gap-2 mb-2 overflow-x-auto pb-2">
+       <div v-for="file in fileList" :key="file.url" class="relative group shrink-0">
+          <img :src="file.url" class="h-16 w-16 object-cover rounded-lg border border-gray-200 dark:border-gray-700" />
+          <button @click="fileList.splice(fileList.indexOf(file), 1)" 
+                  class="absolute -top-1 -right-1 bg-gray-900 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
           </button>
-          <img :src="file.url"
-               class="max-h-16 m-1 shadow-xl cursor-pointer group-hover/img:brightness-75 transition-all rounded-md"
-               alt="selected image" @click="handleImgZoom($event.target as HTMLImageElement)"/>
-        </li>
-      </ul>
+       </div>
     </div>
-    <div class="flex items-end">
-      <UTooltip :text="addHistory?$t('with_history'):$t('without_history')">
-        <UButton class="m-1" @click="addHistory = !addHistory" :color="addHistory?'primary':'gray'"
-                 icon="i-heroicons-clock-solid"/>
+
+    <!-- Input Container -->
+    <div class="relative flex items-end gap-2 p-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-sm focus-within:ring-2 focus-within:ring-primary-500/20 focus-within:border-primary-500 transition-all">
+      
+      <!-- Attachment Button -->
+      <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image')">
+        <button @click="handleAddFiles" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <UIcon name="i-heroicons-paper-clip" class="w-5 h-5" />
+        </button>
       </UTooltip>
-      <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image') + '(' + $t('support_paste') + ')'">
-        <UButton @click="handleAddFiles" color="white" class="m-1" icon="i-heroicons-paper-clip-16-solid"/>
+
+      <!-- History Toggle -->
+      <UTooltip :text="addHistory ? $t('with_history') : $t('without_history')">
+        <button @click="addHistory = !addHistory" 
+                class="p-2 transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                :class="addHistory ? 'text-green-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'">
+          <UIcon name="i-heroicons-clock" class="w-5 h-5" />
+        </button>
       </UTooltip>
-      <UTextarea v-model="input" :placeholder="$t('please_input_text') + '...' "
-                 @keydown.prevent.enter="handleInput($event)"
-                 @paste="handlePaste"
-                 autofocus :rows="1" autoresize
-                 class="flex-1 max-h-48 overflow-y-auto p-1"/>
-      <UButton @click="handleInput($event)" :disabled="loading" class="m-1">
-        {{ $t('send') }}
-      </UButton>
+
+      <!-- Text Area -->
+      <textarea 
+        v-model="input"
+        rows="1"
+        class="flex-1 max-h-48 py-2.5 bg-transparent border-none focus:ring-0 resize-none text-gray-900 dark:text-gray-100 placeholder-gray-400 scrollbar-hide text-base"
+        :placeholder="$t('please_input_text')"
+        @keydown.enter.prevent="handleInput($event)"
+        @paste="handlePaste"
+        style="min-height: 44px;"
+        @input="(e) => {
+          const target = e.target as HTMLTextAreaElement;
+          target.style.height = 'auto';
+          target.style.height = target.scrollHeight + 'px';
+        }"
+      ></textarea>
+
+      <!-- Send Button -->
+      <button 
+        @click="handleInput($event as any)" 
+        :disabled="loading || (!input.trim() && fileList.length === 0)"
+        class="p-2 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-0.5"
+        :class="input.trim() || fileList.length > 0 ? 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80' : 'bg-gray-100 dark:bg-gray-700 text-gray-400'"
+      >
+        <UIcon name="i-heroicons-arrow-up" class="w-5 h-5" />
+      </button>
     </div>
   </div>
 </template>

@@ -24,95 +24,67 @@ const md = new MarkdownIt({
 </script>
 
 <template>
-  <ul class="overflow-y-auto overflow-x-hidden scrollbar-hide pt-24 pb-16 pl-1 flex flex-col space-y-1">
+  <div class="flex flex-col space-y-6 pb-32 pt-4">
     <template v-for="(i,index) in history" :key="i.id">
       <template v-if="!i.content">
-        <USkeleton class="loading-item"/>
+        <div class="max-w-3xl mx-auto w-full px-4 flex gap-4">
+           <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shrink-0">
+              <UIcon name="i-heroicons-sparkles" class="text-white w-5 h-5" />
+           </div>
+           <USkeleton class="h-4 w-3/4"/>
+        </div>
       </template>
       <template v-else>
-        <template v-if="i.role==='user'">
-          <li v-if="i.type === 'text' || i.type === 'image-prompt'" class="user chat-item user-text">
-            {{ i.content }}
-          </li>
-          <li v-else-if="i.type === 'image'" class="user image-item">
-            <template v-for="img_url in i.src_url" :key="img_url">
-              <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url" class="image"
-                   :class="i.src_url?.length === 1 ? 'max-h-64' : (i.src_url?.length === 2 ? 'max-h-32': 'max-h-16')"/>
-            </template>
-          </li>
-        </template>
-        <template v-else>
-          <li v-if="i.type === 'text'" v-html="md.render(i.content)"
-              class="assistant chat-item assistant-text prose prose-pre:break-words prose-pre:whitespace-pre-wrap"
-              :class="index+1===history.length && loading ?  'loading':''"/>
-          <li v-else-if="i.type === 'image'" class="assistant image-item">
-            <template v-for="img_url in i.src_url" :key="img_url">
-              <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url"
-                   class="image"/>
-            </template>
-          </li>
-          <li v-else-if="i.type==='error'" class="assistant chat-item assistant-error">
-            {{ i.content }}
-          </li>
-        </template>
+        <!-- User Message -->
+        <div v-if="i.role==='user'" class="max-w-3xl mx-auto w-full px-4 flex justify-end">
+           <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl px-5 py-3 max-w-[85%]">
+              <div v-if="i.type === 'text' || i.type === 'image-prompt'" class="whitespace-pre-wrap text-gray-800 dark:text-gray-100">
+                {{ i.content }}
+              </div>
+              <div v-else-if="i.type === 'image'" class="flex flex-wrap gap-2">
+                <template v-for="img_url in i.src_url" :key="img_url">
+                  <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url" 
+                       class="max-h-64 rounded-lg cursor-pointer hover:opacity-90 transition-opacity"/>
+                </template>
+              </div>
+           </div>
+        </div>
+
+        <!-- Assistant Message -->
+        <div v-else class="max-w-3xl mx-auto w-full px-4 flex gap-4">
+           <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shrink-0 mt-1">
+              <UIcon name="i-heroicons-sparkles" class="text-white w-5 h-5" />
+           </div>
+           <div class="flex-1 min-w-0 overflow-hidden">
+              <div v-if="i.type === 'text'" v-html="md.render(i.content)"
+                  class="prose dark:prose-invert max-w-none prose-pre:bg-gray-800 prose-pre:text-gray-100"
+                  :class="index+1===history.length && loading ? 'animate-pulse':''"/>
+              
+              <div v-else-if="i.type === 'image'" class="flex flex-wrap gap-2">
+                <template v-for="img_url in i.src_url" :key="img_url">
+                  <img @click="handleImgZoom($event.target as HTMLImageElement)" :src="img_url" :alt="img_url"
+                       class="max-h-96 rounded-lg cursor-pointer hover:opacity-90 transition-opacity"/>
+                </template>
+              </div>
+              
+              <div v-else-if="i.type==='error'" class="text-red-500 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
+                {{ i.content }}
+              </div>
+           </div>
+        </div>
       </template>
     </template>
-  </ul>
+  </div>
 </template>
 
-<style scoped lang="postcss">
-.loading-item {
-  @apply rounded-xl px-2 py-1.5 h-10 shrink-0 w-1/3 animate-pulse
+<style scoped>
+:deep(.prose pre) {
+  @apply rounded-lg p-4 my-2 overflow-x-auto
 }
-
-.user {
-  @apply self-end slide-top
+:deep(.prose code) {
+  @apply bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono text-red-500 dark:text-red-400
 }
-
-.assistant {
-  @apply slide-top
-}
-
-.chat-item {
-  @apply break-words rounded-xl px-2 py-1.5 max-w-[95%] md:max-w-[80%]
-}
-
-.image-item {
-  @apply flex rounded-xl space-x-1 max-w-[95%] md:max-w-[60%]
-}
-
-.image {
-  @apply cursor-pointer hover:brightness-75 transition-all rounded-md
-}
-
-.user-text {
-  @apply bg-green-500 text-white dark:bg-green-700 dark:text-gray-300
-}
-
-.assistant-text {
-  @apply self-start bg-gray-200 text-black dark:bg-gray-400
-}
-
-.assistant-error {
-  @apply self-start bg-red-200 dark:bg-red-400 dark:text-black
-}
-
-.user-text::selection {
-  @apply text-neutral-900 bg-gray-300
-}
-
-.slide-top {
-  animation: slide-top .25s cubic-bezier(.25, .46, .45, .94) both
-}
-
-@keyframes slide-top {
-  0% {
-    transform: translateY(0);
-    opacity: 0
-  }
-  100% {
-    transform: translateY(-16px);
-    opacity: 1
-  }
+:deep(.prose pre code) {
+  @apply bg-transparent text-inherit p-0 text-sm
 }
 </style>

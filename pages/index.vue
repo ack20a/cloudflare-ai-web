@@ -8,7 +8,7 @@ const {t} = useI18n()
 const tabs = ref<TabItem[]>([])
 const history = ref<HistoryItem[]>([])
 const selectedTab = ref(0)
-const {selectedModel} = useGlobalState()
+const {selectedModel, openAside, openModelSelect} = useGlobalState()
 const initializing = ref(true)
 const loading = ref(false)
 let session: number = 0
@@ -201,21 +201,47 @@ async function addFiles(files: {
 </script>
 
 <template>
-  <UContainer class="flex h-full w-full overflow-y-auto">
-    <ModelSelect/>
-    <Pass/>
-
+  <div class="flex h-full w-full overflow-hidden bg-white dark:bg-gray-900">
     <Sidebar :tabs="tabs" :selected="selectedTab" :handle-delete="handleDelete" :handle-new-chat="handleNewChat"
              :handle-switch-chat="handleSwitchChat"/>
-    <main class="w-full flex flex-col">
-      <USkeleton v-if="initializing" class="h-24 w-3/5 self-end rounded-xl mt-20"/>
-      <USkeleton v-if="initializing" class="h-24 w-3/5 rounded-xl mt-2"/>
+    
+    <main class="flex-1 flex flex-col h-full relative min-w-0">
+      <!-- Top Bar -->
+      <div class="h-14 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 z-10">
+         <div class="flex items-center gap-2">
+           <button @click="openAside = !openAside" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
+              <UIcon name="i-heroicons-bars-3" class="w-5 h-5" />
+           </button>
+           <button @click="openModelSelect = true" class="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-gray-700 dark:text-gray-200">
+             <span>{{ selectedModel.name }}</span>
+             <UIcon name="i-heroicons-chevron-down" class="w-4 h-4 text-gray-500" />
+           </button>
+         </div>
+         <div class="w-8"></div> 
+      </div>
+
+      <USkeleton v-if="initializing" class="h-24 w-3/5 self-center rounded-xl mt-20"/>
 
       <template v-else>
-        <ChatList id="chatList" :history="history" :loading="loading"/>
-        <ChatInput class="mt-auto" :session="session" :loading="loading" :selected-model="selectedModel"
-                   :handle-send="handleSend"/>
+        <!-- Chat Area -->
+        <div class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
+          <ChatList :history="history" :loading="loading"/>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-white dark:bg-gray-900">
+          <div class="max-w-3xl mx-auto">
+             <ChatInput :session="session" :loading="loading" :selected-model="selectedModel"
+                        :handle-send="handleSend"/>
+             <div class="text-xs text-center text-gray-400 mt-2">
+                AI can make mistakes. Consider checking important information.
+             </div>
+          </div>
+        </div>
       </template>
+      
+      <ModelSelect/>
+      <Pass/>
     </main>
-  </UContainer>
+  </div>
 </template>

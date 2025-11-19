@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import Header from "~/components/Header.vue";
-import Footer from "~/components/Footer.vue";
-
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
-    <Header/>
+  <div class="h-screen w-screen overflow-hidden bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <slot/>
-    <Footer/>
   </div>
 </template>
