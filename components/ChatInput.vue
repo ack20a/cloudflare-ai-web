@@ -2,6 +2,7 @@
 import {compressionFile, handleImgZoom} from "~/utils/tools";
 
 const input = ref('')
+const quote = ref('')
 const addHistory = ref(true)
 const fileList = ref<{
   file: File
@@ -29,8 +30,19 @@ function setInput(val: string) {
   })
 }
 
+function setQuote(val: string) {
+  quote.value = val
+  nextTick(() => {
+     const textarea = document.querySelector('textarea')
+     if (textarea) {
+        textarea.focus()
+     }
+  })
+}
+
 defineExpose({
-  setInput
+  setInput,
+  setQuote
 })
 
 const p = defineProps<{
@@ -46,8 +58,16 @@ const p = defineProps<{
 function sendMessage() {
   if (input.value.trim() === '' && fileList.value.length === 0) return
   if (p.loading) return
-  p.handleSend(input.value, addHistory.value, toRaw(fileList.value))
+
+  let content = input.value
+  if (quote.value) {
+      const quoteText = quote.value.split('\n').map(line => `> ${line}`).join('\n') + '\n\n'
+      content = quoteText + content
+  }
+
+  p.handleSend(content, addHistory.value, toRaw(fileList.value))
   input.value = ''
+  quote.value = ''
   fileList.value = []
 }
 
@@ -113,6 +133,16 @@ const handlePaste = (e: ClipboardEvent) => {
 
 <template>
   <div class="relative w-full">
+    <!-- Quote Preview -->
+    <div v-if="quote" class="mb-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-xl border-l-4 border-gray-300 dark:border-gray-600 flex justify-between items-start group animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <div class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 whitespace-pre-wrap italic">
+            {{ quote }}
+        </div>
+        <button @click="quote = ''" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shrink-0 ml-2">
+            <UIcon name="i-heroicons-x-mark" class="w-4 h-4" />
+        </button>
+    </div>
+
     <!-- Image Preview List -->
     <div v-if="fileList.length > 0" class="flex gap-2 mb-2 overflow-x-auto pb-2">
        <div v-for="file in fileList" :key="file.url" class="relative group shrink-0">

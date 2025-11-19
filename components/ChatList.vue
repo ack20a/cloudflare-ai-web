@@ -107,7 +107,7 @@ function handleContentClick(e: MouseEvent) {
          class="fixed z-50 transform -translate-x-1/2 -translate-y-full px-2 py-1"
          :style="{ left: quotePos.x + 'px', top: (quotePos.y - 10) + 'px' }">
        <button @click.stop="handleQuote" 
-               class="bg-black dark:bg-white text-white dark:text-black text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform animate-in fade-in zoom-in duration-200">
+               class="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs font-medium px-3 py-1.5 rounded-full shadow-xl flex items-center gap-1.5 hover:scale-105 hover:bg-black dark:hover:bg-white transition-all animate-in fade-in zoom-in duration-200 ring-1 ring-white/20 dark:ring-black/10">
           <UIcon name="i-heroicons-chat-bubble-bottom-center-text" class="w-4 h-4" />
           <span>Quote</span>
        </button>
@@ -139,6 +139,9 @@ function handleContentClick(e: MouseEvent) {
               <button @click.stop="copyContent(i.content, index)" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors" :title="copiedId === index ? 'Copied!' : 'Copy'">
                  <UIcon :name="copiedId === index ? 'i-heroicons-check' : 'i-heroicons-clipboard'" class="w-4 h-4" />
               </button>
+              <button @click.stop="$emit('quote', i.content)" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors" title="Reply">
+                 <UIcon name="i-heroicons-arrow-turn-up-left" class="w-4 h-4" />
+              </button>
            </div>
         </div>
 
@@ -167,6 +170,10 @@ function handleContentClick(e: MouseEvent) {
                   <button @click.stop="copyContent(i.content, index)" class="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
                      <UIcon :name="copiedId === index ? 'i-heroicons-check' : 'i-heroicons-clipboard'" class="w-4 h-4" />
                      <span>{{ copiedId === index ? 'Copied' : 'Copy' }}</span>
+                  </button>
+                  <button @click.stop="$emit('quote', i.content)" class="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                     <UIcon name="i-heroicons-arrow-turn-up-left" class="w-4 h-4" />
+                     <span>Reply</span>
                   </button>
                   <button v-if="index === history.length - 1" @click.stop="$emit('retry')" class="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
                      <UIcon name="i-heroicons-arrow-path" class="w-4 h-4" />

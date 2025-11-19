@@ -251,8 +251,7 @@ const chatInputRef = ref()
 
 function handleQuote(text: string) {
   if (chatInputRef.value) {
-    const quoteText = text.split('\n').map(line => `> ${line}`).join('\n') + '\n\n'
-    chatInputRef.value.setInput(quoteText)
+    chatInputRef.value.setQuote(text)
   }
 }
 </script>
