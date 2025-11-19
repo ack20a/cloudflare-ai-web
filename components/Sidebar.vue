@@ -62,7 +62,7 @@ defineProps<{
          <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-medium text-xs">
             AC
          </div>
-         <div class="flex-1 text-left font-medium">ack20a</div>
+         <div class="flex-1 text-left font-medium">牛永康</div>
       </button>
     </div>
   </aside>
