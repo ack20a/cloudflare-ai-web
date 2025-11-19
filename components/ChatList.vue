@@ -11,10 +11,47 @@ defineProps<{
   loading: boolean
 }>()
 
-const emit = defineEmits(['retry'])
+const emit = defineEmits(['retry', 'quote'])
 
 const { copy, copied } = useClipboard()
 const copiedId = ref<number | null>(null)
+const showQuote = ref(false)
+const quotePos = ref({ x: 0, y: 0 })
+const selectionText = ref('')
+
+function handleMouseUp() {
+  setTimeout(() => {
+      const selection = window.getSelection()
+      if (!selection || selection.isCollapsed || !selection.toString().trim()) {
+        showQuote.value = false
+        return
+      }
+      
+      const text = selection.toString().trim()
+      selectionText.value = text
+      
+      const range = selection.getRangeAt(0)
+      const rect = range.getBoundingClientRect()
+      
+      quotePos.value = {
+        x: rect.left + rect.width / 2,
+        y: rect.top
+      }
+      showQuote.value = true
+  }, 10)
+}
+
+function handleQuote() {
+    emit('quote', selectionText.value)
+    showQuote.value = false
+    window.getSelection()?.removeAllRanges()
+}
+
+// Hide quote button on scroll
+import { useEventListener } from '@vueuse/core'
+useEventListener('scroll', () => {
+    showQuote.value = false
+}, { capture: true })
 
 function copyContent(text: string, id: number) {
   copy(text)
@@ -65,7 +102,16 @@ function handleContentClick(e: MouseEvent) {
 </script>
 
 <template>
-  <div class="flex flex-col space-y-6 pb-32 pt-4" @click="handleContentClick">
+  <div class="flex flex-col space-y-6 pb-32 pt-4" @click="handleContentClick" @mouseup="handleMouseUp">
+    <div v-if="showQuote" 
+         class="fixed z-50 transform -translate-x-1/2 -translate-y-full px-2 py-1"
+         :style="{ left: quotePos.x + 'px', top: (quotePos.y - 10) + 'px' }">
+       <button @click.stop="handleQuote" 
+               class="bg-black dark:bg-white text-white dark:text-black text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform animate-in fade-in zoom-in duration-200">
+          <UIcon name="i-heroicons-chat-bubble-bottom-center-text" class="w-4 h-4" />
+          <span>Quote</span>
+       </button>
+    </div>
     <template v-for="(i,index) in history" :key="i.id">
       <template v-if="!i.content">
         <div class="max-w-3xl mx-auto w-full px-4 flex gap-4">

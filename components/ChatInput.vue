@@ -10,10 +10,27 @@ const fileList = ref<{
 const {openModelSelect} = useGlobalState()
 
 onMounted(() => {
-  addHistory.value = localStorage.getItem('addHistory') === 'true'
+  addHistory.value = localStorage.getItem('addHistory') !== 'false'
 })
 watch(addHistory, () => {
   localStorage.setItem('addHistory', addHistory.value.toString())
+})
+
+function setInput(val: string) {
+  input.value = val
+  nextTick(() => {
+     // Trigger height adjustment
+     const textarea = document.querySelector('textarea')
+     if (textarea) {
+        textarea.style.height = 'auto'
+        textarea.style.height = textarea.scrollHeight + 'px'
+        textarea.focus()
+     }
+  })
+}
+
+defineExpose({
+  setInput
 })
 
 const p = defineProps<{
@@ -112,17 +129,8 @@ const handlePaste = (e: ClipboardEvent) => {
       
       <!-- Attachment Button -->
       <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image')">
-        <button @click="handleAddFiles" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10">
+        <button @click="handleAddFiles" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10 mb-0.5">
           <UIcon name="i-heroicons-paper-clip" class="w-5 h-5" />
-        </button>
-      </UTooltip>
-
-      <!-- History Toggle -->
-      <UTooltip :text="addHistory ? $t('with_history') : $t('without_history')">
-        <button @click="addHistory = !addHistory" 
-                class="p-2 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10"
-                :class="addHistory ? 'text-green-600 dark:text-green-500' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'">
-          <UIcon name="i-heroicons-clock" class="w-5 h-5" />
         </button>
       </UTooltip>
 
@@ -146,11 +154,18 @@ const handlePaste = (e: ClipboardEvent) => {
       <button 
         @click="sendMessage" 
         :disabled="loading || (!input.trim() && fileList.length === 0)"
-        class="p-2 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-1"
+        class="p-1.5 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-1.5"
         :class="input.trim() || fileList.length > 0 ? 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80' : 'bg-transparent text-gray-400 dark:text-gray-500'"
       >
-        <UIcon name="i-heroicons-arrow-up" class="w-6 h-6" />
+        <UIcon name="i-heroicons-arrow-up" class="w-5 h-5" />
       </button>
+    </div>
+    
+    <div class="text-center mt-2">
+       <button @click="addHistory = !addHistory" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex items-center justify-center gap-1 mx-auto transition-colors">
+          <UIcon :name="addHistory ? 'i-heroicons-clock' : 'i-heroicons-no-symbol'" class="w-3 h-3" />
+          <span>{{ addHistory ? $t('with_history') : $t('without_history') }}</span>
+       </button>
     </div>
   </div>
 </template>

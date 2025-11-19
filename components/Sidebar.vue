@@ -37,8 +37,9 @@ defineProps<{
 
     <!-- Chat List -->
     <div class="flex-1 overflow-y-auto px-2 pb-2 space-y-1 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
+      <div v-if="tabs.length > 0" class="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400">Today</div>
       <div v-for="i in tabs" :key="i.id" 
-           class="group relative flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer text-sm transition-all"
+           class="group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm transition-all"
            :class="[i.id === selected ? 'bg-gray-200 dark:bg-white/10 text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/5']"
            @click="handleSwitchChat" :data-id="i.id">
         <div class="truncate flex-1" :data-id="i.id">{{ i.label }}</div>
@@ -57,10 +58,12 @@ defineProps<{
 
     <!-- Bottom Section (User/Settings) -->
     <div class="p-3 border-t border-gray-200 dark:border-white/10">
-      <button @click="toggleDark()" 
-              class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-200">
-        <UIcon :name="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'" class="w-4 h-4" />
-        <span>{{ isDark ? 'Dark mode' : 'Light mode' }}</span>
+      <button class="w-full flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-sm text-gray-700 dark:text-gray-200 mb-1">
+         <div class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white font-medium text-xs">
+            U
+         </div>
+         <div class="flex-1 text-left font-medium">User</div>
+         <UIcon name="i-heroicons-ellipsis-horizontal" class="w-5 h-5 text-gray-500" />
       </button>
     </div>
   </aside>

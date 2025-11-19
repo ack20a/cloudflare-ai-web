@@ -246,26 +246,39 @@ async function handleRetry() {
       break
   }
 }
+
+const chatInputRef = ref()
+
+function handleQuote(text: string) {
+  if (chatInputRef.value) {
+    const quoteText = text.split('\n').map(line => `> ${line}`).join('\n') + '\n\n'
+    chatInputRef.value.setInput(quoteText)
+  }
+}
 </script>
 
 <template>
-  <div class="flex h-full w-full overflow-hidden bg-white dark:bg-gray-900">
+  <div class="flex h-full w-full overflow-hidden bg-white dark:bg-[#212121]">
     <Sidebar :tabs="tabs" :selected="selectedTab" :handle-delete="handleDelete" :handle-new-chat="handleNewChat"
              :handle-switch-chat="handleSwitchChat"/>
     
     <main class="flex-1 flex flex-col h-full relative min-w-0">
       <!-- Top Bar -->
-      <div class="h-14 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 z-10">
+      <div class="h-14 flex items-center justify-between px-4 bg-white dark:bg-[#212121] z-10">
          <div class="flex items-center gap-2">
-           <button @click="openAside = !openAside" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
+           <button @click="openAside = !openAside" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
               <UIcon name="i-heroicons-bars-3" class="w-5 h-5" />
            </button>
-           <button @click="openModelSelect = true" class="flex items-center gap-2 px-3 py-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-gray-700 dark:text-gray-200">
+           <button @click="openModelSelect = true" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2f2f2f] transition-colors font-medium text-gray-700 dark:text-gray-200 text-lg">
              <span>{{ selectedModel.name }}</span>
              <UIcon name="i-heroicons-chevron-down" class="w-4 h-4 text-gray-500" />
            </button>
          </div>
-         <div class="w-8"></div> 
+         <div class="flex items-center gap-2">
+            <button class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+               <UIcon name="i-heroicons-share" class="w-5 h-5" />
+            </button>
+         </div> 
       </div>
 
       <USkeleton v-if="initializing" class="h-24 w-3/5 self-center rounded-xl mt-20"/>
@@ -273,44 +286,43 @@ async function handleRetry() {
       <template v-else>
         <!-- Welcome Screen -->
         <div v-if="history.length === 0" class="flex-1 flex flex-col items-center justify-center p-4 text-center">
-           <div class="w-16 h-16 bg-white dark:bg-gray-800 rounded-full shadow-sm flex items-center justify-center mb-6">
-              <UIcon name="i-heroicons-sparkles" class="w-8 h-8 text-gray-900 dark:text-white" />
+           <div class="w-12 h-12 bg-white dark:bg-white/10 rounded-full shadow-sm flex items-center justify-center mb-6">
+              <UIcon name="i-heroicons-sparkles" class="w-6 h-6 text-gray-900 dark:text-white" />
            </div>
-           <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">How can I help you today?</h2>
            
            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 max-w-2xl w-full">
               <button @click="handleSend('Explain quantum computing in simple terms', true, [])" 
-                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1">Explain quantum computing</div>
-                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">in simple terms</div>
+                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">Explain quantum computing</div>
+                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">in simple terms</div>
               </button>
               <button @click="handleSend('Write a python script to scrape a website', true, [])"
-                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1">Write a python script</div>
-                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to scrape a website</div>
+                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">Write a python script</div>
+                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to scrape a website</div>
               </button>
               <button @click="handleSend('How do I make a HTTP request in Javascript?', true, [])"
-                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1">HTTP request in JS</div>
-                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">using fetch or axios</div>
+                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">HTTP request in JS</div>
+                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">using fetch or axios</div>
               </button>
               <button @click="handleSend('Help me plan a trip to Japan', true, [])"
-                      class="p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-all hover:shadow-md hover:-translate-y-0.5 group">
-                 <div class="font-medium text-gray-900 dark:text-white mb-1">Plan a trip</div>
-                 <div class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to Japan for 2 weeks</div>
+                      class="p-4 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-left transition-all hover:shadow-md group">
+                 <div class="font-medium text-gray-900 dark:text-white mb-1 text-sm">Plan a trip</div>
+                 <div class="text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">to Japan for 2 weeks</div>
               </button>
            </div>
         </div>
 
         <!-- Chat Area -->
         <div v-else class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
-          <ChatList :history="history" :loading="loading" @retry="handleRetry"/>
+          <ChatList :history="history" :loading="loading" @retry="handleRetry" @quote="handleQuote"/>
         </div>
 
         <!-- Input Area -->
-        <div class="p-4 bg-white dark:bg-gray-900">
+        <div class="p-4 bg-white dark:bg-[#212121]">
           <div class="max-w-3xl mx-auto">
-             <ChatInput :session="session" :loading="loading" :selected-model="selectedModel"
+             <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
                         :handle-send="handleSend"/>
              <div class="text-xs text-center text-gray-400 mt-2">
                 AI can make mistakes. Consider checking important information.
