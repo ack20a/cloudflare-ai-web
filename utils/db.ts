@@ -69,7 +69,7 @@ export const uniModals: Model[] = [
 {id: 'bytedance/seed-oss-36b-instruct', name: '豆包 36B', provider: 'openai', type: 'chat' },
 {id: 'qwen/qwen3-next-80b-a3b-thinking', name: 'Qwen 3 Next 80B', provider: 'openai', type: 'chat' },
 {id: 'minimaxai/minimax-m2', name: 'MiniMax M2', provider: 'openai', type: 'chat' },
-{id: 'deepseek-ai/deepseek-v3.1-terminus', name: 'DeepSeek-Terminus', provider: 'openai', type: 'chat' },
+{id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1-0120', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
