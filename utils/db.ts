@@ -63,6 +63,7 @@ export const uniModals: Model[] = [
 {id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', provider: 'openai', type: 'universal' },
 {id: 'gemini-flash-latest', name: 'Gemini 2.5 Flash', provider: 'openai', type: 'universal' },
 {id: 'Gemini-3.0-Pro', name: 'Gemini 3.0 Pro', provider: 'openai', type: 'universal' },
+{id: 'mistralai/mistral-large-3-675b-instruct-2512', name: 'Mistral Large 3 675B Instruct 2512', provider: 'openai', type: 'universal' },
 {id: 'grok-4.1-fast-reasoning', name: 'Grok 4.1 Fast Reasoning', provider: 'openai', type: 'universal' },
 {id: 'openai/gpt-oss-120b', name: 'GPT OSS 120B', provider: 'openai', type: 'chat' },
 {id: 'fast-gpt-oss-120b', name: '[Fast]GPT OSS 120B', provider: 'openai', type: 'chat' },
