@@ -65,7 +65,7 @@ export const uniModals: Model[] = [
 {id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', provider: 'openai', type: 'universal' },
 {id: 'z-ai/glm4.7', name: 'GLM-4.7', provider: 'openai', type: 'chat' },
 {id: 'openai/gpt-oss-120b', name: 'GPT OSS 120B', provider: 'openai', type: 'chat' },
-{id: 'deepseek-ai/deepseek-r1', name: 'DeepSeek-R1-0120', provider: 'openai', type: 'chat' },
+{id: 'deepseek-ai/deepseek-v3.2', name: 'DeepSeek-V3.2', provider: 'openai', type: 'chat' },
 ];
 
 export const textGenModels: Model[] = [
