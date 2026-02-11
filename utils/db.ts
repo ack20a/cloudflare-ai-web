@@ -60,10 +60,10 @@ export class Database extends Dexie {
 export const DB = new Database();
 
 export const uniModals: Model[] = [
-{id: 'gemini-flash-latest', name: 'Gemini 2.5 Flash', provider: 'openai', type: 'universal' },
-{id: 'Gemini-3.0-Pro', name: 'Gemini 3.0 Pro', provider: 'openai', type: 'universal' },
+{id: 'gemini-3-pro-high', name: 'Gemini 3 Pro High', provider: 'openai', type: 'universal' },
+{id: 'claude-sonnet-4-5', name: 'Claude Sonnet 4.5', provider: 'openai', type: 'universal' },
+{id: 'gemini-3-pro-image', name: 'Nanobanana Pro', provider: 'openai', type: 'universal' },
 {id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', provider: 'openai', type: 'universal' },
-{id: 'z-ai/glm4.7', name: 'GLM-4.7', provider: 'openai', type: 'chat' },
 {id: 'openai/gpt-oss-120b', name: 'GPT OSS 120B', provider: 'openai', type: 'chat' },
 {id: 'deepseek-ai/deepseek-v3.2', name: 'DeepSeek-V3.2', provider: 'openai', type: 'chat' },
 ];
