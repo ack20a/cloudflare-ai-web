@@ -188,11 +188,11 @@ const handlePaste = (e: ClipboardEvent) => {
 }
 
 .quote-preview {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
   padding: var(--space-3);
-  border: 1px solid var(--color-neutral-200);
+  border: 1px solid var(--color-outline-soft);
   border-radius: var(--radius-md);
-  background: var(--color-neutral-50);
+  background: var(--color-surface-container);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -212,7 +212,7 @@ const handlePaste = (e: ClipboardEvent) => {
   width: var(--space-6);
   height: var(--space-6);
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-neutral-400);
   display: inline-flex;
@@ -223,14 +223,14 @@ const handlePaste = (e: ClipboardEvent) => {
 }
 
 .quote-clear-btn:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-high);
   color: var(--color-neutral-900);
 }
 
 .file-list {
   display: flex;
   gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
   overflow-x: auto;
   padding-bottom: var(--space-2);
 }
@@ -244,8 +244,9 @@ const handlePaste = (e: ClipboardEvent) => {
   width: var(--space-16);
   height: var(--space-16);
   object-fit: cover;
-  border: 1px solid var(--color-neutral-200);
+  border: 1px solid var(--color-outline-soft);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-level-1);
 }
 
 .file-remove-btn {
@@ -255,7 +256,7 @@ const handlePaste = (e: ClipboardEvent) => {
   width: var(--space-6);
   height: var(--space-6);
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--color-neutral-900) 80%, transparent);
   color: var(--color-neutral-0);
   display: inline-flex;
@@ -268,24 +269,24 @@ const handlePaste = (e: ClipboardEvent) => {
   display: flex;
   align-items: flex-end;
   gap: var(--space-2);
-  padding: var(--space-2);
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
-  background: var(--color-neutral-0);
-  transition: border-color var(--duration-fast) ease;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  border: 1px solid var(--color-outline);
+  border-radius: calc(var(--radius-md) + var(--space-1));
+  background: var(--color-surface-low);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-neutral-0) 45%, transparent);
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
 }
 
 .composer:focus-within {
   border-color: var(--color-primary);
-  outline: 2px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
-  outline-offset: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 24%, transparent);
 }
 
 .composer-icon-btn {
-  width: var(--space-8);
-  height: var(--space-8);
+  width: calc(var(--space-8) + var(--space-1));
+  height: calc(var(--space-8) + var(--space-1));
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-neutral-500);
   display: inline-flex;
@@ -296,7 +297,7 @@ const handlePaste = (e: ClipboardEvent) => {
 }
 
 .composer-icon-btn:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-container);
   color: var(--color-neutral-900);
 }
 
@@ -309,7 +310,7 @@ const handlePaste = (e: ClipboardEvent) => {
   color: var(--color-neutral-900);
   font-size: var(--text-base);
   line-height: 1.5;
-  padding-top: var(--space-2);
+  padding-top: var(--space-3);
   padding-right: 0;
   padding-bottom: var(--space-2);
   padding-left: 0;
@@ -322,18 +323,19 @@ const handlePaste = (e: ClipboardEvent) => {
 }
 
 .send-btn {
-  width: var(--space-8);
-  height: var(--space-8);
+  width: calc(var(--space-8) + var(--space-1));
+  height: calc(var(--space-8) + var(--space-1));
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease, filter var(--duration-fast) ease;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease, transform var(--duration-fast) ease;
 }
 
 .send-btn--idle {
-  background: transparent;
+  background: var(--color-surface-card);
+  border-color: var(--color-outline-soft);
   color: var(--color-neutral-400);
 }
 
@@ -341,35 +343,39 @@ const handlePaste = (e: ClipboardEvent) => {
   background: var(--color-primary);
   border-color: var(--color-primary);
   color: var(--color-neutral-0);
+  box-shadow: var(--shadow-level-1);
 }
 
 .send-btn--active:hover:not(:disabled) {
-  filter: brightness(0.9);
+  background: var(--color-primary-strong);
+  border-color: var(--color-primary-strong);
+  transform: translateY(-1px);
 }
 
 .history-toggle-wrap {
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
   display: flex;
   justify-content: center;
 }
 
 .history-toggle-btn {
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-low);
   color: var(--color-neutral-400);
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   cursor: pointer;
   font-size: var(--text-xs);
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, color var(--duration-fast) ease;
 }
 
 .history-toggle-btn:hover {
-  background: var(--color-neutral-100);
-  color: var(--color-neutral-500);
+  border-color: var(--color-outline);
+  background: var(--color-surface-container);
+  color: var(--color-neutral-700);
 }
 
 .icon-16 {
@@ -380,5 +386,16 @@ const handlePaste = (e: ClipboardEvent) => {
 .icon-20 {
   width: var(--space-5);
   height: var(--space-5);
+}
+
+@media (max-width: 767px) {
+  .composer {
+    border-radius: calc(var(--radius-md) + var(--space-2));
+  }
+
+  .file-thumb {
+    width: var(--space-14);
+    height: var(--space-14);
+  }
 }
 </style>

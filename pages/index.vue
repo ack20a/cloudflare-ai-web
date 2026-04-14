@@ -293,9 +293,12 @@ function handleQuote(text: string) {
             <UIcon name="i-heroicons-chevron-down" class="icon-16"/>
           </button>
         </div>
-        <button class="icon-btn" type="button">
-          <UIcon name="i-heroicons-share" class="icon-20"/>
-        </button>
+        <div class="top-bar-right">
+          <div class="top-chip">{{ tabs.length }} Chats</div>
+          <button class="icon-btn" type="button">
+            <UIcon name="i-heroicons-share" class="icon-20"/>
+          </button>
+        </div>
       </div>
 
       <USkeleton v-if="initializing" class="init-skeleton"/>
@@ -307,6 +310,7 @@ function handleQuote(text: string) {
               <UIcon name="i-heroicons-sparkles" class="icon-20"/>
             </div>
             <h2 class="welcome-title">我们先从哪里开始呢？</h2>
+            <p class="welcome-subtitle">以对话方式创建内容、代码和图像，界面已升级为 Material You 风格。</p>
           </div>
 
           <div class="welcome-input">
@@ -329,8 +333,10 @@ function handleQuote(text: string) {
         </div>
 
         <div v-else class="chat-area">
-          <div class="chat-list" id="chatList">
-            <ChatList :history="history" :loading="loading" @retry="handleRetry" @quote="handleQuote"/>
+          <div class="chat-list-panel">
+            <div class="chat-list" id="chatList">
+              <ChatList :history="history" :loading="loading" @retry="handleRetry" @quote="handleQuote"/>
+            </div>
           </div>
 
           <div class="input-area">
@@ -357,7 +363,9 @@ function handleQuote(text: string) {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background: var(--color-neutral-0);
+  background: var(--color-surface-base);
+  gap: var(--space-3);
+  padding: var(--space-3);
 }
 
 .page-main {
@@ -367,20 +375,27 @@ function handleQuote(text: string) {
   flex: 1;
   flex-direction: column;
   height: 100%;
-  background: var(--color-neutral-0);
+  background: var(--color-surface-low);
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-level-1);
+  overflow: hidden;
 }
 
 .top-bar {
-  height: var(--space-14);
+  min-height: var(--space-14);
+  margin: var(--space-3);
   padding-top: var(--space-2);
   padding-bottom: var(--space-2);
-  padding-left: max(var(--space-4), env(safe-area-inset-left));
-  padding-right: max(var(--space-4), env(safe-area-inset-right));
-  border-bottom: 1px solid var(--color-neutral-200);
+  padding-left: max(var(--space-3), env(safe-area-inset-left));
+  padding-right: max(var(--space-3), env(safe-area-inset-right));
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-level-1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--color-neutral-0);
+  background: var(--color-surface-card);
   z-index: 10;
 }
 
@@ -390,10 +405,30 @@ function handleQuote(text: string) {
   gap: var(--space-2);
 }
 
-.model-btn {
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.top-chip {
+  display: inline-flex;
+  align-items: center;
   height: var(--space-8);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-outline);
+  background: var(--color-surface-container);
+  color: var(--color-neutral-500);
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.model-btn {
+  height: calc(var(--space-8) + var(--space-1));
   padding-right: var(--space-4);
   padding-left: var(--space-4);
+  border-radius: var(--radius-pill);
 }
 
 .icon-16 {
@@ -407,7 +442,7 @@ function handleQuote(text: string) {
 }
 
 .init-skeleton {
-  margin-top: var(--space-12);
+  margin-top: var(--space-10);
   align-self: center;
   width: 60%;
   height: var(--space-12);
@@ -421,7 +456,7 @@ function handleQuote(text: string) {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--space-4);
+  padding: var(--space-8) var(--space-4);
   gap: var(--space-8);
 }
 
@@ -433,26 +468,33 @@ function handleQuote(text: string) {
 }
 
 .welcome-logo {
-  width: var(--space-12);
-  height: var(--space-12);
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-md);
+  width: calc(var(--space-12) + var(--space-2));
+  height: calc(var(--space-12) + var(--space-2));
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, var(--color-outline));
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-primary);
-  background: var(--color-neutral-0);
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
+  box-shadow: var(--shadow-level-1);
 }
 
 .welcome-title {
-  font-size: var(--text-xl);
-  font-weight: 600;
+  font-size: var(--text-2xl);
+  font-weight: 700;
   color: var(--color-neutral-900);
+}
+
+.welcome-subtitle {
+  max-width: calc(var(--space-16) * 8);
+  color: var(--color-neutral-500);
+  font-size: var(--text-base);
 }
 
 .welcome-input {
   width: 100%;
-  max-width: var(--layout-main-max);
+  max-width: calc(var(--space-16) * 10);
   padding-left: var(--space-4);
   padding-right: var(--space-4);
 }
@@ -461,11 +503,13 @@ function handleQuote(text: string) {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .quick-action-btn {
-  min-width: calc(var(--space-16) + var(--space-14));
+  min-width: calc(var(--space-16) * 3);
+  min-height: calc(var(--space-8) + var(--space-2));
+  border-radius: var(--radius-pill);
 }
 
 .chat-area {
@@ -473,33 +517,105 @@ function handleQuote(text: string) {
   flex: 1;
   flex-direction: column;
   overflow: hidden;
+  padding-right: var(--space-3);
+  padding-left: var(--space-3);
+  padding-bottom: var(--space-3);
+  gap: var(--space-3);
+}
+
+.chat-list-panel {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-level-1);
+  overflow: hidden;
 }
 
 .chat-list {
   position: relative;
   flex: 1;
+  height: 100%;
   overflow-y: auto;
 }
 
 .input-area {
-  padding-top: var(--space-4);
-  padding-right: var(--space-4);
+  padding-top: 0;
+  padding-right: 0;
   padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
-  padding-left: var(--space-4);
-  border-top: 1px solid var(--color-neutral-200);
-  background: var(--color-neutral-0);
+  padding-left: 0;
 }
 
 .input-container {
   max-width: var(--layout-main-max);
   margin: 0 auto;
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-3);
 }
 
 .input-note {
   margin-top: var(--space-2);
   text-align: center;
-  color: var(--color-neutral-400);
+  color: var(--color-neutral-500);
   font-size: var(--text-xs);
+}
+
+@media (max-width: 767px) {
+  .page-shell {
+    padding: 0;
+    gap: 0;
+  }
+
+  .page-main {
+    border-radius: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .top-bar {
+    margin: 0;
+    border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: none;
+  }
+
+  .top-chip {
+    display: none;
+  }
+
+  .welcome-title {
+    font-size: var(--text-xl);
+  }
+
+  .welcome-subtitle {
+    font-size: var(--text-sm);
+  }
+
+  .chat-area {
+    padding: 0;
+    gap: 0;
+  }
+
+  .chat-list-panel {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .input-area {
+    padding: var(--space-3) var(--space-3) calc(var(--space-4) + env(safe-area-inset-bottom));
+  }
+
+  .input-container {
+    border-radius: calc(var(--radius-md) + var(--space-1));
+  }
 }
 
 </style>

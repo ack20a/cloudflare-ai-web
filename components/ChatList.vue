@@ -198,9 +198,9 @@ function handleContentClick(e: MouseEvent) {
 .chat-list-root {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  padding-top: var(--space-4);
-  padding-bottom: var(--space-16);
+  gap: var(--space-7);
+  padding-top: var(--space-5);
+  padding-bottom: calc(var(--space-16) + var(--space-3));
 }
 
 .quote-float {
@@ -212,6 +212,7 @@ function handleContentClick(e: MouseEvent) {
 }
 
 .quote-btn {
+  border-radius: var(--radius-pill);
   box-shadow: var(--shadow-level-2);
 }
 
@@ -219,7 +220,7 @@ function handleContentClick(e: MouseEvent) {
   width: 100%;
   max-width: var(--layout-main-max);
   margin: 0 auto;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-5);
 }
 
 .loading-row {
@@ -230,16 +231,17 @@ function handleContentClick(e: MouseEvent) {
 
 .loading-skeleton {
   width: 75%;
-  height: var(--space-4);
+  height: var(--space-6);
+  border-radius: var(--radius-md);
 }
 
 .assistant-avatar {
   width: var(--space-8);
   height: var(--space-8);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-neutral-200);
-  color: var(--color-secondary);
-  background: var(--color-neutral-0);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-outline-soft);
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -247,8 +249,8 @@ function handleContentClick(e: MouseEvent) {
 }
 
 .assistant-avatar--loading {
-  background: var(--color-secondary);
-  border-color: var(--color-secondary);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: var(--color-neutral-0);
 }
 
@@ -266,14 +268,15 @@ function handleContentClick(e: MouseEvent) {
 
 .user-bubble {
   max-width: 85%;
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-md);
-  background: var(--color-neutral-100);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 28%, var(--color-outline));
+  border-radius: calc(var(--radius-md) + var(--space-1));
+  background: var(--color-primary-soft);
+  box-shadow: var(--shadow-level-1);
   padding: var(--space-3) var(--space-4);
 }
 
 .user-text {
-  color: var(--color-neutral-900);
+  color: var(--color-primary-strong);
   white-space: pre-wrap;
   line-height: 1.5;
 }
@@ -282,6 +285,11 @@ function handleContentClick(e: MouseEvent) {
   flex: 1;
   min-width: 0;
   overflow: hidden;
+  border: 1px solid var(--color-outline-soft);
+  border-radius: calc(var(--radius-md) + var(--space-1));
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-4);
 }
 
 .image-grid {
@@ -292,15 +300,15 @@ function handleContentClick(e: MouseEvent) {
 
 .chat-image {
   max-height: calc(var(--space-16) * 6);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-neutral-200);
+  border-radius: calc(var(--radius-md) + var(--space-1));
+  border: 1px solid var(--color-outline-soft);
   cursor: pointer;
 }
 
 .error-box {
   border: 1px solid var(--color-error);
-  border-radius: var(--radius-sm);
-  background: var(--color-neutral-0);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-error) 8%, var(--color-surface-card));
   color: var(--color-error);
   padding: var(--space-3);
 }
@@ -324,7 +332,7 @@ function handleContentClick(e: MouseEvent) {
   width: var(--space-6);
   height: var(--space-6);
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-neutral-400);
   display: inline-flex;
@@ -335,26 +343,27 @@ function handleContentClick(e: MouseEvent) {
 }
 
 .message-action-btn:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-container);
   color: var(--color-neutral-900);
 }
 
 .message-action-text-btn {
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-low);
   color: var(--color-neutral-400);
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   font-size: var(--text-xs);
   cursor: pointer;
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, color var(--duration-fast) ease;
 }
 
 .message-action-text-btn:hover {
-  background: var(--color-neutral-100);
+  border-color: var(--color-outline);
+  background: var(--color-surface-container);
   color: var(--color-neutral-900);
 }
 
@@ -399,10 +408,10 @@ function handleContentClick(e: MouseEvent) {
 :deep(.markdown-content .code-block-wrapper) {
   margin-top: var(--space-4);
   margin-bottom: var(--space-4);
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-outline-soft);
+  border-radius: calc(var(--radius-md) + var(--space-1));
   overflow: hidden;
-  background: var(--color-neutral-0);
+  background: var(--color-surface-card);
 }
 
 :deep(.markdown-content .code-block-header) {
@@ -410,8 +419,8 @@ function handleContentClick(e: MouseEvent) {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-2) var(--space-4);
-  border-bottom: 1px solid var(--color-neutral-200);
-  background: var(--color-neutral-50);
+  border-bottom: 1px solid var(--color-outline-soft);
+  background: var(--color-surface-container);
 }
 
 :deep(.markdown-content .code-lang) {
@@ -421,17 +430,17 @@ function handleContentClick(e: MouseEvent) {
 }
 
 :deep(.markdown-content .copy-btn) {
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-sm);
-  background: var(--color-neutral-0);
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-card);
   color: var(--color-neutral-500);
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   font-size: var(--text-xs);
   cursor: pointer;
 }
 
 :deep(.markdown-content .copy-btn:hover) {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-high);
   color: var(--color-neutral-900);
 }
 
@@ -439,13 +448,13 @@ function handleContentClick(e: MouseEvent) {
   margin: 0;
   padding: var(--space-4);
   overflow-x: auto;
-  background: var(--color-neutral-0);
+  background: var(--color-surface-low);
 }
 
 :deep(.markdown-content code) {
-  border: 1px solid var(--color-neutral-200);
+  border: 1px solid var(--color-outline-soft);
   border-radius: var(--radius-sm);
-  background: var(--color-neutral-50);
+  background: var(--color-surface-container);
   color: var(--color-neutral-900);
   font-size: var(--text-sm);
   padding: 0 var(--space-1);
@@ -456,5 +465,33 @@ function handleContentClick(e: MouseEvent) {
   border-radius: 0;
   background: transparent;
   padding: 0;
+}
+
+@media (max-width: 767px) {
+  .chat-list-root {
+    gap: var(--space-5);
+    padding-top: var(--space-4);
+  }
+
+  .message-container {
+    padding: 0 var(--space-3);
+  }
+
+  .assistant-message-group {
+    gap: var(--space-2);
+  }
+
+  .assistant-content {
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+  }
+
+  .user-bubble {
+    max-width: 92%;
+  }
+
+  .message-actions {
+    opacity: 1;
+  }
 }
 </style>

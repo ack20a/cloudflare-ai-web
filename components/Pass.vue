@@ -29,17 +29,19 @@ function handlePass() {
 <style scoped>
 .pass-panel {
   padding: var(--space-4);
-  background: var(--color-neutral-0);
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-outline-soft);
+  border-radius: calc(var(--radius-md) + var(--space-1));
+  box-shadow: var(--shadow-level-2);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .pass-label {
-  color: var(--color-neutral-900);
+  color: var(--color-neutral-500);
   font-size: var(--text-sm);
+  font-weight: 600;
 }
 
 .pass-row {
@@ -50,9 +52,13 @@ function handlePass() {
 
 .pass-input {
   flex: 1;
+  border-radius: var(--radius-pill);
+  padding-right: var(--space-4);
+  padding-left: var(--space-4);
 }
 
 .pass-submit {
   min-width: calc(var(--space-16) + var(--space-6));
+  border-radius: var(--radius-pill);
 }
 </style>

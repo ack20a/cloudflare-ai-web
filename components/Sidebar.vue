@@ -18,6 +18,10 @@ defineProps<{
 
   <aside class="sidebar" :class="openAside ? 'sidebar--open' : 'sidebar--closed'">
     <div class="sidebar-header">
+      <div class="sidebar-title">
+        <span class="sidebar-title-dot"></span>
+        <span>AI Studio</span>
+      </div>
       <button @click="handleNewChat" class="btn btn-secondary new-chat-btn" type="button">
         <div class="new-chat-label">
           <div class="new-chat-icon-wrap">
@@ -67,7 +71,8 @@ defineProps<{
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: color-mix(in srgb, var(--color-neutral-900) 35%, transparent);
+  backdrop-filter: blur(2px);
+  background: color-mix(in srgb, var(--color-neutral-900) 48%, transparent);
 }
 
 .aside-mask--visible {
@@ -82,8 +87,8 @@ defineProps<{
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--color-neutral-50);
-  border-right: 1px solid var(--color-neutral-200);
+  background: var(--color-surface-low);
+  border-right: 1px solid var(--color-outline-soft);
   transition: width var(--duration-base) ease, transform var(--duration-base) ease, opacity var(--duration-base) ease;
 }
 
@@ -101,10 +106,31 @@ defineProps<{
 }
 
 .sidebar-header {
-  padding-top: var(--space-3);
+  padding-top: var(--space-4);
   padding-right: var(--space-3);
-  padding-bottom: 0;
+  padding-bottom: var(--space-2);
   padding-left: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sidebar-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-neutral-500);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sidebar-title-dot {
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
 }
 
 .new-chat-btn {
@@ -112,6 +138,8 @@ defineProps<{
   justify-content: space-between;
   padding-right: var(--space-3);
   padding-left: var(--space-3);
+  min-height: calc(var(--space-8) + var(--space-1));
+  border-radius: var(--radius-pill);
 }
 
 .new-chat-label {
@@ -123,13 +151,13 @@ defineProps<{
 .new-chat-icon-wrap {
   width: var(--space-6);
   height: var(--space-6);
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 24%, var(--color-outline));
+  border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-primary);
-  background: var(--color-neutral-0);
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
 }
 
 .new-chat-edit-icon {
@@ -139,15 +167,17 @@ defineProps<{
 .tab-list {
   flex: 1;
   overflow-y: auto;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-3) var(--space-3);
 }
 
 .tab-list-title {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
   padding: var(--space-1) var(--space-2);
   color: var(--color-neutral-500);
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .tab-item {
@@ -155,11 +185,12 @@ defineProps<{
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2);
-  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   color: var(--color-neutral-500);
   cursor: pointer;
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, color var(--duration-fast) ease;
 }
 
 .tab-item + .tab-item {
@@ -167,13 +198,15 @@ defineProps<{
 }
 
 .tab-item:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-container);
   color: var(--color-neutral-900);
 }
 
 .tab-item--active {
-  background: var(--color-neutral-100);
-  color: var(--color-neutral-900);
+  background: var(--color-primary-soft);
+  border-color: color-mix(in srgb, var(--color-primary) 34%, var(--color-outline));
+  color: var(--color-primary-strong);
+  box-shadow: var(--shadow-level-1);
 }
 
 .tab-label {
@@ -190,7 +223,7 @@ defineProps<{
   height: var(--space-6);
   padding: var(--space-1);
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-neutral-400);
   display: inline-flex;
@@ -201,7 +234,7 @@ defineProps<{
 }
 
 .tab-delete-btn:hover {
-  background: var(--color-neutral-0);
+  background: var(--color-surface-card);
   color: var(--color-error);
 }
 
@@ -210,15 +243,15 @@ defineProps<{
   padding-right: var(--space-3);
   padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
   padding-left: var(--space-3);
-  border-top: 1px solid var(--color-neutral-200);
+  border-top: 1px solid var(--color-outline-soft);
 }
 
 .profile-btn {
   width: 100%;
   padding: var(--space-2);
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
   color: var(--color-neutral-500);
   display: inline-flex;
   align-items: center;
@@ -228,14 +261,14 @@ defineProps<{
 }
 
 .profile-btn:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-container);
   color: var(--color-neutral-900);
 }
 
 .profile-avatar {
   width: var(--space-8);
   height: var(--space-8);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: var(--color-secondary);
   color: var(--color-neutral-0);
   display: inline-flex;
@@ -266,6 +299,11 @@ defineProps<{
   .sidebar {
     position: relative;
     z-index: 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-outline-soft);
+    box-shadow: var(--shadow-level-1);
+    overflow: hidden;
+    height: 100%;
   }
 
   .sidebar--open,
@@ -274,6 +312,12 @@ defineProps<{
     transform: translateX(0);
     opacity: 1;
     overflow: visible;
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    width: min(84vw, calc(var(--space-16) * 5));
   }
 }
 </style>

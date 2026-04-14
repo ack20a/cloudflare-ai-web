@@ -67,9 +67,10 @@ function onSelect(option: { id: string }) {
 <style scoped>
 .model-panel {
   padding: var(--space-4);
-  border: 1px solid var(--color-neutral-200);
-  border-radius: var(--radius-md);
-  background: var(--color-neutral-0);
+  border: 1px solid var(--color-outline-soft);
+  border-radius: calc(var(--radius-md) + var(--space-1));
+  background: var(--color-surface-card);
+  box-shadow: var(--shadow-level-2);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -81,12 +82,18 @@ function onSelect(option: { id: string }) {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-outline-soft);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-low);
 }
 
 .model-group-title {
   color: var(--color-neutral-500);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .model-options {
@@ -97,27 +104,28 @@ function onSelect(option: { id: string }) {
 
 .model-option {
   width: 100%;
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-sm);
-  background: var(--color-neutral-0);
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-card);
   color: var(--color-neutral-900);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
   line-height: 1.5;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, color var(--duration-fast) ease;
 }
 
 .model-option:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-container);
 }
 
 .model-option--active {
   border-color: var(--color-primary);
-  background: var(--color-neutral-50);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-strong);
 }
 
 .icon-16 {
