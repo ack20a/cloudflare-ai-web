@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import {useDark, useToggle} from "@vueuse/core";
 import {useGlobalState} from "~/utils/store";
 
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 const {openAside} = useGlobalState()
 onMounted(() => {
   const open = localStorage.getItem('openAside')
@@ -19,12 +16,35 @@ function handleReload() {
 </script>
 
 <template>
-  <header class="blur-global dark:bg-neutral-800 shadow h-16 fixed w-full z-30 rounded-b-lg">
-    <UContainer class="h-full flex items-center">
+  <header class="app-header">
+    <UContainer class="app-header__inner">
       <IButton name="i-heroicons-bars-3-20-solid" @click="openAside = !openAside"/>
-      <h1 @click="handleReload" class="text-lg font-bold ml-2 hover:cursor-pointer">永康 AI Web</h1>
-      <IButton class="ml-auto" :name="isDark ? 'i-heroicons-moon' : 'i-heroicons-sun'"
-               @click="toggleDark()"/>
+      <h1 @click="handleReload" class="app-header__title">永康 AI Web</h1>
     </UContainer>
   </header>
 </template>
+
+<style scoped>
+.app-header {
+  position: fixed;
+  z-index: 30;
+  width: 100%;
+  height: var(--space-16);
+  background: var(--color-neutral-0);
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.app-header__inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.app-header__title {
+  margin-left: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-neutral-900);
+  cursor: pointer;
+}
+</style>

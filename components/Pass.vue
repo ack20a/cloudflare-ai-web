@@ -13,14 +13,46 @@ function handlePass() {
 
 <template>
   <UModal v-model="passModal">
-    <div class="p-4 flex flex-col space-y-2">
-      <div>
+    <div class="pass-panel">
+      <div class="pass-label">
         {{ $t('input_password') }}
       </div>
-      <div class="flex space-x-2">
-        <UInput v-model.trim="access_pass" type="password" @keydown.enter="handlePass" class="flex-1"/>
-        <UButton @click="handlePass">{{ $t('confirm') }}</UButton>
+
+      <div class="pass-row">
+        <input v-model.trim="access_pass" type="password" @keydown.enter="handlePass" class="input-field pass-input">
+        <button @click="handlePass" class="btn btn-primary pass-submit" type="button">{{ $t('confirm') }}</button>
       </div>
     </div>
   </UModal>
 </template>
+
+<style scoped>
+.pass-panel {
+  padding: var(--space-4);
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pass-label {
+  color: var(--color-neutral-900);
+  font-size: var(--text-sm);
+}
+
+.pass-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pass-input {
+  flex: 1;
+}
+
+.pass-submit {
+  min-width: calc(var(--space-16) + var(--space-6));
+}
+</style>

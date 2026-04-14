@@ -249,6 +249,27 @@ async function handleRetry() {
 
 const chatInputRef = ref()
 
+const quickActions = [
+  {
+    key: 'image',
+    icon: 'i-heroicons-photo',
+    label: '生成图片',
+    prompt: '生成一张赛博朋克风格的图片'
+  },
+  {
+    key: 'code',
+    icon: 'i-heroicons-code-bracket',
+    label: '写代码',
+    prompt: '写一段 Python 代码'
+  },
+  {
+    key: 'explain',
+    icon: 'i-heroicons-light-bulb',
+    label: '解释概念',
+    prompt: '解释一下量子纠缠'
+  }
+]
+
 function handleQuote(text: string) {
   if (chatInputRef.value) {
     chatInputRef.value.setQuote(text)
@@ -257,76 +278,68 @@ function handleQuote(text: string) {
 </script>
 
 <template>
-  <div class="flex h-full w-full overflow-hidden bg-white dark:bg-[#212121]">
+  <div class="page-shell">
     <Sidebar :tabs="tabs" :selected="selectedTab" :handle-delete="handleDelete" :handle-new-chat="handleNewChat"
              :handle-switch-chat="handleSwitchChat"/>
-    
-    <main class="flex-1 flex flex-col h-full relative min-w-0">
-      <!-- Top Bar -->
-      <div class="h-14 flex items-center justify-between px-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] bg-white dark:bg-[#212121] z-10">
-         <div class="flex items-center gap-2">
-           <button @click="openAside = !openAside" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
-              <UIcon name="i-heroicons-bars-3" class="w-5 h-5" />
-           </button>
-           <button @click="openModelSelect = true" class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2f2f2f] transition-colors font-medium text-gray-700 dark:text-gray-200 text-lg">
-             <span>{{ selectedModel.name }}</span>
-             <UIcon name="i-heroicons-chevron-down" class="w-4 h-4 text-gray-500" />
-           </button>
-         </div>
-         <div class="flex items-center gap-2">
-            <button class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
-               <UIcon name="i-heroicons-share" class="w-5 h-5" />
-            </button>
-         </div> 
+
+    <main class="page-main">
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button @click="openAside = !openAside" class="icon-btn" type="button">
+            <UIcon name="i-heroicons-bars-3" class="icon-20"/>
+          </button>
+          <button @click="openModelSelect = true" class="btn btn-secondary model-btn" type="button">
+            <span>{{ selectedModel.name }}</span>
+            <UIcon name="i-heroicons-chevron-down" class="icon-16"/>
+          </button>
+        </div>
+        <button class="icon-btn" type="button">
+          <UIcon name="i-heroicons-share" class="icon-20"/>
+        </button>
       </div>
 
-      <USkeleton v-if="initializing" class="h-24 w-3/5 self-center rounded-xl mt-20"/>
+      <USkeleton v-if="initializing" class="init-skeleton"/>
 
       <template v-else>
-        <!-- Welcome Screen -->
-        <div v-if="history.length === 0" class="flex-1 flex flex-col items-center justify-center p-4 text-center">
-           <div class="mb-8">
-              <div class="w-12 h-12 bg-white dark:bg-white/10 rounded-full shadow-sm flex items-center justify-center mx-auto mb-4">
-                 <UIcon name="i-heroicons-sparkles" class="w-6 h-6 text-gray-900 dark:text-white" />
-              </div>
-              <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">我们先从哪里开始呢？</h2>
-           </div>
-           
-           <div class="w-full max-w-3xl px-4">
-              <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
-                        :handle-send="handleSend"/>
-           </div>
-           
-           <div class="mt-8 flex flex-wrap justify-center gap-2">
-              <button @click="handleSend('生成一张赛博朋克风格的图片', true, [])" 
-                      class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm text-gray-600 dark:text-gray-300 transition-colors">
-                 🎨 生成图片
-              </button>
-              <button @click="handleSend('写一段 Python 代码', true, [])" 
-                      class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm text-gray-600 dark:text-gray-300 transition-colors">
-                 💻 写代码
-              </button>
-              <button @click="handleSend('解释一下量子纠缠', true, [])" 
-                      class="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-sm text-gray-600 dark:text-gray-300 transition-colors">
-                 🤔 解释概念
-              </button>
-           </div>
+        <div v-if="history.length === 0" class="welcome-screen">
+          <div class="welcome-header">
+            <div class="welcome-logo">
+              <UIcon name="i-heroicons-sparkles" class="icon-20"/>
+            </div>
+            <h2 class="welcome-title">我们先从哪里开始呢？</h2>
+          </div>
+
+          <div class="welcome-input">
+            <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
+                       :handle-send="handleSend"/>
+          </div>
+
+          <div class="quick-actions">
+            <button
+              v-for="action in quickActions"
+              :key="action.key"
+              class="btn btn-secondary quick-action-btn"
+              type="button"
+              @click="handleSend(action.prompt, true, [])"
+            >
+              <UIcon :name="action.icon" class="icon-16"/>
+              <span>{{ action.label }}</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Chat Area -->
-        <div v-else class="flex-1 flex flex-col h-full overflow-hidden">
-          <div class="flex-1 overflow-y-auto relative scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700" id="chatList">
+        <div v-else class="chat-area">
+          <div class="chat-list" id="chatList">
             <ChatList :history="history" :loading="loading" @retry="handleRetry" @quote="handleQuote"/>
           </div>
 
-          <!-- Input Area -->
-          <div class="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white dark:bg-[#212121]">
-            <div class="max-w-3xl mx-auto">
-               <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
-                          :handle-send="handleSend"/>
-               <div class="text-xs text-center text-gray-400 mt-2">
-                  AI can make mistakes. Consider checking important information.
-               </div>
+          <div class="input-area">
+            <div class="input-container">
+              <ChatInput ref="chatInputRef" :session="session" :loading="loading" :selected-model="selectedModel"
+                         :handle-send="handleSend"/>
+              <div class="input-note">
+                AI can make mistakes. Consider checking important information.
+              </div>
             </div>
           </div>
         </div>
@@ -337,3 +350,156 @@ function handleQuote(text: string) {
     </main>
   </div>
 </template>
+
+<style scoped>
+.page-shell {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-neutral-0);
+}
+
+.page-main {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-neutral-0);
+}
+
+.top-bar {
+  height: var(--space-14);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+  padding-left: max(var(--space-4), env(safe-area-inset-left));
+  padding-right: max(var(--space-4), env(safe-area-inset-right));
+  border-bottom: 1px solid var(--color-neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-neutral-0);
+  z-index: 10;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.model-btn {
+  height: var(--space-8);
+  padding-right: var(--space-4);
+  padding-left: var(--space-4);
+}
+
+.icon-16 {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.icon-20 {
+  width: var(--space-5);
+  height: var(--space-5);
+}
+
+.init-skeleton {
+  margin-top: var(--space-12);
+  align-self: center;
+  width: 60%;
+  height: var(--space-12);
+  border-radius: var(--radius-md);
+}
+
+.welcome-screen {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4);
+  gap: var(--space-8);
+}
+
+.welcome-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.welcome-logo {
+  width: var(--space-12);
+  height: var(--space-12);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  background: var(--color-neutral-0);
+}
+
+.welcome-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-neutral-900);
+}
+
+.welcome-input {
+  width: 100%;
+  max-width: var(--layout-main-max);
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.quick-action-btn {
+  min-width: calc(var(--space-16) + var(--space-14));
+}
+
+.chat-area {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-list {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.input-area {
+  padding-top: var(--space-4);
+  padding-right: var(--space-4);
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  padding-left: var(--space-4);
+  border-top: 1px solid var(--color-neutral-200);
+  background: var(--color-neutral-0);
+}
+
+.input-container {
+  max-width: var(--layout-main-max);
+  margin: 0 auto;
+}
+
+.input-note {
+  margin-top: var(--space-2);
+  text-align: center;
+  color: var(--color-neutral-400);
+  font-size: var(--text-xs);
+}
+
+</style>

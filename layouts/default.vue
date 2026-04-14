@@ -2,7 +2,17 @@
 </script>
 
 <template>
-  <div class="h-screen h-[100dvh] w-screen overflow-hidden bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <div class="layout-root">
     <slot/>
   </div>
 </template>
+
+<style scoped>
+.layout-root {
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--color-neutral-0);
+  color: var(--color-neutral-900);
+}
+</style>

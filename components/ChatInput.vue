@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import {compressionFile, handleImgZoom} from "~/utils/tools";
+import {compressionFile} from "~/utils/tools";
 
 const input = ref('')
 const quote = ref('')
 const addHistory = ref(true)
+const textareaRef = ref<HTMLTextAreaElement | null>(null)
 const fileList = ref<{
   file: File
   url: string
 }[]>([])
-const {openModelSelect} = useGlobalState()
-
 onMounted(() => {
   addHistory.value = localStorage.getItem('addHistory') !== 'false'
 })
@@ -20,23 +19,14 @@ watch(addHistory, () => {
 function setInput(val: string) {
   input.value = val
   nextTick(() => {
-     // Trigger height adjustment
-     const textarea = document.querySelector('textarea')
-     if (textarea) {
-        textarea.style.height = 'auto'
-        textarea.style.height = textarea.scrollHeight + 'px'
-        textarea.focus()
-     }
+    textareaRef.value?.focus()
   })
 }
 
 function setQuote(val: string) {
   quote.value = val
   nextTick(() => {
-     const textarea = document.querySelector('textarea')
-     if (textarea) {
-        textarea.focus()
-     }
+    textareaRef.value?.focus()
   })
 }
 
@@ -132,75 +122,263 @@ const handlePaste = (e: ClipboardEvent) => {
 </script>
 
 <template>
-  <div class="relative w-full">
-    <!-- Quote Preview -->
-    <div v-if="quote" class="mb-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-xl border-l-4 border-gray-300 dark:border-gray-600 flex justify-between items-start group animate-in fade-in slide-in-from-bottom-2 duration-200">
-        <div class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 whitespace-pre-wrap italic">
-            {{ quote }}
-        </div>
-        <button @click="quote = ''" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shrink-0 ml-2">
-            <UIcon name="i-heroicons-x-mark" class="w-4 h-4" />
+  <div class="chat-input-root">
+    <div v-if="quote" class="quote-preview">
+      <div class="quote-content">
+        {{ quote }}
+      </div>
+      <button @click="quote = ''" class="quote-clear-btn" type="button">
+        <UIcon name="i-heroicons-x-mark" class="icon-16"/>
+      </button>
+    </div>
+
+    <div v-if="fileList.length > 0" class="file-list">
+      <div v-for="file in fileList" :key="file.url" class="file-item">
+        <img :src="file.url" class="file-thumb"/>
+        <button @click="fileList.splice(fileList.indexOf(file), 1)" class="file-remove-btn" type="button">
+          <UIcon name="i-heroicons-x-mark" class="icon-16"/>
         </button>
+      </div>
     </div>
 
-    <!-- Image Preview List -->
-    <div v-if="fileList.length > 0" class="flex gap-2 mb-2 overflow-x-auto pb-2">
-       <div v-for="file in fileList" :key="file.url" class="relative group shrink-0">
-          <img :src="file.url" class="h-16 w-16 object-cover rounded-lg border border-gray-200 dark:border-gray-700" />
-          <button @click="fileList.splice(fileList.indexOf(file), 1)" 
-                  class="absolute -top-1 -right-1 bg-gray-900 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
-          </button>
-       </div>
-    </div>
-
-    <!-- Input Container -->
-    <div class="relative flex items-end gap-2 p-2 bg-[#f4f4f4] dark:bg-[#2f2f2f] rounded-3xl transition-all focus-within:ring-1 focus-within:ring-black/5 dark:focus-within:ring-white/5 focus-within:bg-white dark:focus-within:bg-[#2f2f2f] focus-within:shadow-lg">
-      
-      <!-- Attachment Button -->
+    <div class="composer">
       <UTooltip v-if="selectedModel.type === 'universal'" :text="$t('add_image')">
-        <button @click="handleAddFiles" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10 mb-0.5">
-          <UIcon name="i-heroicons-paper-clip" class="w-5 h-5" />
+        <button @click="handleAddFiles" class="composer-icon-btn" type="button">
+          <UIcon name="i-heroicons-paper-clip" class="icon-20"/>
         </button>
       </UTooltip>
 
-      <!-- Text Area -->
-      <textarea 
+      <textarea
+        ref="textareaRef"
         v-model="input"
         rows="1"
-        class="flex-1 max-h-48 py-3 bg-transparent border-none focus:ring-0 resize-none text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 scrollbar-hide text-base leading-relaxed"
+        class="composer-textarea"
         :placeholder="$t('please_input_text')"
         @keydown.enter="handleKeydown($event)"
         @paste="handlePaste"
-        style="min-height: 48px;"
-        @input="(e) => {
-          const target = e.target as HTMLTextAreaElement;
-          target.style.height = 'auto';
-          target.style.height = target.scrollHeight + 'px';
-        }"
       ></textarea>
 
-      <!-- Voice Button (Visual Only) -->
-      <button v-if="!input.trim()" class="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-full hover:bg-black/5 dark:hover:bg-white/10 mb-0.5">
-         <UIcon name="i-heroicons-microphone" class="w-5 h-5" />
+      <button v-if="!input.trim()" class="composer-icon-btn" type="button">
+        <UIcon name="i-heroicons-microphone" class="icon-20"/>
       </button>
 
-      <!-- Send Button -->
-      <button 
-        @click="sendMessage" 
+      <button
+        @click="sendMessage"
         :disabled="loading || (!input.trim() && fileList.length === 0)"
-        class="p-1.5 rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-1.5"
-        :class="input.trim() || fileList.length > 0 ? 'bg-black dark:bg-white text-white dark:text-black hover:opacity-80' : 'bg-transparent text-gray-400 dark:text-gray-500'"
+        class="send-btn"
+        :class="input.trim() || fileList.length > 0 ? 'send-btn--active' : 'send-btn--idle'"
+        type="button"
       >
-        <UIcon name="i-heroicons-arrow-up" class="w-5 h-5" />
+        <UIcon name="i-heroicons-arrow-up" class="icon-20"/>
       </button>
     </div>
-    
-    <div class="text-center mt-2">
-       <button @click="addHistory = !addHistory" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex items-center justify-center gap-1 mx-auto transition-colors">
-          <UIcon :name="addHistory ? 'i-heroicons-clock' : 'i-heroicons-no-symbol'" class="w-3 h-3" />
-          <span>{{ addHistory ? $t('with_history') : $t('without_history') }}</span>
-       </button>
+
+    <div class="history-toggle-wrap">
+      <button @click="addHistory = !addHistory" class="history-toggle-btn" type="button">
+        <UIcon :name="addHistory ? 'i-heroicons-clock' : 'i-heroicons-no-symbol'" class="icon-16"/>
+        <span>{{ addHistory ? $t('with_history') : $t('without_history') }}</span>
+      </button>
     </div>
   </div>
 </template>
+
+<style scoped>
+.chat-input-root {
+  width: 100%;
+}
+
+.quote-preview {
+  margin-bottom: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  background: var(--color-neutral-50);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.quote-content {
+  flex: 1;
+  color: var(--color-neutral-500);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+
+.quote-clear-btn {
+  width: var(--space-6);
+  height: var(--space-6);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-neutral-400);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.quote-clear-btn:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+}
+
+.file-list {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.file-item {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.file-thumb {
+  width: var(--space-16);
+  height: var(--space-16);
+  object-fit: cover;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+}
+
+.file-remove-btn {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-1);
+  width: var(--space-6);
+  height: var(--space-6);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: rgba(17, 24, 39, 0.8);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  background: var(--color-neutral-0);
+  transition: border-color var(--duration-fast) ease;
+}
+
+.composer:focus-within {
+  border-color: var(--color-primary);
+  outline: 2px solid rgba(29, 78, 216, 0.15);
+  outline-offset: 0;
+}
+
+.composer-icon-btn {
+  width: var(--space-8);
+  height: var(--space-8);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-neutral-500);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.composer-icon-btn:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+}
+
+.composer-textarea {
+  flex: 1;
+  max-height: calc(var(--space-16) * 3);
+  min-height: var(--space-12);
+  border: 0;
+  background: transparent;
+  color: var(--color-neutral-900);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  padding-top: var(--space-2);
+  padding-right: 0;
+  padding-bottom: var(--space-2);
+  padding-left: 0;
+  resize: none;
+  outline: none;
+}
+
+.composer-textarea::placeholder {
+  color: var(--color-neutral-400);
+}
+
+.send-btn {
+  width: var(--space-8);
+  height: var(--space-8);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease, filter var(--duration-fast) ease;
+}
+
+.send-btn--idle {
+  background: transparent;
+  color: var(--color-neutral-400);
+}
+
+.send-btn--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.send-btn--active:hover:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+.history-toggle-wrap {
+  margin-top: var(--space-2);
+  display: flex;
+  justify-content: center;
+}
+
+.history-toggle-btn {
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-neutral-400);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  cursor: pointer;
+  font-size: var(--text-xs);
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.history-toggle-btn:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-500);
+}
+
+.icon-16 {
+  width: var(--space-4);
+  height: var(--space-4);
+}
+
+.icon-20 {
+  width: var(--space-5);
+  height: var(--space-5);
+}
+</style>
