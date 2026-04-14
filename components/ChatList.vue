@@ -249,7 +249,7 @@ function handleContentClick(e: MouseEvent) {
 .assistant-avatar--loading {
   background: var(--color-secondary);
   border-color: var(--color-secondary);
-  color: #ffffff;
+  color: var(--color-neutral-0);
 }
 
 .user-message-group {

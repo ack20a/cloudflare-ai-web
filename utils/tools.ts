@@ -81,7 +81,7 @@ export function handleImgZoom(img: HTMLImageElement) {
     container.style.cssText = `
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: color-mix(in srgb, var(--color-neutral-900) 80%, transparent);
     display: flex;
     justify-content: center;
     align-items: center;

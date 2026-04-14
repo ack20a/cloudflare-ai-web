@@ -67,7 +67,7 @@ defineProps<{
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: rgba(17, 24, 39, 0.35);
+  background: color-mix(in srgb, var(--color-neutral-900) 35%, transparent);
 }
 
 .aside-mask--visible {
@@ -237,7 +237,7 @@ defineProps<{
   height: var(--space-8);
   border-radius: var(--radius-sm);
   background: var(--color-secondary);
-  color: #ffffff;
+  color: var(--color-neutral-0);
   display: inline-flex;
   align-items: center;
   justify-content: center;

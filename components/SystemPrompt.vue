@@ -139,6 +139,6 @@ defineExpose({
 
 .toggle-input:checked + .toggle-track .toggle-thumb {
   transform: translateX(var(--space-4));
-  background: #ffffff;
+  background: var(--color-neutral-0);
 }
 </style>

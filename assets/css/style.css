@@ -150,7 +150,7 @@ p {
 .btn-primary {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-neutral-0);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -229,7 +229,7 @@ p {
 .input-field:focus,
 .textarea-field:focus {
     border-color: var(--color-primary);
-    outline: 2px solid rgba(29, 78, 216, 0.15);
+    outline: 2px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
     outline-offset: 0;
 }
 

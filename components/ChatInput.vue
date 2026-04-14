@@ -256,8 +256,8 @@ const handlePaste = (e: ClipboardEvent) => {
   height: var(--space-6);
   border: 0;
   border-radius: var(--radius-sm);
-  background: rgba(17, 24, 39, 0.8);
-  color: #ffffff;
+  background: color-mix(in srgb, var(--color-neutral-900) 80%, transparent);
+  color: var(--color-neutral-0);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -277,7 +277,7 @@ const handlePaste = (e: ClipboardEvent) => {
 
 .composer:focus-within {
   border-color: var(--color-primary);
-  outline: 2px solid rgba(29, 78, 216, 0.15);
+  outline: 2px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
   outline-offset: 0;
 }
 
@@ -340,7 +340,7 @@ const handlePaste = (e: ClipboardEvent) => {
 .send-btn--active {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-neutral-0);
 }
 
 .send-btn--active:hover:not(:disabled) {
